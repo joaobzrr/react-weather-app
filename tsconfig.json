@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "moduleResolution": "node",
+        "strict": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "downlevelIteration": true,
+        "isolatedModules": true,
+        "sourceMap": true,
+        "jsx": "react"
+    }
+}

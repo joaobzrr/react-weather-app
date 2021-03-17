@@ -1,0 +1,30 @@
+.WeekdayButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.WeekdayButton .WeatherIcon {
+    transform: scale(0.75);
+}
+
+.WeekdayButton_day {
+    margin-bottom: 1rem;
+}
+
+.WeekdayButton_temperature {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+}
+
+.WeekdayButton_max {
+    padding-right: 1rem;
+}
+
+.WeekdayButton_min {
+    color: #878787;
+}
+

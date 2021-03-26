@@ -66,7 +66,7 @@ function getWeatherInfo(data: any, precipitation: number|null): WeatherInfo {
     result.icon          = getIconURL(icon);
     result.humidity      = data.humidity;
     result.windSpeed     = Math.round(data.wind_speed * 3.6);
-    result.precipitation = Math.round(((precipitation !== null) ? precipitation : data.pop) * 100); // @Todo: Use daily data instead of hourly for this.
+    result.precipitation = Math.round(((precipitation !== null) ? precipitation : data.pop) * 100);
 
     if (isNumber(data.temp)) {
         result.currentTemperature = Math.round(data.temp);

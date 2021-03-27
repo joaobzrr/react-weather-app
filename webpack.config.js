@@ -1,47 +1,46 @@
-const path = require("path");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path                   = require("path");
+const fs                     = require("fs");
+const webpack                = require("webpack");
+const TerserWebpackPlugin    = require("terser-webpack-plugin");
+const MiniCssExtractPlugin   = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin      = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const rootDir       = __dirname;
-const srcDir        = path.resolve(rootDir,   "src");
-const componentsDir = path.resolve(srcDir,    "components");
-const hooksDir      = path.resolve(srcDir,    "hooks");
-const coreDir       = path.resolve(srcDir,    "core");
-const assetsDir     = path.resolve(srcDir,    "assets");
-const imagesDir     = path.resolve(assetsDir, "images");
-const distDir       = path.resolve(rootDir,   "dist");
-const ghPagesDir    = path.resolve(rootDir,   "gh-pages");
+const ROOT_DIR       = __dirname;
+const SRC_DIR        = path.resolve(ROOT_DIR,   "src");
+const COMPONENTS_DIR = path.resolve(SRC_DIR,    "components");
+const HOOKS_DIR      = path.resolve(SRC_DIR,    "hooks");
+const CORE_DIR       = path.resolve(SRC_DIR,    "core");
+const ASSETS_DIR     = path.resolve(SRC_DIR,    "assets");
+const IMAGES_DIR     = path.resolve(ASSETS_DIR, "images");
+const DIST_DIR       = path.resolve(ROOT_DIR,   "dist");
+const GH_PAGES_DIR   = path.resolve(ROOT_DIR,   "gh-pages");
 
-const dotenv = require("dotenv").config({
-    path: path.resolve(rootDir, ".env")
-}).parsed;
+const REPO_NAME = "react-weather-app";
+
+const FAVICON_FILE_NAME   = "favicon.ico";
+const FAVICON_OUTPUT_PATH = "static/images/";
+
+const dotenv = require("dotenv").parse(fs.readFileSync('.env'));
 
 const plugins = [
+    new webpack.DefinePlugin({
+        "__OPEN_WEATHER_MAP_API_KEY__": JSON.stringify(dotenv.OPEN_WEATHER_MAP_API_KEY)
+    }),
     new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: ["**/*", "!.git/**"]
     }),
     new HtmlWebpackPlugin({
-        template: path.resolve(srcDir, "index.hbs"),
+        template: path.resolve(SRC_DIR, "index.hbs"),
         inject: false,
         templateParameters: {
             favicon: {
-                fileName: dotenv.faviconFileName,
-                outputPath: dotenv.faviconOutputPath
+                fileName: FAVICON_FILE_NAME,
+                outputPath: FAVICON_OUTPUT_PATH
             }
         }
     })
 ];
-
-const postCssLoader = {
-    loader: "postcss-loader",
-    options: {
-        postcssOptions: {
-            config: "postcss.config.js"
-        }
-    }
-};
 
 module.exports = env => {
     const config = getConfig(env.config);
@@ -51,8 +50,8 @@ module.exports = env => {
         target: "web",
         entry: {
             main: [
-                path.resolve(srcDir, "index.tsx"),
-                path.resolve(imagesDir, dotenv.faviconFileName)
+                path.resolve(SRC_DIR, "index.tsx"),
+                path.resolve(IMAGES_DIR, FAVICON_FILE_NAME)
             ],
         },
         output: {
@@ -72,7 +71,14 @@ module.exports = env => {
                     use: [
                         config.styleLoader,
                         "css-loader",
-                        postCssLoader,
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                postcssOptions: {
+                                    config: "postcss.config.js"
+                                }
+                            }
+                        },
                         "sass-loader"
                     ]
                 },
@@ -80,7 +86,7 @@ module.exports = env => {
                     test: /favicon.ico/i,
                     type: "asset/resource",
                     generator: {
-                        filename: `${dotenv.faviconOutputPath}${dotenv.faviconFileName}`
+                        filename: `${FAVICON_OUTPUT_PATH}${FAVICON_FILE_NAME}`
                     }
                 },
                 {
@@ -95,16 +101,16 @@ module.exports = env => {
         },
         resolve: {
             alias: {
-                "$src":        srcDir,
-                "$components": componentsDir,
-                "$hooks":      hooksDir,
-                "$core":       coreDir,
-                "$assets":     assetsDir
+                "$src":        SRC_DIR,
+                "$components": COMPONENTS_DIR,
+                "$hooks":      HOOKS_DIR,
+                "$core":       CORE_DIR,
+                "$assets":     ASSETS_DIR
             },
             extensions: [".js", ".jsx", ".json", ".ts", ".tsx"]
         },
         devServer: {
-            contentBase: distDir,
+            contentBase: DIST_DIR,
             inline: true,
             hot: true
         },
@@ -144,10 +150,10 @@ function getConfig(config) {
 
     let outputPath, publicPath;
     if (config === "gh-pages") {
-        outputPath = ghPagesDir;
-        publicPath = `/${dotenv.repoName}/`;
+        outputPath = GH_PAGES_DIR;
+        publicPath = `/${REPO_NAME}/`;
     } else {
-        outputPath = distDir;
+        outputPath = DIST_DIR;
         publicPath = "/";
     }
 

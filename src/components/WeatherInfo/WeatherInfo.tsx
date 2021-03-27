@@ -13,10 +13,12 @@ type PropsType = {
 function WeatherInfo(props: PropsType) {
     const { weatherData } = props;
 
-    const inner = (weatherData !== null) ? [
+    const inner = (weatherData !== null) ? (
+        <>
         <WeatherDetails weatherData={weatherData} />,
         <SevenDayForecast weatherData={weatherData} />
-    ] : null;
+        </>
+    ) : null;
 
     return (
         <div className="WeatherInfo">

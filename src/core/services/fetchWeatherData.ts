@@ -18,13 +18,10 @@ export type WeatherData = {
     city:    string;
 }
 
-// @nocommit: Where do we put this?
-const key = "c75584bd99a68993548367d046a5e341";
-
 export default async function fetchWeatherData(address: string) {
     return fetchCoordinates(address).then(({city, lat, lon}) => {
         const baseUrl = "https://api.openweathermap.org/data/2.5/onecall";
-        const query = `?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&appid=${key}`; // @Note: Assuming metric system for now.
+        const query = `?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&appid=${__OPEN_WEATHER_MAP_API_KEY__}`; // @Note: Assuming metric system for now.
 
         return fetch(baseUrl + query).then(response => response.json()).then(data => {
             const result: WeatherData = {} as WeatherData;
@@ -45,7 +42,7 @@ export default async function fetchWeatherData(address: string) {
 
 export async function fetchCoordinates(address: string) {
     const baseUrl = "http://api.openweathermap.org/geo/1.0/direct";
-    const query = `?q=${address}&appid=${key}`
+    const query = `?q=${address}&appid=${__OPEN_WEATHER_MAP_API_KEY__}`;
 
     return fetch(baseUrl + query).then(response => response.json()).then(data => {
         return {

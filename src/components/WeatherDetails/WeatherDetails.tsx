@@ -1,6 +1,6 @@
 import React from "react";
 import WeatherIcon from "$components/WeatherIcon";
-import { WeatherData } from "$src/fetchWeatherData";
+import { WeatherData } from "$core/services/fetchWeatherData";
 import { useClasses, serializeClasses } from "./useClasses";
 import "./WeatherDetails.scss";
 

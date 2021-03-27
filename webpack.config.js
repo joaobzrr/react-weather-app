@@ -1,23 +1,37 @@
-const path = require("path")
+const path = require("path");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const rootDir       = __dirname;
-const srcDir        = path.resolve(rootDir, "src");
-const componentsDir = path.resolve(srcDir,  "components");
-const hooksDir      = path.resolve(srcDir,  "hooks");
-const assetsDir     = path.resolve(srcDir,  "assets");
-const distDir       = path.resolve(rootDir, "dist");
-const ghPagesDir    = path.resolve(rootDir, "gh-pages");
+const srcDir        = path.resolve(rootDir,   "src");
+const componentsDir = path.resolve(srcDir,    "components");
+const hooksDir      = path.resolve(srcDir,    "hooks");
+const assetsDir     = path.resolve(srcDir,    "assets");
+const imagesDir     = path.resolve(assetsDir, "images");
+const distDir       = path.resolve(rootDir,   "dist");
+const ghPagesDir    = path.resolve(rootDir,   "gh-pages");
 
-const entryFileName    = "index.tsx";
-const templateFileName = "index.hbs";
-const faviconFileName  = "favicon.ico";
+const dotenv = require("dotenv").config({
+    path: path.resolve(rootDir, ".env")
+}).parsed;
 
-// @Todo: Put this somewhere else?
-const repoName = "react-weather-app";
+const plugins = [
+    new CleanWebpackPlugin({
+        cleanOnceBeforeBuildPatterns: ["**/*", "!.git/**"]
+    }),
+    new HtmlWebpackPlugin({
+        template: path.resolve(srcDir, "index.hbs"),
+        inject: false,
+        templateParameters: {
+            favicon: {
+                fileName: dotenv.faviconFileName,
+                outputPath: dotenv.faviconOutputPath
+            }
+        }
+    })
+];
 
 const postCssLoader = {
     loader: "postcss-loader",
@@ -34,7 +48,12 @@ module.exports = env => {
     const result = {
         mode: config.mode,
         target: "web",
-        entry: path.resolve(srcDir, entryFileName),
+        entry: {
+            main: [
+                path.resolve(srcDir, "index.tsx"),
+                path.resolve(imagesDir, dotenv.faviconFileName)
+            ],
+        },
         output: {
             filename:   "static/js/[name].[fullhash].js",
             path:       config.outputPath,
@@ -57,13 +76,20 @@ module.exports = env => {
                     ]
                 },
                 {
+                    test: /favicon.ico/i,
+                    type: "asset/resource",
+                    generator: {
+                        filename: `${dotenv.faviconOutputPath}${dotenv.faviconFileName}`
+                    }
+                },
+                {
                     test: /\.svg$/,
                     use: ["@svgr/webpack"]
                 },
                 {
                     test: /\.hbs$/,
-                    loader: "handlebars-loader"
-                },
+                    loader: "handlebars-loader",
+                }
             ]
         },
         resolve: {
@@ -99,17 +125,6 @@ module.exports = env => {
 };
 
 function getConfig(config) {
-    const plugins = [
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ["**/*", "!.git/**"]
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(srcDir, templateFileName),
-            favicon:  path.resolve(assetsDir, "images", faviconFileName),
-            inject:   false
-        })
-    ];
-
     let mode, devtool, styleLoader;
     if (config === "development") {
         mode = "development";
@@ -128,7 +143,7 @@ function getConfig(config) {
     let outputPath, publicPath;
     if (config === "gh-pages") {
         outputPath = ghPagesDir;
-        publicPath = `/${repoName}/`;
+        publicPath = `/${dotenv.repoName}/`;
     } else {
         outputPath = distDir;
         publicPath = "/";

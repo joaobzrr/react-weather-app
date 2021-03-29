@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
 import "./SevenDayForecast.scss";
 import { getWeekdayFromDate } from "$src/utils";
-import { WeatherData } from "$core/services/fetchWeatherData";
+import { WeatherData } from "$services/fetchWeatherData";
 
 type PropsType = {
     weatherData: WeatherData;

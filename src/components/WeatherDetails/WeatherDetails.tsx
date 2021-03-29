@@ -1,6 +1,6 @@
 import React from "react";
 import WeatherIcon from "$components/WeatherIcon";
-import { WeatherData } from "$core/services/fetchWeatherData";
+import { WeatherData } from "$services/fetchWeatherData";
 import { useClasses, serializeClasses } from "./useClasses";
 import "./WeatherDetails.scss";
 
@@ -9,7 +9,7 @@ type PropsType = {
 };
 
 export default function WeatherDetails(props: PropsType) {
-    const { description, icon, precipitation, humidity, windSpeed, currentTemperature } = props.weatherData.current;
+    const { description, icon, precipitation, humidity, windSpeed, temperature } = props.weatherData.current;
     const city = props.weatherData.city;
 
     const { classes, setClasses } = useClasses();
@@ -18,7 +18,7 @@ export default function WeatherDetails(props: PropsType) {
         <div className={serializeClasses(classes)}>
             <WeatherIcon src={icon} />
             <span className="WeatherDetails_temperature">
-                {currentTemperature}
+                {temperature}
             </span>
             <span className="WeatherDetails_temperatureSelector">
                 ºC | ºF

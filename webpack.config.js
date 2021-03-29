@@ -10,7 +10,7 @@ const ROOT_DIR       = __dirname;
 const SRC_DIR        = path.resolve(ROOT_DIR,   "src");
 const COMPONENTS_DIR = path.resolve(SRC_DIR,    "components");
 const HOOKS_DIR      = path.resolve(SRC_DIR,    "hooks");
-const CORE_DIR       = path.resolve(SRC_DIR,    "core");
+const SERVICES_DIR   = path.resolve(SRC_DIR,    "services");
 const ASSETS_DIR     = path.resolve(SRC_DIR,    "assets");
 const IMAGES_DIR     = path.resolve(ASSETS_DIR, "images");
 const DIST_DIR       = path.resolve(ROOT_DIR,   "dist");
@@ -104,7 +104,7 @@ module.exports = env => {
                 "$src":        SRC_DIR,
                 "$components": COMPONENTS_DIR,
                 "$hooks":      HOOKS_DIR,
-                "$core":       CORE_DIR,
+                "$services":   SERVICES_DIR,
                 "$assets":     ASSETS_DIR
             },
             extensions: [".js", ".jsx", ".json", ".ts", ".tsx"]

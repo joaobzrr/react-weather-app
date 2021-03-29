@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import TextInput from "$components/TextInput";
 import WeatherInfo from "$components/WeatherInfo";
-import fetchWeatherData, { WeatherData } from "$core/services/fetchWeatherData";
-import { fetchCoordinates } from "$core/services/fetchWeatherData";
+import fetchWeatherData, { WeatherData } from "$services/fetchWeatherData";
+import { fetchCoordinates } from "$services/fetchWeatherData";
 import useOnce from "$hooks/useOnce";
 import "./App.scss";
 

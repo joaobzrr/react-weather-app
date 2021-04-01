@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
-import { useClasses, serializeClasses } from "./useClasses";
+import { serializeClasses } from "@bzrr/useclasses";
+import useClasses from "./useClasses";
 import "./TextInput.scss";
 
 type PropsType = {

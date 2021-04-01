@@ -1,7 +1,8 @@
 import React from "react";
+import { serializeClasses } from "@bzrr/useclasses";
 import WeatherIcon from "$components/WeatherIcon";
 import { WeatherData } from "$services/fetchWeatherData";
-import { useClasses, serializeClasses } from "./useClasses";
+import useClasses from "./useClasses";
 import "./WeatherDetails.scss";
 
 type PropsType = {

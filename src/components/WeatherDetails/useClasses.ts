@@ -1,9 +1,5 @@
-import make from "@bzrr/useclasses";
-const { useClasses, serializeClasses } = make([
-    {
-        name: "WeatherDetails",
-        group: "default"
-    }
-]);
+import { fromSchema } from "@bzrr/useclasses";
 
-export { useClasses, serializeClasses };
+export default fromSchema({
+    WeatherDetails: "default"
+});

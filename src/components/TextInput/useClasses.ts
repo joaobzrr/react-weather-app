@@ -1,13 +1,6 @@
-import make from "@bzrr/useclasses";
-const { useClasses, serializeClasses } = make([
-    {
-        name: "TextInput",
-        group: "default"
-    },
-    {
-        name: "TextInput__focused",
-        group: null
-    }
-]);
+import { fromSchema } from "@bzrr/useclasses";
 
-export { useClasses, serializeClasses };
+export default fromSchema({
+    TextInput: "default",
+    TextInput__focused: null
+});

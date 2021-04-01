@@ -79,7 +79,7 @@ export async function fetchCoordinates(address: string) {
     const query = `?q=${address}&appid=${__OPEN_WEATHER_MAP_API_KEY__}`;
 
     return fetch(baseUrl + query).then(response => response.json()).then(data => {
-        const { name, lat, lon } = data;
+        const { name, lat, lon } = data[0];
 
         return {
             city: name,

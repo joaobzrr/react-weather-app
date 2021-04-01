@@ -3,26 +3,33 @@ import WeatherDetails from "$components/WeatherDetails";
 import SevenDayForecast from "$components/SevenDayForecast";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
-import { WeatherData } from "$services/fetchWeatherData";
+import {
+    WeatherData,
+    CurrentWeatherData,
+    ForecastedWeatherData,
+    SelectedWeatherData
+} from "$services/WeatherData";
 import "./WeatherInfo.scss";
 
 type PropsType = {
-    weatherData: WeatherData|null;
+    onPressWeekDayButton: (value: number) => void;
+    weatherData: WeatherData;
+    selectedWeatherData: SelectedWeatherData;
 }
 
 function WeatherInfo(props: PropsType) {
-    const { weatherData } = props;
-
-    const inner = (weatherData !== null) ? (
-        <>
-        <WeatherDetails weatherData={weatherData} />,
-        <SevenDayForecast weatherData={weatherData} />
-        </>
-    ) : null;
+    const { weatherData, selectedWeatherData, onPressWeekDayButton } = props;
 
     return (
         <div className="WeatherInfo">
-            {inner}
+            <WeatherDetails
+                weatherData={weatherData}
+                selectedWeatherData={selectedWeatherData!}
+            />
+            <SevenDayForecast
+                weatherData={weatherData}
+                onPressWeekDayButton={onPressWeekDayButton}
+            />
         </div>
     );
 }

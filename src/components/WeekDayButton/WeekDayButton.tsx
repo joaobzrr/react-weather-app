@@ -1,28 +1,35 @@
 import React, { useEffect, useRef } from "react";
 import WeatherIcon from "$components/WeatherIcon";
-import "./WeekdayButton.scss";
+import "./WeekDayButton.scss";
 
 type PropsType = {
-    day: string;
+    onPressWeekDayButton: (value: number) => void;
+    weekDayIndex: number;
+    weekDayName: string;
     icon: string;
     minTemperature: number;
     maxTemperature: number;
 };
 
-export default function WeekdayButton(props: PropsType) {
-    const { day, icon, minTemperature, maxTemperature } = props;
+export default function WeekDayButton(props: PropsType) {
+    const { onPressWeekDayButton, weekDayIndex, weekDayName, icon, minTemperature, maxTemperature } = props;
+
+    const onClick = () => onPressWeekDayButton(weekDayIndex);
 
     const formatTemperature = (t: number) => t.toString() + " º";
 
     return (
-        <div className="WeekdayButton">
-            <p className="WeekdayButton_day">{day}</p>
+        <div
+            className="WeekDayButton"
+            onClick={onClick}
+        >
+            <p className="WeekDayButton_day">{weekDayName}</p>
             <WeatherIcon src={icon} />
-            <div className="WeekdayButton_temperature">
-                <span className="WeekdayButton_max">
+            <div className="WeekDayButton_temperature">
+                <span className="WeekDayButton_max">
                     {formatTemperature(maxTemperature)}
                 </span>
-                <span className="WeekdayButton_min">
+                <span className="WeekDayButton_min">
                     {formatTemperature(minTemperature)}
                 </span>
             </div>

@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { serializeClasses } from "@bzrr/useclasses";
 import WeatherIcon from "$components/WeatherIcon";
-import { WeatherData } from "$services/fetchWeatherData";
+import {
+    WeatherData,
+    CurrentWeatherData,
+    ForecastedWeatherData,
+    SelectedWeatherData
+} from "$services/WeatherData";
 import useClasses from "./useClasses";
+import { getWeekDayNameFromDate } from "$src/utils";
 import "./WeatherDetails.scss";
 
 type PropsType = {
     weatherData: WeatherData;
+    selectedWeatherData: SelectedWeatherData;
 };
 
 export default function WeatherDetails(props: PropsType) {
-    const { description, icon, precipitation, humidity, windSpeed, temperature } = props.weatherData.current;
-    const city = props.weatherData.city;
+    const { weatherData, selectedWeatherData } = props;
+    const { city } = weatherData;
+    const { description, icon, precipitation, humidity, windSpeed } = selectedWeatherData;
+
+    const [temperature, weekDayName] = useMemo(() => {
+        let temp;
+        if (selectedWeatherData instanceof CurrentWeatherData) {
+            temp = (selectedWeatherData as CurrentWeatherData).temperature;
+        } else {
+            temp = (selectedWeatherData as ForecastedWeatherData).maxTemperature;
+        }
+
+        const day = getWeekDayNameFromDate(selectedWeatherData.dt);
+
+        return [temp, day];
+    }, [selectedWeatherData]);
 
     const { classes, setClasses } = useClasses();
 
@@ -31,7 +52,7 @@ export default function WeatherDetails(props: PropsType) {
             </div>
             <div className="WeatherDetails_location">
                 <span className="WeatherDetails_city">{city}</span>
-                <span>Wednesday 20:20</span>
+                <span>{weekDayName} 20:20</span>
                 <span>{description}</span>
             </div>
         </div>

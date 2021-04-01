@@ -1,62 +1,16 @@
+import {
+    WeatherData,
+    CurrentWeatherData,
+    ForecastedWeatherData
+} from "$services/WeatherData";
 import { isNumber } from "$src/utils";
-
-export class BaseWeatherData {
-    dt:           Date;
-    description:  string;
-    icon:         string;
-    humidity:     number;
-    windSpeed:    number;
-
-    constructor(data: {[key: string]: any}) {
-        this.dt = new Date(data.dt * 1000);
-        this.description =
-            data.weather[0].description.charAt(0).toUpperCase() +
-            data.weather[0].description.slice(1);
-
-        const url = `https://openweathermap.org/img/wn/`;
-        this.icon = `${url}${data.weather[0].icon}@2x.png`;
-
-        this.humidity  = data.humidity;
-        this.windSpeed = Math.round(data.wind_speed * 3.6);
-    }
-}
-
-export class CurrentWeatherData extends BaseWeatherData {
-    temperature:   number;
-    precipitation: number;
-
-    constructor(data: {[key: string]: any}) {
-        super(data.current);
-
-        this.temperature   = Math.round(data.current.temp);
-        this.precipitation = data.hourly[1].pop;
-    }
-}
-
-export class ForecastedWeatherData extends BaseWeatherData {
-    maxTemperature: number;
-    minTemperature: number;
-    precipitation:  number;
-
-    constructor(data: {[key: string]: any}) {
-        super(data);
-
-        this.maxTemperature = Math.round(data.temp.max);
-        this.minTemperature = Math.round(data.temp.min);
-        this.precipitation  = data.pop;
-    }
-}
-
-export type WeatherData = {
-    current: CurrentWeatherData;
-    daily:   ForecastedWeatherData[];
-    city:    string;
-}
 
 export default async function fetchWeatherData(address: string) {
     return fetchCoordinates(address).then(({city, lat, lon}) => {
+        const key = __OPEN_WEATHER_MAP_API_KEY__;
+
         const baseUrl = "https://api.openweathermap.org/data/2.5/onecall";
-        const query = `?lat=${lat}&lon=${lon}&units=metric&appid=${__OPEN_WEATHER_MAP_API_KEY__}`; // @Note: Assuming metric system for now.
+        const query = `?lat=${lat}&lon=${lon}&units=metric&appid=${key}`; // @Note: Assuming metric system for now.
 
         return fetch(baseUrl + query).then(response => response.json()).then(data => {
             const result: WeatherData = {} as WeatherData;
@@ -75,8 +29,10 @@ export default async function fetchWeatherData(address: string) {
 }
 
 export async function fetchCoordinates(address: string) {
+    const key = __OPEN_WEATHER_MAP_API_KEY__;
+
     const baseUrl = "http://api.openweathermap.org/geo/1.0/direct";
-    const query = `?q=${address}&appid=${__OPEN_WEATHER_MAP_API_KEY__}`;
+    const query = `?q=${address}&appid=${key}`;
 
     return fetch(baseUrl + query).then(response => response.json()).then(data => {
         const { name, lat, lon } = data[0];

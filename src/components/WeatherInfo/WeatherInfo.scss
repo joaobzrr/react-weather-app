@@ -1,5 +1,12 @@
 @import "$assets/css/globals";
 
+.WeatherInfo_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $main-height;
+}
+
 .WeatherInfo {
     /* @Note Setting the width directly, like so:
 
@@ -12,9 +19,58 @@
     flex: 0 0 $main-width;
 }
 
-.WeatherInfo_container {
+.WeatherInfo_inner1 {
+    margin: 4rem 0;
+}
+
+.WeatherInfo_inner2 {
     display: flex;
+    justify-content: space-between;
+}
+
+.WeatherInfo_inner4 {
+    display: flex;
+
+    .Icon {
+        width: 9rem;
+        height: 9rem;
+        margin-left: 1rem;
+    }
+}
+
+.WeatherInfo_inner5 {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: $main-height;
+    align-items: flex-end;
+    margin-right: 2rem;
+}
+
+.WeatherInfo_city {
+    word-break: break-word;
+    margin-bottom: 1rem;
+    font-size: 3rem;
+    color: black;
+}
+
+.WeatherInfo_temperature {
+    display: inline-block;
+    margin-right: 2rem;
+    font-size: 9rem;
+}
+
+.WeatherInfo_description {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.WeatherInfo_details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 1.4rem;
+
+    div:not(:last-child) {
+        margin-bottom: 0.8rem;
+    }
 }

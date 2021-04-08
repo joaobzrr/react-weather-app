@@ -1,15 +1,13 @@
-import React from "react";
-import "./WeatherIcon.scss";
+import React, { useMemo } from "react";
+import Icon from "$components/Icon";
+import iconCodeToFileName from "$services/iconCodeToFileName";
 
 type PropsType = {
-    src: string;
+    iconCode: string;
 }
 
 export default function WeatherIcon(props: PropsType) {
-    return (
-        <img
-            className="WeatherIcon"
-            src={props.src}
-        />
-    );
+    const { iconCode } = props;
+    const fileName = useMemo(() => iconCodeToFileName(iconCode), [iconCode]);
+    return <Icon fileName={fileName} />;
 }

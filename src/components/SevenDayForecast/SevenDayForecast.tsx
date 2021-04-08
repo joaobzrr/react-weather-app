@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
 import "./SevenDayForecast.scss";
-import { getWeekDayNameFromDate } from "$src/utils";
+import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { WeatherData } from "$services/WeatherData";
 
 type PropsType = {
@@ -15,7 +15,7 @@ export default function SevenDayForecast(props: PropsType) {
     const buttons = useMemo(() => {
         const result = [];
         for (const [index, data] of weatherData.daily.entries()) {
-            const {icon, maxTemperature, minTemperature} = data;
+            const {iconCode, maxTemperature, minTemperature} = data;
             const weekDayName = getWeekDayNameFromDate(data.dt, true);
             result.push(
                 <WeekDayButton
@@ -23,7 +23,7 @@ export default function SevenDayForecast(props: PropsType) {
                     onPressWeekDayButton={onPressWeekDayButton}
                     weekDayIndex={index}
                     weekDayName={weekDayName}
-                    icon={icon}
+                    iconCode={iconCode}
                     maxTemperature={maxTemperature}
                     minTemperature={minTemperature}
                 />

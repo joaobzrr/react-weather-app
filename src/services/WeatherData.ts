@@ -1,7 +1,7 @@
 export class BaseWeatherData {
     dt:           Date;
     description:  string;
-    icon:         string;
+    iconCode:     string;
     humidity:     number;
     windSpeed:    number;
 
@@ -11,9 +11,7 @@ export class BaseWeatherData {
             data.weather[0].description.charAt(0).toUpperCase() +
             data.weather[0].description.slice(1);
 
-        const url = `https://openweathermap.org/img/wn/`;
-        this.icon = `${url}${data.weather[0].icon}@2x.png`;
-
+        this.iconCode  = data.weather[0].icon;
         this.humidity  = data.humidity;
         this.windSpeed = Math.round(data.wind_speed * 3.6);
     }

@@ -8,7 +8,7 @@ import {
     SelectedWeatherData
 } from "$services/WeatherData";
 import useClasses from "./useClasses";
-import { getWeekDayNameFromDate } from "$src/utils";
+import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import "./WeatherDetails.scss";
 
 type PropsType = {
@@ -19,7 +19,7 @@ type PropsType = {
 export default function WeatherDetails(props: PropsType) {
     const { weatherData, selectedWeatherData } = props;
     const { city } = weatherData;
-    const { description, icon, precipitation, humidity, windSpeed } = selectedWeatherData;
+    const { description, iconCode, precipitation, humidity, windSpeed } = selectedWeatherData;
 
     const [temperature, weekDayName] = useMemo(() => {
         let temp;
@@ -38,22 +38,24 @@ export default function WeatherDetails(props: PropsType) {
 
     return (
         <div className={serializeClasses(classes)}>
-            <WeatherIcon src={icon} />
-            <span className="WeatherDetails_temperature">
-                {temperature}
-            </span>
-            <span className="WeatherDetails_temperatureSelector">
-                ºC | ºF
-            </span>
-            <div className="WeatherDetails_extra">
-                <span>Precipitation: {precipitation}%</span>
-                <span>Humidity: {humidity}%</span>
-                <span>Wind: {windSpeed} km/h</span>
-            </div>
-            <div className="WeatherDetails_location">
-                <span className="WeatherDetails_city">{city}</span>
-                <span>{weekDayName} 20:20</span>
-                <span>{description}</span>
+            <div className="WeatherDetails_city">{city}</div>
+            <div className="WeatherDetails_inner">
+                <div className="WeatherDetials_left">
+                    <span className="WeatherDetails_temperature">
+                        {temperature}º
+                    </span>
+                </div>
+                <div className="WeatherDetails_right">
+                    <div className="WeatherDetails_extra">
+                        <div className="WeatherDetails_description">{description}</div>
+                        <div className="WeatherDetails_rest">
+                            <div>Precipitation: {precipitation}%</div>
+                            <div>Humidity: {humidity}%</div>
+                            <div>Wind: {windSpeed} km/h</div>
+                        </div>
+                    </div>
+                    <WeatherIcon iconCode={iconCode}/>
+                </div>
             </div>
         </div>
     );

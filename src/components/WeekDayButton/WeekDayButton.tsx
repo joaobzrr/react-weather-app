@@ -19,7 +19,7 @@ export default function WeekDayButton(props: PropsType) {
 
     return (
         <div
-            className="WeekDayButton"
+            className="WeekDayButton flex flex-column justify-content-center align-items-center"
             onClick={onClick}
         >
             <p className="WeekDayButton_day">{weekDayName}</p>

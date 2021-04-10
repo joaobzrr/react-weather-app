@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextInput from "$components/TextInput";
 import WeatherInfo from "$components/WeatherInfo";
+import withContainer from "$components/withContainer";
 import fetchWeatherData from "$services/fetchWeatherData";
 import {
     WeatherData,
@@ -12,7 +13,7 @@ import { fetchCoordinates } from "$services/fetchWeatherData";
 import useOnce from "$hooks/useOnce";
 import "./App.scss";
 
-export default function App() {
+export function App() {
     const [weatherData, setWeatherData] = useState<WeatherData>(null!);
     const [selectedWeatherData, setSelectedWeatherData] = useState<SelectedWeatherData>(null!);
     const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +41,7 @@ export default function App() {
     }
 
     return (
-        <div className="App">
+        <div className="App flex flex-column">
             <TextInput onInputEnter={onInputEnter} />
             <WeatherInfo
                 onPressWeekDayButton={onPressWeekDayButton}
@@ -52,4 +53,6 @@ export default function App() {
     );
 }
 
-App.displayName = "App";
+export default withContainer(App, {
+    className: "flex justify-content-center align-items-center"
+});

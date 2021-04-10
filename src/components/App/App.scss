@@ -1,3 +1,33 @@
+@import "$assets/css/globals";
+
+// Helper Classes
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-flex-end {
+    align-items: end;
+}
+
+// ------------------------
+
 html, body {
     height: 100%;
     font-size: 62.5%;
@@ -7,18 +37,6 @@ body {
     font-family: arial, sans-serif;
 }
 
-#root {
+#root, .App_container {
     height: 100%;
-}
-
-.App_container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.App {
-    display: flex;
-    flex-direction: column;
 }

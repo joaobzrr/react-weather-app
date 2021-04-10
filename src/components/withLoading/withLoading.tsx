@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import Loader from "$components/Loader";
-
-type ExtraProps = {
-    isLoading: boolean;
-}
+import { getFunctionalComponentName } from "$src/utils";
 
 export default function withLoading<P>(Component: React.ComponentType<P>) {
-    const Wrapped = (props: P & ExtraProps) => {
+    const result = (props: P & {isLoading: boolean}) => {
         const { isLoading, ...componentProps } = props;
 
         return props.isLoading ?
@@ -14,7 +11,12 @@ export default function withLoading<P>(Component: React.ComponentType<P>) {
             <Component {...componentProps as unknown as P}/>;
     }
 
-    Wrapped.displayName = Component.displayName;
+    const componentName = getFunctionalComponentName(Component);
+    if (componentName === undefined) {
+        throw new Error("Wrapped component does not have a name");
+    }
 
-    return Wrapped;
+    result._name = componentName;
+    result.displayName = `${componentName}_withLoading`;
+    return result;
 }

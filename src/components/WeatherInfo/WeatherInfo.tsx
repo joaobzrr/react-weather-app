@@ -40,16 +40,16 @@ function WeatherInfo(props: PropsType) {
         <div className="WeatherInfo">
             <div className="WeatherInfo_inner1">
                 <div className="WeatherInfo_city">{city}</div>
-                <div className="WeatherInfo_inner2">
+                <div className="WeatherInfo_inner2 flex justify-content-between">
                     <div className="WeatherInfo_inner3">
                         <span className="WeatherInfo_temperature">
                             {temperature}º
                         </span>
                     </div>
-                    <div className="WeatherInfo_inner4">
-                        <div className="WeatherInfo_inner5">
+                    <div className="WeatherInfo_inner4 flex">
+                        <div className="WeatherInfo_inner5 flex flex-column justify-content-center align-items-flex-end">
                             <div className="WeatherInfo_description">{description}</div>
-                            <div className="WeatherInfo_details">
+                            <div className="WeatherInfo_details flex flex-column align-items-flex-end">
                                 <div>Precipitation: {precipitation}%</div>
                                 <div>Humidity: {humidity}%</div>
                                 <div>Wind: {windSpeed} km/h</div>
@@ -69,4 +69,6 @@ function WeatherInfo(props: PropsType) {
 
 WeatherInfo.displayName = "WeatherInfo";
 
-export default withContainer(withLoading(WeatherInfo));
+export default withContainer(withLoading(WeatherInfo), {
+    className: "flex justify-content-center align-items-center"
+});

@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
-import "./SevenDayForecast.scss";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { WeatherData } from "$services/WeatherData";
 
@@ -33,7 +32,7 @@ export default function SevenDayForecast(props: PropsType) {
     }, [weatherData]);
 
     return (
-        <div className="SevenDayForecast">
+        <div className="SevenDayForecast flex justify-content-between">
             {buttons}
         </div>
     );

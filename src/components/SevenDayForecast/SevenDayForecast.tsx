@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
-import { WeatherData } from "$services/WeatherData";
+import { WeatherData } from "$services/fetchWeatherData";
 
 type PropsType = {
     weatherData: WeatherData;

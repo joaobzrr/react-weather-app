@@ -3,24 +3,25 @@ import SevenDayForecast from "$components/SevenDayForecast";
 import WeatherIcon from "$components/WeatherIcon";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
+import { LocationData } from "$services/fetchLocationData";
 import {
     WeatherData,
     CurrentWeatherData,
-    ForecastedWeatherData,
-    SelectedWeatherData
-} from "$services/WeatherData";
+    ForecastedWeatherData
+} from "$services/fetchWeatherData";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import "./WeatherInfo.scss";
 
 type PropsType = {
     onPressWeekDayButton: (value: number) => void;
     weatherData: WeatherData;
-    selectedWeatherData: SelectedWeatherData;
+    selectedWeatherData: CurrentWeatherData | ForecastedWeatherData;
+    locationData: LocationData;
 };
 
 function WeatherInfo(props: PropsType) {
-    const { onPressWeekDayButton, weatherData, selectedWeatherData } = props;
-    const { city } = weatherData;
+    const { onPressWeekDayButton, weatherData, selectedWeatherData, locationData } = props;
+    const { city } = locationData;
     const { description, iconCode, precipitation, humidity, windSpeed } = selectedWeatherData;
 
     const [temperature, weekDayName] = useMemo(() => {

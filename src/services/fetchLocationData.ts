@@ -1,3 +1,9 @@
+export type LocationData = {
+    city: string,
+    lat: number;
+    lon: number;
+}
+
 export default async function fetchCoordinates(text: string) {
     const key = __LOCATION_IQ_API_KEY__;
     const input = encodeURIComponent(text);

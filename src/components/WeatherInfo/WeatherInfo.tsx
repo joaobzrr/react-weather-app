@@ -40,8 +40,8 @@ function WeatherInfo(props: PropsType) {
         <div className="WeatherInfo">
             <div className="WeatherInfo_inner1">
                 <div className="WeatherInfo_city">{city}</div>
-                <div className="WeatherInfo_inner2 flex justify-content-between">
-                    <div className="WeatherInfo_inner3">
+                <div className="flex justify-content-between">
+                    <div>
                         <span className="WeatherInfo_temperature">
                             {temperature}º
                         </span>

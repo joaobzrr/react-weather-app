@@ -3,13 +3,13 @@ import TextInput from "$components/TextInput";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import fetchWeatherData from "$services/fetchWeatherData";
+import fetchCoordinates from "$services/fetchCoordinates";
 import {
     WeatherData,
     CurrentWeatherData,
     ForecastedWeatherData,
     SelectedWeatherData
 } from "$services/WeatherData";
-import { fetchCoordinates } from "$services/fetchWeatherData";
 import useOnce from "$hooks/useOnce";
 import "./App.scss";
 
@@ -19,20 +19,23 @@ export function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
-        fetchWeatherData("Teresina").then((data) => {
-            setWeatherData(data);
-            setSelectedWeatherData(data.current);
-            setIsLoading(false);
+        fetchCoordinates("Teresina").then(({city, lat, lon}) => {
+            fetchWeatherData(city, lat, lon).then(data => {
+                setWeatherData(data);
+                setSelectedWeatherData(data.current);
+                setIsLoading(false);
+            });
         });
     });
 
     const onInputEnter = (value: string) => {
         setIsLoading(true);
-
-        fetchWeatherData(value).then((data) => {
-            setWeatherData(data);
-            setSelectedWeatherData(data.current);
-            setIsLoading(false);
+        fetchCoordinates(value).then(({city, lat, lon}) => {
+            fetchWeatherData(city, lat, lon).then(data => {
+                setWeatherData(data);
+                setSelectedWeatherData(data.current);
+                setIsLoading(false);
+            });
         });
     }
 

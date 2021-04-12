@@ -23,10 +23,13 @@ const FAVICON_OUTPUT_PATH = "static/images/";
 
 const dotenv = require("dotenv").parse(fs.readFileSync('.env'));
 
+const globals = {
+    "__OPEN_WEATHER_MAP_API_KEY__": JSON.stringify(dotenv.OPEN_WEATHER_MAP_API_KEY),
+    "__LOCATION_IQ_API_KEY__": JSON.stringify(dotenv.LOCATION_IQ_API_KEY)
+};
+
 const plugins = [
-    new webpack.DefinePlugin({
-        "__OPEN_WEATHER_MAP_API_KEY__": JSON.stringify(dotenv.OPEN_WEATHER_MAP_API_KEY)
-    }),
+    new webpack.DefinePlugin(globals),
     new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: ["**/*", "!.git/**"]
     }),

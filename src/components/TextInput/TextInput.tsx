@@ -6,6 +6,8 @@ type PropsType = {
     onInputEnter: (value: string) => void;
 }
 
+// @Todo: Add placeholder text.
+
 // @Todo: Refactor this in two components: a more specific
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
@@ -17,12 +19,11 @@ function TextInput(props: PropsType) {
 
     // @Todo: Make sure that this works on mobile too.
     const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-        if (e.key === "Enter") {
-            valueRef.current = inputRef.current.value;
-            inputRef.current.blur();
+        if (e.key !== "Enter") return;
 
-            onInputEnter(inputRef.current.value);
-        }
+        valueRef.current = inputRef.current.value;
+        inputRef.current.blur();
+        onInputEnter(inputRef.current.value);
     }, [inputRef.current, valueRef.current]);
 
     return (

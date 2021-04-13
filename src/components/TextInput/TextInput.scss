@@ -1,10 +1,5 @@
 .TextInput_container {
-    box-sizing: border-box;
-    width: 69rem;
-    padding: 1rem;
-    background-color: #F2F2F2;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.12);
+    padding: 1rem 2rem;
 }
 
 .TextInput {
@@ -12,5 +7,4 @@
     font-size: 3rem;
     outline: 0;
     border: 0;
-    background-color: #F2F2F2;
 }

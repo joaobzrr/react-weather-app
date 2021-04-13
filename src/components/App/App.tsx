@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextInput from "$components/TextInput";
+import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import fetchWeatherData from "$services/fetchWeatherData";
@@ -52,7 +52,7 @@ export function App() {
 
     return (
         <div className="App flex flex-column">
-            <TextInput onInputEnter={onInputEnter} />
+            <DropdownSearch onInputEnter={onInputEnter} />
             <WeatherInfo
                 onPressWeekDayButton={onPressWeekDayButton}
                 weatherData={weatherData}

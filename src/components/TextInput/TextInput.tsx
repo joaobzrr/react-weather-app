@@ -1,6 +1,5 @@
-import React, { useState, useRef, useCallback } from "react";
-import { serializeClasses } from "@bzrr/useclasses";
-import useClasses from "./useClasses";
+import React, { useRef, useCallback } from "react";
+import withContainer from "$components/withContainer";
 import "./TextInput.scss";
 
 type PropsType = {
@@ -10,10 +9,9 @@ type PropsType = {
 // @Todo: Refactor this in two components: a more specific
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
-export default function TextInput(props: PropsType) {
+function TextInput(props: PropsType) {
     const { onInputEnter } = props;
 
-    const {classes, setClasses} = useClasses();
     const inputRef = useRef<HTMLInputElement>(null!);
     const valueRef = useRef("");
 
@@ -27,24 +25,14 @@ export default function TextInput(props: PropsType) {
         }
     }, [inputRef.current, valueRef.current]);
 
-    const handleFocus = () => {
-        setClasses({TextInput__focused: true});
-    }
-
-    const handleBlur = () => {
-        setClasses({TextInput__focused: false});
-    }
-
     return (
-        <div className={serializeClasses(classes)}>
-            <input
-                ref={inputRef}
-                onKeyDown={handleKeyDown}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                type="text"
-                className="TextInput_input"
-            />
-        </div>
+        <input
+            ref={inputRef}
+            onKeyDown={handleKeyDown}
+            type="text"
+            className="TextInput"
+        />
     );
 }
+
+export default withContainer(TextInput);

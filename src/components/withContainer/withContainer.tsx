@@ -4,9 +4,11 @@ import { getFunctionalComponentName } from "$src/utils";
 // @Todo: Make a version of this that does not require a name.
 export default function withContainer<P>(
     Component: React.ComponentType<P>,
-    containerProps: React.HTMLProps<HTMLDivElement>,
+    containerProps?: React.HTMLProps<HTMLDivElement>,
     name?: string
 ) {
+    containerProps = containerProps || {};
+
     const componentName = name || getFunctionalComponentName(Component);
     if (componentName === undefined) {
         throw new Error("Wrapped component does not have a name");

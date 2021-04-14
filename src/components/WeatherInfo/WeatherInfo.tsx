@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext }  from "react";
 import SevenDayForecast from "$components/SevenDayForecast";
 import WeatherIcon from "$components/WeatherIcon";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
 import { AppDataContext } from "$contexts/AppDataContext";
-import { LocationData } from "$services/fetchLocationData";
+import { SelectedWeatherData } from "$types/global";
 import {
     WeatherData,
     CurrentWeatherData,
@@ -14,29 +14,23 @@ import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import "./WeatherInfo.scss";
 
 type PropsType = {
-    onPressWeekDayButton: (value: number) => void;
-    selectedWeatherData: CurrentWeatherData | ForecastedWeatherData;
+    onSelectWeatherData: (value: number) => void;
+    selectedWeatherData: SelectedWeatherData;
 };
 
 function WeatherInfo(props: PropsType) {
-    const { onPressWeekDayButton, selectedWeatherData } = props;
-    const { description, iconCode, precipitation, humidity, windSpeed } = selectedWeatherData;
+    const { onSelectWeatherData, selectedWeatherData } = props;
 
     const [appData, setAppData] = useContext(AppDataContext);
     const city = appData.location.city;
 
-    const [temperature, weekDayName] = useMemo(() => {
-        let temp;
-        if (selectedWeatherData instanceof CurrentWeatherData) {
-            temp = (selectedWeatherData as CurrentWeatherData).temperature;
-        } else {
-            temp = (selectedWeatherData as ForecastedWeatherData).maxTemperature;
-        }
+    const data = (selectedWeatherData === "current") ?
+        appData.weather.current :
+        appData.weather.daily[selectedWeatherData];
 
-        const day = getWeekDayNameFromDate(selectedWeatherData.dt);
-
-        return [temp, day];
-    }, [selectedWeatherData]);
+    const { description, iconCode, precipitation, humidity, windSpeed } = data;
+    const temperature = ("temperature" in data) ? data.temperature : data.maxTemperature;
+    const day = getWeekDayNameFromDate(data.dt);
 
     return (
         <div className="WeatherInfo">
@@ -62,7 +56,7 @@ function WeatherInfo(props: PropsType) {
                 </div>
             </div>
             <SevenDayForecast
-                onPressWeekDayButton={onPressWeekDayButton}
+                onSelectWeatherData={onSelectWeatherData}
             />
         </div>
     );

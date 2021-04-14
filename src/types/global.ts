@@ -13,3 +13,5 @@ export type AppData = {
     weather:  WeatherData;
     location: LocationData;
 }
+
+export type SelectedWeatherData = "current" | number;

@@ -1,19 +1,21 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
+import { AppDataContext } from "$contexts/AppDataContext";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { WeatherData } from "$services/fetchWeatherData";
 
 type PropsType = {
-    weatherData: WeatherData;
     onPressWeekDayButton: (value: number) => void;
 }
 
 export default function SevenDayForecast(props: PropsType) {
-    const { weatherData, onPressWeekDayButton } = props;
+    const { onPressWeekDayButton } = props;
+
+    const [appData, setAppData] = useContext(AppDataContext);
 
     const buttons = useMemo(() => {
         const result = [];
-        for (const [index, data] of weatherData.daily.entries()) {
+        for (const [index, data] of appData.weather.daily.entries()) {
             const {iconCode, maxTemperature, minTemperature} = data;
             const weekDayName = getWeekDayNameFromDate(data.dt, true);
             result.push(
@@ -29,7 +31,7 @@ export default function SevenDayForecast(props: PropsType) {
             );
         }
         return result;
-    }, [weatherData]);
+    }, [appData.weather]);
 
     return (
         <div className="SevenDayForecast flex justify-content-between">

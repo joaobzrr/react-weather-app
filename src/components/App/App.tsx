@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
+import { AppDataProvider } from "$contexts/AppDataContext";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationData, { LocationData } from "$services/fetchLocationData";
+import { AppData } from "$types/global";
 import {
     WeatherData,
     CurrentWeatherData,
@@ -13,20 +15,17 @@ import useOnce from "$hooks/useOnce";
 import "./App.scss";
 
 export function App() {
-    const [weatherData, setWeatherData] = useState<WeatherData>(null!);
-    const [locationData, setLocationData] = useState<LocationData>(null!);
+    const [appData, setAppData] = useState<AppData>(null!);
     const [selectedWeatherData, setSelectedWeatherData] =
         useState<CurrentWeatherData|ForecastedWeatherData>(null!);
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
         fetchLocationData("Teresina").then((locationData: LocationData) => {
-            setLocationData(locationData);
-
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((data: WeatherData) => {
-                setWeatherData(data);
                 setSelectedWeatherData(data.current);
+                setAppData({weather: data, location: locationData});
                 setIsLoading(false);
             });
         });
@@ -35,31 +34,29 @@ export function App() {
     const onInputEnter = (value: string) => {
         setIsLoading(true);
         fetchLocationData(value).then((locationData: LocationData) => {
-            setLocationData(locationData);
-
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((data: WeatherData) => {
-                setWeatherData(data);
                 setSelectedWeatherData(data.current);
+                setAppData({weather: data, location: locationData});
                 setIsLoading(false);
             });
         });
     }
 
     const onPressWeekDayButton = (value: number) => {
-        setSelectedWeatherData(weatherData!.daily[value]);
+        setSelectedWeatherData(appData!.weather.daily[value]);
     }
 
     return (
         <div className="App flex flex-column">
             <DropdownSearch onInputEnter={onInputEnter} />
-            <WeatherInfo
-                onPressWeekDayButton={onPressWeekDayButton}
-                weatherData={weatherData}
-                selectedWeatherData={selectedWeatherData}
-                locationData={locationData}
-                isLoading={isLoading}
-            />
+            <AppDataProvider data={appData}>
+                <WeatherInfo
+                    onPressWeekDayButton={onPressWeekDayButton}
+                    selectedWeatherData={selectedWeatherData}
+                    isLoading={isLoading}
+                />
+            </AppDataProvider>
         </div>
     );
 }

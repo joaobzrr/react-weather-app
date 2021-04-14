@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import SevenDayForecast from "$components/SevenDayForecast";
 import WeatherIcon from "$components/WeatherIcon";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
+import { AppDataContext } from "$contexts/AppDataContext";
 import { LocationData } from "$services/fetchLocationData";
 import {
     WeatherData,
@@ -14,15 +15,15 @@ import "./WeatherInfo.scss";
 
 type PropsType = {
     onPressWeekDayButton: (value: number) => void;
-    weatherData: WeatherData;
     selectedWeatherData: CurrentWeatherData | ForecastedWeatherData;
-    locationData: LocationData;
 };
 
 function WeatherInfo(props: PropsType) {
-    const { onPressWeekDayButton, weatherData, selectedWeatherData, locationData } = props;
-    const { city } = locationData;
+    const { onPressWeekDayButton, selectedWeatherData } = props;
     const { description, iconCode, precipitation, humidity, windSpeed } = selectedWeatherData;
+
+    const [appData, setAppData] = useContext(AppDataContext);
+    const city = appData.location.city;
 
     const [temperature, weekDayName] = useMemo(() => {
         let temp;
@@ -61,7 +62,6 @@ function WeatherInfo(props: PropsType) {
                 </div>
             </div>
             <SevenDayForecast
-                weatherData={weatherData}
                 onPressWeekDayButton={onPressWeekDayButton}
             />
         </div>

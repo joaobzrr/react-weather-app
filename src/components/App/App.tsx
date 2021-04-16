@@ -3,16 +3,16 @@ import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
+import useOnce from "$hooks/useOnce";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
-import { AppData, LocationData, SelectedWeatherData } from "$types/global";
 import {
+    AppData,
+    LocationData,
     WeatherData,
-    CurrentWeatherData,
-    ForecastedWeatherData
-} from "$services/fetchWeatherData";
-import useOnce from "$hooks/useOnce";
+    SelectedWeatherData
+} from "$src/types";
 import "./App.scss";
 
 export function App() {

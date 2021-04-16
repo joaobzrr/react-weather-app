@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { AppData, UseStateReturnType } from "$types/global";
+import { AppData, UseStateReturnType } from "$src/types";
 
 export const AppDataContext = createContext<UseStateReturnType<AppData>>(null!);
 

@@ -6,7 +6,7 @@ import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
 import { AppDataContext } from "$contexts/AppDataContext";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
-import { SelectedWeatherData } from "$types/global";
+import { SelectedWeatherData } from "$src/types";
 import "./WeatherInfo.scss";
 
 type PropsType = {

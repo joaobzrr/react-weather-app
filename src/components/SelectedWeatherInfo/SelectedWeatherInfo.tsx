@@ -3,9 +3,9 @@ import WeatherIcon from "$components/WeatherIcon";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import {
     CurrentWeatherData,
-    ForecastedWeatherData
-} from "$services/fetchWeatherData";
-import { LocationData } from "$types/global";
+    ForecastedWeatherData,
+    LocationData
+} from "$src/types";
 import "./SelectedWeatherInfo.scss";
 
 type PropsType = {

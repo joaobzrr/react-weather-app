@@ -6,7 +6,6 @@ type ContainerPropsType = {
     classes?: string;
 }
 
-// @Todo: Make a version of this that does not require a name.
 export default function withContainer<P>(
     Component: React.ComponentType<P>,
     containerProps: ContainerPropsType = {}

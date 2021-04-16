@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LocationData } from "$types/global";
+import { LocationData } from "$src/types";
 
 export default async function fetchAutocompleteData(text: string) {
     const key = __LOCATION_IQ_API_KEY__;

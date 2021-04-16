@@ -1,4 +1,4 @@
-import fetchLocationData from "$services/fetchLocationData";
+import axios, { AxiosResponse } from "axios";
 import { isNumber } from "$src/utils";
 
 export default async function fetchWeatherData(lat: number, lon: number) {
@@ -6,7 +6,9 @@ export default async function fetchWeatherData(lat: number, lon: number) {
     const baseUrl = "https://api.openweathermap.org/data/2.5/onecall";
     const query = `?lat=${lat}&lon=${lon}&units=metric&appid=${key}`; // @Note: Assuming metric system for now.
 
-    return fetch(baseUrl + query).then(response => response.json()).then(data => {
+    return axios.get(baseUrl + query).then((response: AxiosResponse<any>) => {
+        const data = response.data;
+
         const result: WeatherData = {} as WeatherData;
         result.current = new CurrentWeatherData(data);
 

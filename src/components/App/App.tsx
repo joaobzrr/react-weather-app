@@ -4,10 +4,9 @@ import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import fetchWeatherData from "$services/fetchWeatherData";
-import fetchLocationData, { LocationData } from "$services/fetchLocationData";
+import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
-import { AppData } from "$types/global";
-import { SelectedWeatherData } from "$types/global";
+import { AppData, LocationData, SelectedWeatherData } from "$types/global";
 import {
     WeatherData,
     CurrentWeatherData,
@@ -23,6 +22,8 @@ export function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
+        setIsLoading(true);
+
         fetchLocationDataFromIP().then((locationData: LocationData) => {
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
@@ -34,14 +35,15 @@ export function App() {
 
     const onInputEnter = (value: string) => {
         setIsLoading(true);
-        fetchLocationData(value).then((locationData: LocationData) => {
-            const { lat, lon } = locationData;
+
+        fetchAutocompleteData(value).then((locationData: LocationData[]) => {
+            const { lat, lon } = locationData[0];
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-                setAppData({weather: weatherData, location: locationData});
+                setAppData({weather: weatherData, location: locationData[0]});
                 setSelectedWeatherData("current");
                 setIsLoading(false);
             });
-        });
+        }).catch(console.error);
     }
 
     const onPressWeekDayButton = (value: number) => setSelectedWeatherData(value);

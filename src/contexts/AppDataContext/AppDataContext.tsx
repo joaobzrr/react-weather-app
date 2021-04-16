@@ -1,6 +1,4 @@
 import React, { useState, useEffect, createContext } from "react";
-import { WeatherData } from "$services/fetchWeatherData";
-import { LocationData } from "$services/fetchLocationData";
 import { AppData, UseStateReturnType } from "$types/global";
 
 export const AppDataContext = createContext<UseStateReturnType<AppData>>(null!);

@@ -4,7 +4,7 @@ export type LocationData = {
     lon: number;
 }
 
-export default async function fetchCoordinates(text: string) {
+export default async function fetchLocationData(text: string) {
     const key = __LOCATION_IQ_API_KEY__;
     const input = encodeURIComponent(text);
     const baseUrl = "https://api.locationiq.com/v1/autocomplete.php";

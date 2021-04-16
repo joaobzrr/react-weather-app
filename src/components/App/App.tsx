@@ -5,6 +5,7 @@ import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationData, { LocationData } from "$services/fetchLocationData";
+import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
 import { AppData } from "$types/global";
 import { SelectedWeatherData } from "$types/global";
 import {
@@ -22,7 +23,7 @@ export function App() {
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
-        fetchLocationData("Teresina").then((locationData: LocationData) => {
+        fetchLocationDataFromIP().then((locationData: LocationData) => {
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
                 setAppData({weather: weatherData, location: locationData});

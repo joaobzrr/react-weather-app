@@ -38,5 +38,5 @@ function WeatherInfo(props: PropsType) {
 }
 
 export default withContainer(withLoading(WeatherInfo), {
-    className: "flex justify-content-center align-items-center"
+    classes: "flex justify-content-center align-items-center"
 });

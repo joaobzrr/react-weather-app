@@ -63,5 +63,5 @@ export function App() {
 }
 
 export default withContainer(App, {
-    className: "flex justify-content-center align-items-center"
+    classes: "flex justify-content-center align-items-center"
 });

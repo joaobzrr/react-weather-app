@@ -17,6 +17,6 @@ export default function withLoading<P>(Component: React.ComponentType<P>) {
     }
 
     result._name = componentName;
-    result.displayName = `${componentName}_withLoading`;
+    result.displayName = `withLoading(${componentName})`;
     return result;
 }

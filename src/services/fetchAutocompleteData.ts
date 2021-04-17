@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LocationData } from "$src/types";
+import { AutocompleteData } from "$src/types";
 
 export default async function fetchAutocompleteData(text: string) {
     const key = __LOCATION_IQ_API_KEY__;
@@ -9,7 +9,7 @@ export default async function fetchAutocompleteData(text: string) {
 
     try {
         const response = await axios.get(baseUrl + query);
-        const result: LocationData[] = [];
+        const result: AutocompleteData = [];
         for (const item of response.data) {
             result.push({
                 city: item.address.name,

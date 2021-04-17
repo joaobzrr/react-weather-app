@@ -11,7 +11,8 @@ import {
     AppData,
     LocationData,
     WeatherData,
-    SelectedWeatherData
+    SelectedWeatherData,
+    AutocompleteData
 } from "$src/types";
 import "./App.scss";
 
@@ -36,10 +37,10 @@ export function App() {
     const onInputEnter = (value: string) => {
         setIsLoading(true);
 
-        fetchAutocompleteData(value).then((locationData: LocationData[]) => {
-            const { lat, lon } = locationData[0];
+        fetchAutocompleteData(value).then((autocompleteData: AutocompleteData) => {
+            const { lat, lon } = autocompleteData[0];
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-                setAppData({weather: weatherData, location: locationData[0]});
+                setAppData({weather: weatherData, location: autocompleteData[0]});
                 setSelectedWeatherData("current");
                 setIsLoading(false);
             });

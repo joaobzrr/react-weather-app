@@ -42,3 +42,5 @@ export type AppData = {
 }
 
 export type SelectedWeatherData = "current" | number;
+
+export type AutocompleteData = LocationData[];

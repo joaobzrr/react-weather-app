@@ -18,13 +18,14 @@ import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
+    const [autocompleteData, setAutocompleteData] =
+        useState<AutocompleteData>([]);
     const [selectedWeatherData, setSelectedWeatherData] =
         useState<SelectedWeatherData>("current");
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
         setIsLoading(true);
-
         fetchLocationDataFromIP().then((locationData: LocationData) => {
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
@@ -34,24 +35,44 @@ export function App() {
         });
     });
 
+    const onInputChange = (value: string) => {
+        if (value === "") {
+            setAutocompleteData([]);
+            return;
+        }
+
+        fetchAutocompleteData(value).then((data: AutocompleteData) => {
+            setAutocompleteData(data);
+        });
+    }
+
     const onInputEnter = (value: string) => {
+        if (value === "") {
+            return;
+        }
+
+        const locationData = autocompleteData[0];
+        setAutocompleteData([]);
+
         setIsLoading(true);
 
-        fetchAutocompleteData(value).then((autocompleteData: AutocompleteData) => {
-            const { lat, lon } = autocompleteData[0];
-            fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-                setAppData({weather: weatherData, location: autocompleteData[0]});
-                setSelectedWeatherData("current");
-                setIsLoading(false);
-            });
-        }).catch(console.error);
+        const { lat, lon } = locationData;
+        fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
+            setAppData({weather: weatherData, location: locationData});
+            setSelectedWeatherData("current");
+            setIsLoading(false);
+        });
     }
 
     const onPressWeekDayButton = (value: number) => setSelectedWeatherData(value);
 
     return (
         <div className="App flex flex-column">
-            <DropdownSearch onInputEnter={onInputEnter} />
+            <DropdownSearch
+                onInputChange={onInputChange}
+                onInputEnter={onInputEnter}
+                autocompleteData={autocompleteData}
+            />
             <AppDataProvider data={appData}>
                 <WeatherInfo
                     onSelectWeatherData={onPressWeekDayButton}

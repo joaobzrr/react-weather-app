@@ -1,9 +1,9 @@
 import React, { useRef, useCallback } from "react";
-import withContainer from "$components/withContainer";
 import "./TextInput.scss";
 
 type PropsType = {
-    onInputEnter: (value: string) => void;
+    onChange: (value: string) => void;
+    onEnter:  (value: string) => void;
 }
 
 // @Todo: Add placeholder text.
@@ -11,8 +11,8 @@ type PropsType = {
 // @Todo: Refactor this in two components: a more specific
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
-function TextInput(props: PropsType) {
-    const { onInputEnter } = props;
+export default function TextInput(props: PropsType) {
+    const { onChange, onEnter } = props;
 
     const inputRef = useRef<HTMLInputElement>(null!);
     const valueRef = useRef("");
@@ -23,17 +23,20 @@ function TextInput(props: PropsType) {
 
         valueRef.current = inputRef.current.value;
         inputRef.current.blur();
-        onInputEnter(inputRef.current.value);
-    }, [inputRef.current, valueRef.current]);
+        onEnter(inputRef.current.value);
+    }, [inputRef.current, valueRef.current, onEnter]);
+
+    const handleChange = () => {
+        onChange(inputRef.current.value);
+    }
 
     return (
         <input
             ref={inputRef}
+            onChange={handleChange}
             onKeyDown={handleKeyDown}
             type="text"
             className="TextInput"
         />
     );
 }
-
-export default withContainer(TextInput);

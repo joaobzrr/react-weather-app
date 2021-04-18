@@ -1,17 +1,28 @@
 import React from "react";
-import TextInput from "$components/TextInput";
+import TextInputContainer from "$components/TextInputContainer";
+import Dropdown from "$components/Dropdown";
+import { AutocompleteData } from "$src/types";
 import "./DropdownSearch.scss";
 
 type PropsType = {
-    onInputEnter: (value: string) => void;
+    onInputChange: (value: string) => void;
+    onInputEnter:  (value: string) => void;
+    autocompleteData: AutocompleteData;
 };
 
 export default function DropdownSearch(props: PropsType) {
-    const { onInputEnter } = props;
+    const { onInputChange, onInputEnter, autocompleteData } = props;
+
+    const hasItems = autocompleteData.length > 0;
 
     return (
         <div className="DropdownSearch">
-            <TextInput onInputEnter={onInputEnter} />
+            <TextInputContainer
+                onInputChange={onInputChange}
+                onInputEnter={onInputEnter}
+                noBottomBorders={hasItems}
+            />
+            {hasItems ? <Dropdown autocompleteData={autocompleteData}/> : null}
         </div>
     );
 }

@@ -1,11 +1,10 @@
 .DropdownSearch {
-    box-sizing: border-box;
+    position: relative;
     width: 69rem;
-    border: 1px solid #DFE1E5;
-    border-radius: 24px;
 }
 
+// @Todo: Apply this style only when input is active.
 .DropdownSearch:hover {
-    box-shadow: 0 1px 6px RGB(32 33 36 / 28%);
-    border-color: rgba(223, 225, 229, 0);
+    // box-shadow: 0 1px 6px RGB(32 33 36 / 28%);
+    // border-color: rgba(223, 225, 229, 0);
 }

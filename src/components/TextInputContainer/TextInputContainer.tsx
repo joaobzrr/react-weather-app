@@ -4,25 +4,25 @@ import TextInput from "$components/TextInput";
 import "./TextInputContainer.scss";
 
 type PropsType = {
-    onInputChange: (value: string) => void;
-    onInputEnter:  (value: string) => void;
-    isDropdownVisible: boolean;
+    handleChange: (value: string) => void;
+    handleSelect: (value: string) => void;
+    dropdownIsVisible: boolean;
 }
 
 export default function TextInputContainer(props: PropsType) {
-    const { onInputChange, onInputEnter, isDropdownVisible } = props;
+    const { handleChange, handleSelect, dropdownIsVisible } = props;
 
     const { classes, setClasses } = useClasses("TextInputContainer");
 
     useEffect(() => {
-        setClasses({TextInputContainer__dropdownIsVisible: isDropdownVisible});
-    }, [isDropdownVisible]);
+        setClasses({TextInputContainer__dropdownIsVisible: dropdownIsVisible});
+    }, [dropdownIsVisible]);
 
     return (
         <div className={serializeClasses(classes)}>
             <TextInput
-                onChange={onInputChange}
-                onEnter={onInputEnter}
+                handleChange={handleChange}
+                handleSelect={handleSelect}
             />
         </div>
     );

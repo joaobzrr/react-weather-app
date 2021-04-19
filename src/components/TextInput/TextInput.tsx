@@ -2,8 +2,8 @@ import React, { useRef, useCallback } from "react";
 import "./TextInput.scss";
 
 type PropsType = {
-    onChange: (value: string) => void;
-    onEnter:  (value: string) => void;
+    handleChange: (value: string) => void;
+    handleSelect: (value: string) => void;
 }
 
 // @Todo: Add placeholder text.
@@ -12,29 +12,29 @@ type PropsType = {
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
 export default function TextInput(props: PropsType) {
-    const { onChange, onEnter } = props;
+    const { handleChange, handleSelect } = props;
 
     const inputRef = useRef<HTMLInputElement>(null!);
     const valueRef = useRef("");
 
+    const onChange = () => {
+        handleChange(inputRef.current.value);
+    }
+
     // @Todo: Make sure that this works on mobile too.
-    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    const onKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (e.key !== "Enter") return;
 
         valueRef.current = inputRef.current.value;
         inputRef.current.blur();
-        onEnter(inputRef.current.value);
-    }, [inputRef.current, valueRef.current, onEnter]);
-
-    const handleChange = () => {
-        onChange(inputRef.current.value);
-    }
+        handleSelect(inputRef.current.value);
+    }, [inputRef.current, valueRef.current, handleSelect]);
 
     return (
         <input
             ref={inputRef}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
             type="text"
             className="TextInput"
         />

@@ -3,19 +3,19 @@ import { AutocompleteData, ArrayElementType } from "$src/types";
 import "./Dropdown.scss";
 
 type PropsType = {
-    autocompleteData: AutocompleteData;
+    entries: string[];
 }
 
 export default function DropdownSearch(props: PropsType) {
-    const { autocompleteData } = props;
+    const { entries } = props;
 
     const items = useMemo(() => {
-        return autocompleteData.map((item, index) => (
+        return entries.map((entry, index) => (
             <li className="Dropdown_entry" key={index}>
-                {item.city}
+                {entry}
             </li>
         ));
-    }, [autocompleteData]);
+    }, [entries]);
 
     return (
         <ul className="Dropdown">

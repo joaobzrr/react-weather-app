@@ -44,7 +44,6 @@ export function App() {
 
     const onInputChange = (value: string) => {
         if (value === "") {
-            setAutocompleteData([]);
             return;
         }
 
@@ -57,11 +56,10 @@ export function App() {
         }
 
         const locationData = autocompleteData[0];
-        setAutocompleteData([]);
+        const { lat, lon } = locationData;
 
         setIsLoading(true);
 
-        const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
             setAppData({weather: weatherData, location: locationData});
             setSelectedWeatherData("current");
@@ -74,9 +72,9 @@ export function App() {
     return (
         <div className="App flex flex-column">
             <DropdownSearch
-                onInputChange={onInputChange}
-                onInputEnter={onInputEnter}
-                autocompleteData={autocompleteData}
+                handleChange={onInputChange}
+                handleSelect={onInputEnter}
+                entries={autocompleteData.map((entry, index) => entry.city)}
             />
             <AppDataProvider data={appData}>
                 <WeatherInfo

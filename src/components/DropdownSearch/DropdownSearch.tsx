@@ -13,16 +13,16 @@ type PropsType = {
 export default function DropdownSearch(props: PropsType) {
     const { onInputChange, onInputEnter, autocompleteData } = props;
 
-    const hasItems = autocompleteData.length > 0;
+    const isDropdownVisible = autocompleteData.length > 0;
 
     return (
         <div className="DropdownSearch">
             <TextInputContainer
                 onInputChange={onInputChange}
                 onInputEnter={onInputEnter}
-                noBottomBorders={hasItems}
+                isDropdownVisible={isDropdownVisible}
             />
-            {hasItems ? <Dropdown autocompleteData={autocompleteData}/> : null}
+            {isDropdownVisible ? <Dropdown autocompleteData={autocompleteData}/> : null}
         </div>
     );
 }

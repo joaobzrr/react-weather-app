@@ -4,19 +4,19 @@ import TextInput from "$components/TextInput";
 import "./TextInputContainer.scss";
 
 type PropsType = {
-    onInputChange:   (value: string) => void;
-    onInputEnter:    (value: string) => void;
-    noBottomBorders: boolean;
+    onInputChange: (value: string) => void;
+    onInputEnter:  (value: string) => void;
+    isDropdownVisible: boolean;
 }
 
 export default function TextInputContainer(props: PropsType) {
-    const { onInputChange, onInputEnter, noBottomBorders } = props;
+    const { onInputChange, onInputEnter, isDropdownVisible } = props;
 
     const { classes, setClasses } = useClasses("TextInputContainer");
 
     useEffect(() => {
-        setClasses({TextInputContainer__hasItems: noBottomBorders});
-    }, [noBottomBorders]);
+        setClasses({TextInputContainer__dropdownIsVisible: isDropdownVisible});
+    }, [isDropdownVisible]);
 
     return (
         <div className={serializeClasses(classes)}>

@@ -7,6 +7,8 @@ export type UseStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>]
 
 export type NamedComponent<T> = React.ComponentType<T> & { _name?: string; };
 
+export type TimeoutType = ReturnType<typeof setTimeout>;
+
 type BaseWeatherData = {
     dt:            Date;
     description:   string;

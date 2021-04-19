@@ -4,6 +4,7 @@ import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
+import useDelay from "$hooks/useDelay";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
@@ -35,15 +36,19 @@ export function App() {
         });
     });
 
+    const fetchAndUpdateAutocompleteData = useDelay((value: string) => {
+        fetchAutocompleteData(value).then((data: AutocompleteData) => {
+            setAutocompleteData(data);
+        });
+    }, 500);
+
     const onInputChange = (value: string) => {
         if (value === "") {
             setAutocompleteData([]);
             return;
         }
 
-        fetchAutocompleteData(value).then((data: AutocompleteData) => {
-            setAutocompleteData(data);
-        });
+        fetchAndUpdateAutocompleteData(value);
     }
 
     const onInputEnter = (value: string) => {

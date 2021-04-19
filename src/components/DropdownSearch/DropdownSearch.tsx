@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextInputContainer from "$components/TextInputContainer";
+import TextInput from "$components/TextInput";
 import Dropdown from "$components/Dropdown";
 import { AutocompleteData } from "$src/types";
 import "./DropdownSearch.scss";
@@ -25,13 +25,19 @@ export default function DropdownSearch(props: PropsType) {
         handleSelect(value);
     }
 
+    const textInputContainerClasses = ["DropdownSearch_textInputContainer"];
+    if (dropdownIsVisible) {
+        textInputContainerClasses.push("DropdownSearch_textInputContainer__noRoundBottomCorners");
+    }
+
     return (
         <div className="DropdownSearch">
-            <TextInputContainer
-                handleChange={_handleChange}
-                handleSelect={_handleSelect}
-                dropdownIsVisible={dropdownIsVisible}
-            />
+            <div className={textInputContainerClasses.join(" ")}>
+                <TextInput
+                    handleChange={_handleChange}
+                    handleSelect={_handleSelect}
+                />
+            </div>
             {dropdownIsVisible && <Dropdown entries={entries}/>}
         </div>
     );

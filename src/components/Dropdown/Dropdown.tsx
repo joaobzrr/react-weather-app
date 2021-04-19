@@ -6,7 +6,7 @@ type PropsType = {
     entries: string[];
 }
 
-export default function DropdownSearch(props: PropsType) {
+export default function Dropdown(props: PropsType) {
     const { entries } = props;
 
     const items = useMemo(() => {

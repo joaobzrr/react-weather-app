@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
@@ -42,7 +42,7 @@ export function App() {
         });
     }, 500);
 
-    const onInputChange = (value: string) => {
+    const handleDropdownSearchChange = (value: string) => {
         if (value === "") {
             return;
         }
@@ -50,7 +50,7 @@ export function App() {
         fetchAndUpdateAutocompleteData(value);
     }
 
-    const onInputEnter = (value: string) => {
+    const handleDropdownSearchSelect = (value: string) => {
         if (value === "") {
             return;
         }
@@ -67,18 +67,24 @@ export function App() {
         });
     }
 
-    const onPressWeekDayButton = (value: number) => setSelectedWeatherData(value);
+    const handleSelectWeekDay = (value: number) => {
+        setSelectedWeatherData(value);
+    }
+
+    const dropdownSearchEntries = useMemo(() => {
+        return autocompleteData.map((entry, index) => entry.city)
+    }, [autocompleteData]);
 
     return (
         <div className="App flex flex-column">
             <DropdownSearch
-                handleChange={onInputChange}
-                handleSelect={onInputEnter}
-                entries={autocompleteData.map((entry, index) => entry.city)}
+                handleChange={handleDropdownSearchChange}
+                handleSelect={handleDropdownSearchSelect}
+                entries={dropdownSearchEntries}
             />
             <AppDataProvider data={appData}>
                 <WeatherInfo
-                    onSelectWeatherData={onPressWeekDayButton}
+                    handleSelectWeekDay={handleSelectWeekDay}
                     selectedWeatherData={selectedWeatherData}
                     isLoading={isLoading}
                 />

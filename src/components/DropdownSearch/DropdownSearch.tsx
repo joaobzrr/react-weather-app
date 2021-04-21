@@ -15,6 +15,11 @@ export default function DropdownSearch(props: PropsType) {
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
     const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
 
+    const textInputContainerClasses = ["DropdownSearch_textInputContainer"];
+    if (dropdownIsVisible) {
+        textInputContainerClasses.push("DropdownSearch_textInputContainer__noRoundBottomCorners");
+    }
+
     const _handleChange = (value: string) => {
         setDropdownIsHidden(value === "");
         handleChange(value);
@@ -23,11 +28,6 @@ export default function DropdownSearch(props: PropsType) {
     const _handleSelect = (value: string) => {
         setDropdownIsHidden(true);
         handleSelect(value);
-    }
-
-    const textInputContainerClasses = ["DropdownSearch_textInputContainer"];
-    if (dropdownIsVisible) {
-        textInputContainerClasses.push("DropdownSearch_textInputContainer__noRoundBottomCorners");
     }
 
     return (

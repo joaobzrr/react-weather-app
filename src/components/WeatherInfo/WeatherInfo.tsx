@@ -10,12 +10,12 @@ import { SelectedWeatherData } from "$src/types";
 import "./WeatherInfo.scss";
 
 type PropsType = {
-    onSelectWeatherData: (value: number) => void;
+    handleSelectWeekDay: (value: number) => void;
     selectedWeatherData: SelectedWeatherData;
 };
 
 function WeatherInfo(props: PropsType) {
-    const { onSelectWeatherData, selectedWeatherData } = props;
+    const { handleSelectWeekDay, selectedWeatherData } = props;
 
     const [appData, setAppData] = useContext(AppDataContext);
 
@@ -31,7 +31,7 @@ function WeatherInfo(props: PropsType) {
                 locationData={locationData}
             />
             <SevenDayForecast
-                onSelectWeatherData={onSelectWeatherData}
+                handleSelectWeekDay={handleSelectWeekDay}
             />
         </div>
     );

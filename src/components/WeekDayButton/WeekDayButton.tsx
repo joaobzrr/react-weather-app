@@ -4,18 +4,18 @@ import { formatTemperature } from "$src/utils";
 import "./WeekDayButton.scss";
 
 type PropsType = {
-    onPress: (value: number) => void;
-    weekDayIndex: number;
-    weekDayName: string;
-    iconCode: string;
+    handlePress:    (value: number) => void;
     minTemperature: number;
     maxTemperature: number;
+    iconCode:       string;
+    weekDayName:    string;
+    weekDayIndex:   number;
 };
 
 export default function WeekDayButton(props: PropsType) {
-    const { onPress, weekDayIndex, weekDayName, iconCode, minTemperature, maxTemperature } = props;
+    const { handlePress, weekDayIndex, weekDayName, iconCode, minTemperature, maxTemperature } = props;
 
-    const onClick = () => onPress(weekDayIndex);
+    const onClick = () => handlePress(weekDayIndex);
 
     return (
         <div

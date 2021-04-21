@@ -30,12 +30,17 @@ export default function DropdownSearch(props: PropsType) {
         handleSelect(value);
     }
 
+    const handleFocus = () => {
+        setDropdownIsHidden(false);
+    }
+
     return (
         <div className="DropdownSearch">
             <div className={textInputContainerClasses.join(" ")}>
                 <TextInput
                     handleChange={_handleChange}
                     handleSelect={_handleSelect}
+                    handleFocus={handleFocus}
                 />
             </div>
             {dropdownIsVisible && <Dropdown entries={entries}/>}

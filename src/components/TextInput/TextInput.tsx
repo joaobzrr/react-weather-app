@@ -4,6 +4,7 @@ import "./TextInput.scss";
 type PropsType = {
     handleChange: (value: string) => void;
     handleSelect: (value: string) => void;
+    handleFocus:  () => void;
 }
 
 // @Todo: Add placeholder text.
@@ -12,7 +13,7 @@ type PropsType = {
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
 export default function TextInput(props: PropsType) {
-    const { handleChange, handleSelect } = props;
+    const { handleChange, handleSelect, handleFocus } = props;
 
     const inputRef = useRef<HTMLInputElement>(null!);
     const valueRef = useRef("");
@@ -30,11 +31,16 @@ export default function TextInput(props: PropsType) {
         handleSelect(inputRef.current.value);
     }, [inputRef.current, valueRef.current, handleSelect]);
 
+    const onFocus = () => {
+        handleFocus();
+    }
+
     return (
         <input
             ref={inputRef}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            onFocus={onFocus}
             type="text"
             className="TextInput"
         />

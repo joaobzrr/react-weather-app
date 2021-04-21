@@ -16,7 +16,7 @@ export default async function fetchWeatherData(lat: number, lon: number) {
 
         const result: WeatherData = {} as WeatherData;
 
-        const precipitation = data.hourly[1].pop * 100;
+        const precipitation = data.hourly[1].pop;
         result.current = processCurrentWeatherData(data.current, precipitation);
 
         result.daily = [];

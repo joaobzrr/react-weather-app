@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, KeyboardEvent } from "react";
 import TextInput from "$components/TextInput";
 import Dropdown from "$components/Dropdown";
 import { AutocompleteData } from "$src/types";
@@ -12,8 +12,12 @@ type PropsType = {
 
 export default function DropdownSearch(props: PropsType) {
     const { handleChange, handleSelect, entries } = props;
+
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
     const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
+
+    const [selectedEntry, setSelectedEntry] = useState(0);
+    useEffect(() => setSelectedEntry(0), [entries]);
 
     const textInputContainerClasses = ["DropdownSearch_textInputContainer"];
     if (dropdownIsVisible) {
@@ -33,6 +37,24 @@ export default function DropdownSearch(props: PropsType) {
         setDropdownIsHidden(true);
     }
 
+    const handleTextInputUp = (e: KeyboardEvent<HTMLInputElement>) => {
+        setSelectedEntry((value: number) => {
+            const index = Math.max(value - 1, 0);
+            const input = e.target as HTMLInputElement;
+            input.value = entries[index];
+            return index;
+        });
+    }
+
+    const handleTextInputDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        setSelectedEntry((value: number) => {
+            const index = Math.min(value + 1, entries.length - 1)
+            const input = e.target as HTMLInputElement;
+            input.value = entries[index];
+            return index;
+        });
+    }
+
     return (
         <div className="DropdownSearch">
             <div className={textInputContainerClasses.join(" ")}>
@@ -41,9 +63,16 @@ export default function DropdownSearch(props: PropsType) {
                     handleSelect={handleSelect}
                     handleFocus={handleFocus}
                     handleBlur={handleBlur}
+                    handleUp={handleTextInputUp}
+                    handleDown={handleTextInputDown}
                 />
             </div>
-            {dropdownIsVisible && <Dropdown entries={entries}/>}
+            {dropdownIsVisible &&
+                <Dropdown
+                    entries={entries}
+                    selected={selectedEntry}
+                />
+            }
         </div>
     );
 }

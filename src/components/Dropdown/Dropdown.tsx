@@ -5,12 +5,11 @@ import "./Dropdown.scss";
 
 type PropsType = {
     entries: string[];
+    selected: number; // @Rename
 }
 
 export default function Dropdown(props: PropsType) {
-    const { entries } = props;
-
-    const selected = 0; // @Temporary
+    const { entries, selected } = props;
 
     const items = useMemo(() => {
         return entries.map((entry, index) => {
@@ -22,7 +21,7 @@ export default function Dropdown(props: PropsType) {
                 />
             );
         });
-    }, [entries]);
+    }, [entries, selected]);
 
     return (
         <ul className="Dropdown">

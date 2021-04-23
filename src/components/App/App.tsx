@@ -4,9 +4,8 @@ import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
-import useDelay from "$hooks/useDelay";
+import useAutocompleteData from "$hooks/useAutocompleteData";
 import fetchWeatherData from "$services/fetchWeatherData";
-import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
 import {
     AppData,
@@ -19,14 +18,11 @@ import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
-    const [autocompleteData, setAutocompleteData] =
-        useState<AutocompleteData>([]);
-    const [selectedWeatherData, setSelectedWeatherData] =
-        useState<SelectedWeatherData>("current");
+    const [autocompleteData, fetchAutocompleteData, waitAutocompleteData] = useAutocompleteData();
+    const [selectedWeatherData, setSelectedWeatherData] = useState<SelectedWeatherData>("current");
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
-        setIsLoading(true);
         fetchLocationDataFromIP().then((locationData: LocationData) => {
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
@@ -36,18 +32,12 @@ export function App() {
         });
     });
 
-    const fetchAndUpdateAutocompleteData = useDelay((value: string) => {
-        fetchAutocompleteData(value).then((data: AutocompleteData) => {
-            setAutocompleteData(data);
-        });
-    }, 500);
-
     const handleDropdownSearchChange = (value: string) => {
         if (value === "") {
             return;
         }
 
-        fetchAndUpdateAutocompleteData(value);
+        fetchAutocompleteData(value);
     }
 
     const handleDropdownSearchSelect = (value: string) => {
@@ -55,15 +45,16 @@ export function App() {
             return;
         }
 
-        const locationData = autocompleteData[0];
-        const { lat, lon } = locationData;
-
         setIsLoading(true);
+        waitAutocompleteData().then((autocompleteData: AutocompleteData) => {
+            const locationData = autocompleteData[0];
+            const { lat, lon } = locationData;
 
-        fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-            setAppData({weather: weatherData, location: locationData});
-            setSelectedWeatherData("current");
-            setIsLoading(false);
+            fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
+                setAppData({weather: weatherData, location: locationData});
+                setSelectedWeatherData("current");
+                setIsLoading(false);
+            });
         });
     }
 

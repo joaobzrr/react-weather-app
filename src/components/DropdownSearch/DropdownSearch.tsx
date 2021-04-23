@@ -5,13 +5,14 @@ import { AutocompleteData } from "$src/types";
 import "./DropdownSearch.scss";
 
 type PropsType = {
-    handleChange: (value: string) => void;
-    handleSelect: (value: string) => void;
-    entries: string[];
+    handleChange:          (value: string) => void;
+    handleSelect:          (value: string) => void;
+    handleSelectionChange: (value: number) => void;
+    entries:               string[];
 };
 
 export default function DropdownSearch(props: PropsType) {
-    const { handleChange, handleSelect, entries } = props;
+    const { handleChange, handleSelectionChange, handleSelect, entries } = props;
 
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
     const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
@@ -40,8 +41,11 @@ export default function DropdownSearch(props: PropsType) {
     const handleTextInputUp = (e: KeyboardEvent<HTMLInputElement>) => {
         setSelectedEntry((value: number) => {
             const index = Math.max(value - 1, 0);
+            handleSelectionChange(index);
+
             const input = e.target as HTMLInputElement;
             input.value = entries[index];
+
             return index;
         });
     }
@@ -49,8 +53,11 @@ export default function DropdownSearch(props: PropsType) {
     const handleTextInputDown = (e: KeyboardEvent<HTMLInputElement>) => {
         setSelectedEntry((value: number) => {
             const index = Math.min(value + 1, entries.length - 1)
+            handleSelectionChange(index);
+
             const input = e.target as HTMLInputElement;
             input.value = entries[index];
+
             return index;
         });
     }

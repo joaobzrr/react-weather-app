@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
@@ -21,6 +21,8 @@ export function App() {
     const [autocompleteData, fetchAutocompleteData, waitAutocompleteData] = useAutocompleteData();
     const [selectedWeatherData, setSelectedWeatherData] = useState<SelectedWeatherData>("current");
     const [isLoading, setIsLoading] = useState(true);
+
+    const selectedDropdownEntryRef = useRef(0);
 
     useOnce(() => {
         fetchLocationDataFromIP().then((locationData: LocationData) => {
@@ -47,7 +49,9 @@ export function App() {
 
         setIsLoading(true);
         waitAutocompleteData().then((autocompleteData: AutocompleteData) => {
-            const locationData = autocompleteData[0];
+
+            const index = selectedDropdownEntryRef.current;
+            const locationData = autocompleteData[index];
             const { lat, lon } = locationData;
 
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
@@ -56,6 +60,10 @@ export function App() {
                 setIsLoading(false);
             });
         });
+    }
+
+    const handleDropdownSearchSelectionChange = (index: number) => {
+        selectedDropdownEntryRef.current = index;
     }
 
     const handleSelectWeekDay = (value: number) => {
@@ -70,6 +78,7 @@ export function App() {
         <div className="App flex flex-column">
             <DropdownSearch
                 handleChange={handleDropdownSearchChange}
+                handleSelectionChange={handleDropdownSearchSelectionChange}
                 handleSelect={handleDropdownSearchSelect}
                 entries={dropdownSearchEntries}
             />

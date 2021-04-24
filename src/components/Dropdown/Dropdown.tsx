@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import DropdownEntry from "$components/DropdownEntry";
+import DropdownItem from "$components/DropdownItem";
 import { AutocompleteData, ArrayElementType } from "$src/types";
 import "./Dropdown.scss";
 
@@ -14,7 +14,7 @@ export default function Dropdown(props: PropsType) {
     const items = useMemo(() => {
         return entries.map((entry, index) => {
             return (
-                <DropdownEntry
+                <DropdownItem
                     text={entry} // @Note: Maybe we should use props.children instead?
                     selected={index === selected}
                     key={index}

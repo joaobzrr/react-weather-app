@@ -6,8 +6,8 @@ import "./DropdownSearch.scss";
 
 type PropsType = {
     handleChange:          (value: string) => void;
+    handleSelectionChange: (index: number) => void;
     handleSelect:          (value: string) => void;
-    handleSelectionChange: (value: number) => void;
     entries:               string[];
 };
 

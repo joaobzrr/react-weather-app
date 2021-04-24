@@ -1,10 +1,11 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
-import useAutocompleteData from "$hooks/useAutocompleteData";
+import useUpdate from "$hooks/useUpdate";
+import useDropdownSearch from "$hooks/useDropdownSearch";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
 import {
@@ -18,11 +19,9 @@ import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
-    const [autocompleteData, fetchAutocompleteData, waitAutocompleteData] = useAutocompleteData();
+    const [autocompleteData, locationData, handleDropdownSearchChange, handleDropdownSearchSelectionChange, handleDropdownSearchSelect] = useDropdownSearch();
     const [selectedWeatherData, setSelectedWeatherData] = useState<SelectedWeatherData>("current");
     const [isLoading, setIsLoading] = useState(true);
-
-    const selectedDropdownEntryRef = useRef(0);
 
     useOnce(() => {
         fetchLocationDataFromIP().then((locationData: LocationData) => {
@@ -34,40 +33,22 @@ export function App() {
         });
     });
 
-    const handleDropdownSearchChange = (value: string) => {
-        if (value === "") {
-            return;
-        }
-
-        fetchAutocompleteData(value);
-    }
-
-    const handleDropdownSearchSelect = (value: string) => {
-        if (value === "") {
-            return;
-        }
-
-        setIsLoading(true);
-        waitAutocompleteData().then((autocompleteData: AutocompleteData) => {
-
-            const index = selectedDropdownEntryRef.current;
-            const locationData = autocompleteData[index];
-            const { lat, lon } = locationData;
-
-            fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-                setAppData({weather: weatherData, location: locationData});
-                setSelectedWeatherData("current");
-                setIsLoading(false);
-            });
+    useUpdate(() => {
+        const { lat, lon } = locationData;
+        fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
+            setAppData({weather: weatherData, location: locationData});
+            setSelectedWeatherData("current");
+            setIsLoading(false);
         });
-    }
-
-    const handleDropdownSearchSelectionChange = (index: number) => {
-        selectedDropdownEntryRef.current = index;
-    }
+    }, [locationData]);
 
     const handleSelectWeekDay = (value: number) => {
         setSelectedWeatherData(value);
+    }
+
+    const _handleDropdownSearchSelect = (value: string) => {
+        setIsLoading(true);
+        handleDropdownSearchSelect(value);
     }
 
     const dropdownSearchEntries = useMemo(() => {
@@ -79,7 +60,7 @@ export function App() {
             <DropdownSearch
                 handleChange={handleDropdownSearchChange}
                 handleSelectionChange={handleDropdownSearchSelectionChange}
-                handleSelect={handleDropdownSearchSelect}
+                handleSelect={_handleDropdownSearchSelect}
                 entries={dropdownSearchEntries}
             />
             <AppDataProvider data={appData}>

@@ -1,12 +1,24 @@
-export default async function waitFor<T>(callback: () => any, pollingTime: number) {
-    while (!callback()) {
+import sleep from "$services/sleep";
+import { isFunction } from "$src/utils";
+
+type PredicateFunction  = () => boolean;
+type PayloadFunction<T> = () => T;
+
+export default async function waitFor<T>(
+    predicate:   PredicateFunction,
+    payload:     T | PayloadFunction<T>,
+    pollingTime: number
+) {
+    while (!predicate()) {
         await sleep(pollingTime);
     }
 
-    return callback();
-}
+    let result;
+    if (isFunction(payload)) {
+        result = (payload as PayloadFunction<T>)();
+    } else {
+        result = (payload as T);
+    }
 
-function sleep(milliseconds: number) {
-    // @Remember Check what this r param is supposed to be.
-    return new Promise(r => setTimeout(r, milliseconds));
+    return result;
 }

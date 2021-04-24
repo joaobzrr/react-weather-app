@@ -34,8 +34,8 @@ export type WeatherData = {
 
 export type LocationData = {
     city: string,
-    lat: number;
-    lon: number;
+    lat:  number;
+    lon:  number;
 }
 
 export type AppData = {
@@ -46,3 +46,8 @@ export type AppData = {
 export type SelectedWeatherData = "current" | number;
 
 export type AutocompleteData = LocationData[];
+
+export type DropdownEntry = {
+    id:   number;
+    data: LocationData;
+}

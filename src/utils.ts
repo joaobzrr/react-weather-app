@@ -18,3 +18,7 @@ export function formatTemperature(value: number) {
 export function isNumber(value: any) {
     return typeof value === "number";
 }
+
+export function isFunction(obj: any): boolean {
+    return obj && Object.prototype.toString.call(obj) === '[object Function]';
+}

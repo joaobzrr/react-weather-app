@@ -1,24 +1,24 @@
 import React, { useState, useEffect, KeyboardEvent } from "react";
 import TextInput from "$components/TextInput";
 import Dropdown from "$components/Dropdown";
-import { AutocompleteData } from "$src/types";
+import useDropdownSearch from "$hooks/useDropdownSearch";
+import { AutocompleteData, LocationData } from "$src/types";
 import "./DropdownSearch.scss";
 
 type PropsType = {
-    handleChange:          (value: string) => void;
-    handleSelectionChange: (index: number) => void;
-    handleSelect:          (value: string) => void;
-    entries:               string[];
-};
+    onSelect:  (locationData: LocationData) => void;
+    onLoading: () => void;
+}
 
 export default function DropdownSearch(props: PropsType) {
-    const { handleChange, handleSelectionChange, handleSelect, entries } = props;
+    const { onSelect, onLoading } = props;
 
+    const [entries, selectedIndex, handleChange, handleSelectionChange, handleSelect] = useDropdownSearch();;
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
-    const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
 
-    const [selectedEntry, setSelectedEntry] = useState(0);
-    useEffect(() => setSelectedEntry(0), [entries]);
+    // useEffect(() => setSelectedEntry(0), [entries]); // @Remove
+
+    const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
 
     const textInputContainerClasses = ["DropdownSearch_textInputContainer"];
     if (dropdownIsVisible) {
@@ -30,54 +30,51 @@ export default function DropdownSearch(props: PropsType) {
         handleChange(value);
     }
 
-    const handleFocus = () => {
+    const _handleSelect = (value: string) => {
+        onLoading();
+        handleSelect(value).then(onSelect);
+    }
+
+    const handleTextInputFocus = () => {
         setDropdownIsHidden(false);
     }
 
-    const handleBlur = () => {
+    const handleTextInputBlur = () => {
         setDropdownIsHidden(true);
     }
 
     const handleTextInputUp = (e: KeyboardEvent<HTMLInputElement>) => {
-        setSelectedEntry((value: number) => {
-            const index = Math.max(value - 1, 0);
-            handleSelectionChange(index);
+        const input = e.target as HTMLInputElement;
+        const index = Math.max(selectedIndex - 1, 0);
+        input.value = entries[index];
 
-            const input = e.target as HTMLInputElement;
-            input.value = entries[index];
-
-            return index;
-        });
+        handleSelectionChange(index);
     }
 
     const handleTextInputDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        setSelectedEntry((value: number) => {
-            const index = Math.min(value + 1, entries.length - 1)
-            handleSelectionChange(index);
+        const input = e.target as HTMLInputElement;
+        const index = Math.min(selectedIndex + 1, entries.length - 1)
+        input.value = entries[index];
 
-            const input = e.target as HTMLInputElement;
-            input.value = entries[index];
-
-            return index;
-        });
+        handleSelectionChange(index);
     }
 
     return (
         <div className="DropdownSearch">
             <div className={textInputContainerClasses.join(" ")}>
                 <TextInput
-                    handleChange={_handleChange}
-                    handleSelect={handleSelect}
-                    handleFocus={handleFocus}
-                    handleBlur={handleBlur}
-                    handleUp={handleTextInputUp}
-                    handleDown={handleTextInputDown}
+                    onChange={_handleChange}
+                    onSelect={_handleSelect}
+                    onFocus={handleTextInputFocus}
+                    onBlur={handleTextInputBlur}
+                    onUp={handleTextInputUp}
+                    onDown={handleTextInputDown}
                 />
             </div>
             {dropdownIsVisible &&
                 <Dropdown
                     entries={entries}
-                    selected={selectedEntry}
+                    selected={selectedIndex}
                 />
             }
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import useDelay from "$hooks/useDelay";
 import waitFor from "$services/waitFor";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
@@ -7,28 +7,34 @@ import {
     LocationData
 } from "$src/types";
 
+type Entry = string;
+
 type ReturnValueType = [
-    AutocompleteData,
-    LocationData,
+    Entry[],
+    number,
     (value: string) => void,
     (index: number) => void,
-    (value: string) => void
+    (value: string) => Promise<LocationData>
 ];
 
 export default function useDropdownSearch(): ReturnValueType {
     const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>([]);
-    const [locationData, setLocationData]         = useState<LocationData>(null!);
+    const [selectedIndex, setSelectedIndex]       = useState(0);
 
-    const fetchedData   = useRef<AutocompleteData|null>(null);
-    const selectedIndex = useRef(0);
+    const autocompleteDataRef = useRef<AutocompleteData|null>([]); // @Remove
+    const selectedIndexRef    = useRef(0);                         // @Remove
+    const isFetchingRef       = useRef(false);                     // @Remove
+
+    const entries = useMemo(() => {
+        return autocompleteData.map(entry => entry.city);
+    }, [autocompleteData]);
 
     const fetchAndUpdateAutocompleteData = useDelay((value: string) => {
-        // @Todo: In case we had previously tried to fetch autocomplete data
-        // but still did not get a response, we should cancel this previous
-        // request before making another one.
         fetchAutocompleteData(value).then((data: AutocompleteData) => {
             setAutocompleteData(data);
-            fetchedData.current = data;
+
+            autocompleteDataRef.current = data;  // @Remove
+            isFetchingRef.current       = false; // @Remove
         });
     }, 500);
 
@@ -38,14 +44,18 @@ export default function useDropdownSearch(): ReturnValueType {
             return;
         }
 
-        fetchedData.current   = null;
-        selectedIndex.current = 0;
+        setSelectedIndex(0);
+
+        autocompleteDataRef.current = null; // @Remove
+        isFetchingRef.current       = true; // @Remove
 
         fetchAndUpdateAutocompleteData(value);
     }
 
     const handleSelectionChange = (index: number) => {
-        selectedIndex.current = index;
+        setSelectedIndex(index);
+
+        selectedIndexRef.current = index; // @Remove
     }
 
     // @Todo: Particular inputs could produce no search results,
@@ -61,20 +71,31 @@ export default function useDropdownSearch(): ReturnValueType {
             return;
         }
 
-        // @Todo: Move these function types somewhere else.
+        setSelectedIndex(0);
+
+        // @Remove @Todo: There should be a better way to this without using waitFor
+        // and refs. We should try using observables and see if they are
+        // better suited than promises for this kind of thing.
         const predicate: (() => boolean) = () => {
-            return fetchedData.current !== null;
+            return !isFetchingRef.current;
         }
 
-        // @Todo: Move these function types somewhere else.
-        const payload: (() => AutocompleteData) = () => {
-            return fetchedData.current!;
+        const payload: (() => [AutocompleteData, number]) = () => {
+            return [autocompleteDataRef.current!, selectedIndexRef.current];
         }
 
-        waitFor(predicate, payload, 100).then((data: AutocompleteData) => {
-            setLocationData(data[selectedIndex.current]);
-        });
+        // @Todo: In case we had previously tried to fetch autocomplete data
+        // but still did not get a response, we should cancel this previous
+        // request before making another one.
+        return waitFor(predicate, payload, 100).then(([data, index]) => {
+            debugger;
+
+            setAutocompleteData(data);
+            selectedIndexRef.current = 0; // @Remove
+
+            return data[index];
+        }) as any; // @Any
     }
 
-    return [autocompleteData, locationData, handleChange, handleSelectionChange, handleSelect];
+    return [entries, selectedIndex, handleChange, handleSelectionChange, handleSelect];
 }

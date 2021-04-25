@@ -5,7 +5,7 @@ import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
 import useUpdate from "$hooks/useUpdate";
-import useDropdownSearch from "$hooks/useDropdownSearch";
+// import useDropdownSearch from "$hooks/useDropdownSearch"; @Remove
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
 import {
@@ -19,7 +19,6 @@ import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
-    const [autocompleteData, locationData, handleDropdownSearchChange, handleDropdownSearchSelectionChange, handleDropdownSearchSelect] = useDropdownSearch();
     const [selectedWeatherData, setSelectedWeatherData] = useState<SelectedWeatherData>("current");
     const [isLoading, setIsLoading] = useState(true);
 
@@ -33,35 +32,28 @@ export function App() {
         });
     });
 
-    useUpdate(() => {
+    const handleDropdownSearchLoading = () => {
+        setIsLoading(true);
+    }
+
+    const handleDropdownSearchSelect = (locationData: LocationData) => {
         const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
             setAppData({weather: weatherData, location: locationData});
             setSelectedWeatherData("current");
             setIsLoading(false);
         });
-    }, [locationData]);
+    }
 
     const handleSelectWeekDay = (value: number) => {
         setSelectedWeatherData(value);
     }
 
-    const _handleDropdownSearchSelect = (value: string) => {
-        setIsLoading(true);
-        handleDropdownSearchSelect(value);
-    }
-
-    const dropdownSearchEntries = useMemo(() => {
-        return autocompleteData.map((entry, index) => entry.city)
-    }, [autocompleteData]);
-
     return (
         <div className="App flex flex-column">
             <DropdownSearch
-                handleChange={handleDropdownSearchChange}
-                handleSelectionChange={handleDropdownSearchSelectionChange}
-                handleSelect={_handleDropdownSearchSelect}
-                entries={dropdownSearchEntries}
+                onLoading={handleDropdownSearchLoading}
+                onSelect={handleDropdownSearchSelect}
             />
             <AppDataProvider data={appData}>
                 <WeatherInfo

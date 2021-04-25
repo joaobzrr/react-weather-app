@@ -2,12 +2,12 @@ import React, { useRef, useCallback, KeyboardEvent } from "react";
 import "./TextInput.scss";
 
 type PropsType = {
-    handleChange: (value: string) => void;
-    handleSelect: (value: string) => void;
-    handleBlur:   () => void;
-    handleFocus:  () => void;
-    handleUp:     (e: KeyboardEvent<HTMLInputElement>) => void;
-    handleDown:   (e: KeyboardEvent<HTMLInputElement>) => void;
+    onChange: (value: string) => void;
+    onSelect: (value: string) => void;
+    onBlur:   () => void;
+    onFocus:  () => void;
+    onUp:     (e: KeyboardEvent<HTMLInputElement>) => void;
+    onDown:   (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 // @Todo: Add placeholder text.
@@ -16,45 +16,45 @@ type PropsType = {
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
 export default function TextInput(props: PropsType) {
-    const { handleChange, handleSelect, handleBlur, handleFocus, handleUp, handleDown } = props;
+    const { onChange, onSelect, onBlur, onFocus, onUp, onDown } = props;
 
     const inputRef = useRef<HTMLInputElement>(null!);
     const valueRef = useRef("");
 
-    const onChange = () => {
-        handleChange(inputRef.current.value);
+    const handleChange = () => {
+        onChange(inputRef.current.value);
     }
 
     // @Todo: Make sure that this works on mobile too.
-    const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
         switch (e.key) {
             case "Enter": {
                 e.preventDefault();
                 valueRef.current = inputRef.current.value;
                 inputRef.current.blur();
-                handleSelect(inputRef.current.value);
+                onSelect(inputRef.current.value);
             } break;
             case "ArrowUp": {
                 e.preventDefault();
-                handleUp(e);
+                onUp(e);
             } break;
             case "ArrowDown": {
                 e.preventDefault();
-                handleDown(e);
+                onDown(e);
             } break;
             case "Escape": {
                 inputRef.current.blur();
             } break;
         }
-    }, [inputRef.current, valueRef.current, handleSelect]);
+    }, [inputRef.current, valueRef.current, onSelect]);
 
     return (
         <input
             ref={inputRef}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onFocus={onFocus}
+            onBlur={onBlur}
             type="text"
             className="TextInput"
         />

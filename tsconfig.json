@@ -10,6 +10,7 @@
         "isolatedModules": true,
         "sourceMap": true,
         "jsx": "react",
+        "baseUrl": "./",
         "paths": {
             "$src/*":        ["src/*"],
             "$components/*": ["src/components/*"],

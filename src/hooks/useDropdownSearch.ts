@@ -98,7 +98,9 @@ export default function useDropdownSearch(
             return;
         }
 
-        input.value = entries[selectedIndex];
+        if (entries.length) {
+            input.value = entries[selectedIndex];
+        }
 
         onStartSelect();
 

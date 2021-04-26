@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
@@ -29,11 +29,11 @@ export function App() {
         });
     });
 
-    const handleDropdownSearchLoading = () => {
+    const handleDropdownSearchStartSelect = () => {
         setIsLoading(true);
     }
 
-    const handleDropdownSearchSelect = (locationData: LocationData) => {
+    const handleDropdownSearchEndSelect = (locationData: LocationData) => {
         const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
             setAppData({weather: weatherData, location: locationData});
@@ -49,8 +49,8 @@ export function App() {
     return (
         <div className="App flex flex-column">
             <DropdownSearch
-                onLoading={handleDropdownSearchLoading}
-                onSelect={handleDropdownSearchSelect}
+                onStartSelect={handleDropdownSearchStartSelect}
+                onEndSelect={handleDropdownSearchEndSelect}
             />
             <AppDataProvider data={appData}>
                 <WeatherInfo

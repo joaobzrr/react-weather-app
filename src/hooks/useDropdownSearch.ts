@@ -18,15 +18,16 @@ type ReturnValueType = [
 
 export default function useDropdownSearch(): ReturnValueType {
     const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>([]);
-    const [selectedIndex, setSelectedIndex]       = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const deferrableRef           = useRef<Deferrable<LocationData>|null>(null);
-    const shouldResolvePromiseRef = useRef(false);
+    const deferrableRef = useRef<Deferrable<LocationData>|null>(null);
+    const canResolvePromiseRef = useRef(false);
+    const shouldResolvePromiseLaterRef = useRef(false);
 
     const fetchAndUpdateAutocompleteData = useDelay((value: string) => {
         fetchAutocompleteData(value).then((data: AutocompleteData) => {
             setAutocompleteData(data);
-            shouldResolvePromiseRef.current = true;
+            canResolvePromiseRef.current = true;
         });
     }, 500);
 
@@ -37,7 +38,9 @@ export default function useDropdownSearch(): ReturnValueType {
         }
 
         setSelectedIndex(0);
-        shouldResolvePromiseRef.current = false;
+
+        shouldResolvePromiseLaterRef.current = false;
+        canResolvePromiseRef.current = false;
 
         fetchAndUpdateAutocompleteData(value);
     }
@@ -59,15 +62,17 @@ export default function useDropdownSearch(): ReturnValueType {
         deferrableRef.current = makeDeferrable();
         const { promise, resolve } = deferrableRef.current;
 
-        if (shouldResolvePromiseRef.current) {
+        if (canResolvePromiseRef.current) {
             resolve(autocompleteData[selectedIndex]);
+        } else {
+            shouldResolvePromiseLaterRef.current = true;
         }
 
         return promise;
     }
 
     useEffect(() => {
-        if (!shouldResolvePromiseRef.current) {
+        if (!(canResolvePromiseRef.current && shouldResolvePromiseLaterRef.current)) {
             return;
         }
 

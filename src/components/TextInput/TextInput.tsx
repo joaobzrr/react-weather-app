@@ -1,13 +1,13 @@
-import React, { useRef, useCallback, KeyboardEvent } from "react";
+import React, { useRef, useCallback } from "react";
 import "./TextInput.scss";
 
 type PropsType = {
     onChange: (value: string) => void;
-    onSelect: (e: KeyboardEvent<HTMLInputElement>) => void;
+    onSelect: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     onBlur:   () => void;
     onFocus:  () => void;
-    onUp:     (e: KeyboardEvent<HTMLInputElement>) => void;
-    onDown:   (e: KeyboardEvent<HTMLInputElement>) => void;
+    onUp:     (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDown:   (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 // @Todo: Add placeholder text.

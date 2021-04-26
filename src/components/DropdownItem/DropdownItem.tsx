@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useClasses, serializeClasses } from "@bzrr/useClasses";
+import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import "./DropdownItem.scss";
 
 type PropsType = {

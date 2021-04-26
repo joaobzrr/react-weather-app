@@ -2,7 +2,7 @@ import React, { useState, useEffect, KeyboardEvent } from "react";
 import TextInput from "$components/TextInput";
 import Dropdown from "$components/Dropdown";
 import useDropdownSearch from "$hooks/useDropdownSearch";
-import { AutocompleteData, LocationData } from "$src/types";
+import { LocationData } from "$src/types";
 import "./DropdownSearch.scss";
 
 type PropsType = {

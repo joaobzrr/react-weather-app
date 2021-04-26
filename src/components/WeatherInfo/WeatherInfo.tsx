@@ -1,11 +1,9 @@
 import React, { useContext }  from "react";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
-import WeatherIcon from "$components/WeatherIcon";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
 import { AppDataContext } from "$contexts/AppDataContext";
-import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { SelectedWeatherData } from "$src/types";
 import "./WeatherInfo.scss";
 

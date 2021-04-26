@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import DropdownItem from "$components/DropdownItem";
-import { AutocompleteData, ArrayElementType } from "$src/types";
 import "./Dropdown.scss";
 
 type PropsType = {

@@ -1,4 +1,3 @@
-import React from "react";
 import { NamedComponent } from "$src/types";
 
 export function getFunctionalComponentName<P>(Component: NamedComponent<P>): string | undefined {

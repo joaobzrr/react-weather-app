@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ComponentType, SVGProps, FC } from "react";
+import React, { useState, useEffect, useRef, ComponentType, SVGProps } from "react";
 
 type PropsType = SVGProps<SVGSVGElement> & {
     fileName: string;

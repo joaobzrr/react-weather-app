@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import WeatherIcon from "$components/WeatherIcon";
 import { formatTemperature } from "$src/utils";
 import "./WeekDayButton.scss";

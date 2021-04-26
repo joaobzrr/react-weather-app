@@ -11,7 +11,6 @@ import {
     LocationData,
     WeatherData,
     SelectedWeatherData,
-    AutocompleteData
 } from "$src/types";
 import "./App.scss";
 

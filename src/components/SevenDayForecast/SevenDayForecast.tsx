@@ -1,8 +1,7 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
 import { AppDataContext } from "$contexts/AppDataContext";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
-import { WeatherData } from "$src/types";
 
 type PropsType = {
     handleSelectWeekDay: (value: number) => void;

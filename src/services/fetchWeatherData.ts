@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { isNumber } from "$src/utils";
 import {
     WeatherData,
     CurrentWeatherData,

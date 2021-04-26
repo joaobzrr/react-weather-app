@@ -28,7 +28,11 @@ export default function DropdownSearch(props: PropsType) {
         handleChange(value);
     }
 
-    const _handleSelect = (value: string) => {
+    const _handleSelect = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const input = e.target as HTMLInputElement;
+        const value = input.value;
+        input.value = entries[selectedIndex];
+
         onLoading();
 
         const promise = handleSelect(value);

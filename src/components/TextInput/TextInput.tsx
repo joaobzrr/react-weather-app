@@ -3,7 +3,7 @@ import "./TextInput.scss";
 
 type PropsType = {
     onChange: (value: string) => void;
-    onSelect: (value: string) => void;
+    onSelect: (e: KeyboardEvent<HTMLInputElement>) => void;
     onBlur:   () => void;
     onFocus:  () => void;
     onUp:     (e: KeyboardEvent<HTMLInputElement>) => void;
@@ -32,7 +32,7 @@ export default function TextInput(props: PropsType) {
                 e.preventDefault();
                 valueRef.current = inputRef.current.value;
                 inputRef.current.blur();
-                onSelect(inputRef.current.value);
+                onSelect(e);
             } break;
             case "ArrowUp": {
                 e.preventDefault();

@@ -9,6 +9,16 @@ export type NamedComponent<T> = React.ComponentType<T> & { _name?: string; };
 
 export type TimeoutType = ReturnType<typeof setTimeout>;
 
+export type ResolveFunctionType<T> = (value?: T | PromiseLike<T>) => void;
+
+export type RejectFunctionType  = (reason?: any) => void;
+
+export type Deferrable<T> = {
+    promise: Promise<T>,
+    resolve: ResolveFunctionType<T>
+    reject:  RejectFunctionType
+}
+
 type BaseWeatherData = {
     dt:            Date;
     description:   string;

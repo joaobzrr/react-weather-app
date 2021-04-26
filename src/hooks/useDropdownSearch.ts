@@ -1,40 +1,33 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import useDelay from "$hooks/useDelay";
 import waitFor from "$services/waitFor";
+import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import {
     AutocompleteData,
-    LocationData
+    LocationData,
+    Deferrable
 } from "$src/types";
 
-type Entry = string;
-
 type ReturnValueType = [
-    Entry[],
+    string[],
     number,
     (value: string) => void,
     (index: number) => void,
-    (value: string) => Promise<LocationData>
+    (value: string) => Promise<LocationData> | null
 ];
 
 export default function useDropdownSearch(): ReturnValueType {
     const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>([]);
     const [selectedIndex, setSelectedIndex]       = useState(0);
 
-    const autocompleteDataRef = useRef<AutocompleteData|null>([]); // @Remove
-    const selectedIndexRef    = useRef(0);                         // @Remove
-    const isFetchingRef       = useRef(false);                     // @Remove
-
-    const entries = useMemo(() => {
-        return autocompleteData.map(entry => entry.city);
-    }, [autocompleteData]);
+    const deferrableRef           = useRef<Deferrable<LocationData>|null>(null);
+    const shouldResolvePromiseRef = useRef(false);
 
     const fetchAndUpdateAutocompleteData = useDelay((value: string) => {
         fetchAutocompleteData(value).then((data: AutocompleteData) => {
             setAutocompleteData(data);
-
-            autocompleteDataRef.current = data;  // @Remove
-            isFetchingRef.current       = false; // @Remove
+            shouldResolvePromiseRef.current = true;
         });
     }, 500);
 
@@ -45,17 +38,13 @@ export default function useDropdownSearch(): ReturnValueType {
         }
 
         setSelectedIndex(0);
-
-        autocompleteDataRef.current = null; // @Remove
-        isFetchingRef.current       = true; // @Remove
+        shouldResolvePromiseRef.current = false;
 
         fetchAndUpdateAutocompleteData(value);
     }
 
     const handleSelectionChange = (index: number) => {
         setSelectedIndex(index);
-
-        selectedIndexRef.current = index; // @Remove
     }
 
     // @Todo: Particular inputs could produce no search results,
@@ -63,39 +52,33 @@ export default function useDropdownSearch(): ReturnValueType {
     // and callbacks depending on the resolution of this promise
     // would never be executed, so we need to handle that case
     // as well.
-    const handleSelect = (value: string) => {
-        // @Todo: Maybe, instead of checking that the input value is not empty
-        // we could check that autocompleteData is not null instead. If that
-        // works, we don't need this value parameter here.
+    const handleSelect = (value: string): Promise<LocationData> | null => {
         if (value === "") {
+            return null;
+        }
+
+        deferrableRef.current = makeDeferrable();
+        const { promise, resolve } = deferrableRef.current;
+
+        if (shouldResolvePromiseRef.current) {
+            resolve(autocompleteData[selectedIndex]);
+        }
+
+        return promise;
+    }
+
+    useEffect(() => {
+        if (!shouldResolvePromiseRef.current) {
             return;
         }
 
-        setSelectedIndex(0);
+        const promise = deferrableRef.current!;
+        promise.resolve(autocompleteData[selectedIndex]);
+    }, [autocompleteData]);
 
-        // @Remove @Todo: There should be a better way to this without using waitFor
-        // and refs. We should try using observables and see if they are
-        // better suited than promises for this kind of thing.
-        const predicate: (() => boolean) = () => {
-            return !isFetchingRef.current;
-        }
-
-        const payload: (() => [AutocompleteData, number]) = () => {
-            return [autocompleteDataRef.current!, selectedIndexRef.current];
-        }
-
-        // @Todo: In case we had previously tried to fetch autocomplete data
-        // but still did not get a response, we should cancel this previous
-        // request before making another one.
-        return waitFor(predicate, payload, 100).then(([data, index]) => {
-            debugger;
-
-            setAutocompleteData(data);
-            selectedIndexRef.current = 0; // @Remove
-
-            return data[index];
-        }) as any; // @Any
-    }
+    const entries = useMemo(() => {
+        return autocompleteData.map(entry => entry.city);
+    }, [autocompleteData]);
 
     return [entries, selectedIndex, handleChange, handleSelectionChange, handleSelect];
 }

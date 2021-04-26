@@ -16,8 +16,6 @@ export default function DropdownSearch(props: PropsType) {
     const [entries, selectedIndex, handleChange, handleSelectionChange, handleSelect] = useDropdownSearch();;
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
 
-    // useEffect(() => setSelectedEntry(0), [entries]); // @Remove
-
     const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
 
     const textInputContainerClasses = ["DropdownSearch_textInputContainer"];
@@ -32,7 +30,11 @@ export default function DropdownSearch(props: PropsType) {
 
     const _handleSelect = (value: string) => {
         onLoading();
-        handleSelect(value).then(onSelect);
+
+        const promise = handleSelect(value);
+        if (promise !== null) {
+            promise!.then(onSelect);
+        }
     }
 
     const handleTextInputFocus = () => {

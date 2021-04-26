@@ -4,8 +4,6 @@ import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
 import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
-import useUpdate from "$hooks/useUpdate";
-// import useDropdownSearch from "$hooks/useDropdownSearch"; @Remove
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
 import {

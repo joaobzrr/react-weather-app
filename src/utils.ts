@@ -14,6 +14,10 @@ export function formatTemperature(value: number) {
     return value.toString() + " º";
 }
 
+export function clamp(n: number, lower: number, upper: number) {
+    return Math.max(lower, Math.min(n, upper));
+}
+
 export function isNumber(value: any) {
     return typeof value === "number";
 }

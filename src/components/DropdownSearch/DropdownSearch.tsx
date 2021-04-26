@@ -13,7 +13,7 @@ type PropsType = {
 export default function DropdownSearch(props: PropsType) {
     const { onStartSelect, onEndSelect } = props;
 
-    const [entries, selectedIndex, dropdownIsVisible, handleFocus, handleBlur, handleChange, handleSelectionChange, handleSelectionPrevious, handleSelectionNext, handleSelect] = useDropdownSearch(onStartSelect, onEndSelect);
+    const [entries, selectedIndex, dropdownIsVisible, handleFocus, handleBlur, handleChange, handleSelectionPrevious, handleSelectionNext, handleSelect] = useDropdownSearch(onStartSelect, onEndSelect);
 
     return (
         <div className="DropdownSearch">
@@ -22,8 +22,8 @@ export default function DropdownSearch(props: PropsType) {
                 onSelect={handleSelect}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                onUp={handleSelectionPrevious}
-                onDown={handleSelectionNext}
+                onArrowUp={handleSelectionPrevious}
+                onArrowDown={handleSelectionNext}
                 noRoundBottomCorners={dropdownIsVisible}
             />
             {dropdownIsVisible &&

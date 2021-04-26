@@ -4,12 +4,12 @@ import TextInput from "$components/TextInput";
 import "./TextInputContainer.scss";
 
 type PropsType = {
-    onChange: (value: string) => void;
-    onSelect: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onBlur:   () => void;
-    onFocus:  () => void;
-    onUp:     (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onDown:   (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onChange:    (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSelect:    (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onArrowUp:   (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onArrowDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onBlur:      () => void;
+    onFocus:     () => void;
 
     noRoundBottomCorners: boolean;
 }

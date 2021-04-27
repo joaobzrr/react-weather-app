@@ -37,6 +37,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     const [wrapper, setWrapper]                   = useState<Wrapper>(makeWrapper());
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
 
+    const inputValueRef                = useRef("");
     const deferrableRef                = useRef<Deferrable<LocationData>|null>(null);
     const canResolvePromiseRef         = useRef(false);
     const shouldResolvePromiseLaterRef = useRef(false);
@@ -70,15 +71,18 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     // it should be set to true or false and it's relation to
     // entrie.length.
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        inputValueRef.current = (e.target as HTMLInputElement).value;
         canResolvePromiseRef.current = false;
-        handleChangeWithDelay(e)
-    };
+        handleChangeWithDelay(e);
+    }
 
     const handleSelection = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-        const normalizedIndex = clamp(index, 0, entries.length - 1);
-        const input = e.target as HTMLInputElement;
-        input.value = entries[normalizedIndex];
+        const normalizedIndex = clamp(index, 0, entries.length);
         setWrapper(({data}) => makeWrapper(data, normalizedIndex));
+
+        const input = e.target as HTMLInputElement;
+        input.value = (normalizedIndex === 0) ?
+            inputValueRef.current : entries[normalizedIndex - 1];
     }
 
     const handleSelectionPrevious = (e: React.KeyboardEvent<HTMLInputElement>) => handleSelection(e, selectedIndex - 1);
@@ -99,7 +103,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
         promise.then(onEndSelect);
 
         if (canResolvePromiseRef.current) {
-            resolve(autocompleteData[selectedIndex]);
+            resolve(autocompleteData[Math.max(0, selectedIndex - 1)]);
         } else {
             shouldResolvePromiseLaterRef.current = true;
         }
@@ -111,14 +115,14 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
             return;
         }
 
+        shouldResolvePromiseLaterRef.current = false;
+
         if (!canResolvePromiseRef.current) {
             return;
         }
 
-        shouldResolvePromiseLaterRef.current = false;
-
         const { resolve } = deferrableRef.current!;
-        resolve(autocompleteData[selectedIndex]);
+        resolve(autocompleteData[Math.max(0, selectedIndex - 1)]);
     }, [autocompleteData]);
 
     const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;

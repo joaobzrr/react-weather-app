@@ -11,15 +11,13 @@ export default function Dropdown(props: PropsType) {
     const { entries, selected } = props;
 
     const items = useMemo(() => {
-        return entries.map((entry, index) => {
-            return (
-                <DropdownItem
-                    text={entry} // @Note: Maybe we should use props.children instead?
-                    selected={index === selected}
-                    key={index}
-                />
-            );
-        });
+        return entries.map((entry, index) => (
+            <DropdownItem
+                text={entry} // @Note: Maybe we should use props.children instead?
+                selected={(index + 1) === selected}
+                key={index}
+            />
+        ));
     }, [entries, selected]);
 
     return (

@@ -43,9 +43,10 @@ export type WeatherData = {
 }
 
 export type LocationData = {
-    city: string,
-    lat:  number;
-    lon:  number;
+    city:    string,
+    country: string;
+    lat:     number;
+    lon:     number;
 }
 
 export type AppData = {

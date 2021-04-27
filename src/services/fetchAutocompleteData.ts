@@ -10,12 +10,14 @@ export default async function fetchAutocompleteData(text: string) {
 
     try {
         const response = await axios.get(baseUrl + query);
+
         const result: AutocompleteData = [];
         for (const item of response.data) {
             result.push({
-                city: item.address.name,
-                lat: item.lat,
-                lon: item.lon
+                city:    item.address.name,
+                country: item.address.country,
+                lat:     item.lat,
+                lon:     item.lon
             });
         }
         return result;

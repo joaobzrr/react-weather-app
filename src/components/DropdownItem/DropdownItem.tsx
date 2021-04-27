@@ -3,19 +3,21 @@ import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import "./DropdownItem.scss";
 
 type PropsType = {
-    text: string;
+    city:     string;
+    country:  string;
     selected: boolean;
 }
 
 export default function DropdownItem(props: PropsType) {
-    const { text, selected } = props;
+    const { city, country, selected } = props;
 
     const {classes, setClasses} = useClasses("DropdownItem");
     useEffect(() => setClasses({"DropdownItem__selected": selected}), [selected]);
 
     return (
         <li className={serializeClasses(classes)}>
-            {text}
+            <span className="DropdownItem_city">{city}</span>
+            <span className="DropdownItem_country">{country}</span>
         </li>
     );
 }

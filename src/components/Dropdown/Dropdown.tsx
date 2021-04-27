@@ -1,24 +1,31 @@
 import React, { useMemo } from "react";
 import DropdownItem from "$components/DropdownItem";
+import { AutocompleteData } from "$src/types";
 import "./Dropdown.scss";
 
 type PropsType = {
-    entries: string[];
-    selected: number; // @Rename
+    autocompleteData: AutocompleteData;
+    selectedIndex:    number;
 }
 
 export default function Dropdown(props: PropsType) {
-    const { entries, selected } = props;
+    const { autocompleteData, selectedIndex } = props;
 
     const items = useMemo(() => {
-        return entries.map((entry, index) => (
-            <DropdownItem
-                text={entry} // @Note: Maybe we should use props.children instead?
-                selected={(index + 1) === selected}
-                key={index}
-            />
-        ));
-    }, [entries, selected]);
+        return autocompleteData.map((data, index) => {
+            const { city, country } = data;
+            const selected = (index + 1) === selectedIndex;
+
+            return (
+                <DropdownItem
+                    city={city}
+                    country={country}
+                    selected={selected}
+                    key={index}
+                />
+            );
+        });
+    }, [autocompleteData, selectedIndex]);
 
     return (
         <ul className="Dropdown">

@@ -13,7 +13,7 @@ type OnStartSelectFunctionType = () => void;
 type OnEndSelectFunctionType = (locationData: LocationData) => void;
 
 type ReturnValueType = [
-    string[],
+    AutocompleteData,
     number,
     boolean,
     () => void,
@@ -43,7 +43,6 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     const shouldResolvePromiseLaterRef = useRef(false);
 
     const { data: autocompleteData, index: selectedIndex } = wrapper;
-    const entries = autocompleteData.map(entry => entry.city);
 
     const handleFocus = () => setDropdownIsHidden(false);
     const handleBlur  = () => setDropdownIsHidden(true);
@@ -77,12 +76,16 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     }
 
     const handleSelection = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-        const normalizedIndex = clamp(index, 0, entries.length);
+        const normalizedIndex = clamp(index, 0, autocompleteData.length);
         setWrapper(({data}) => makeWrapper(data, normalizedIndex));
 
         const input = e.target as HTMLInputElement;
-        input.value = (normalizedIndex === 0) ?
-            inputValueRef.current : entries[normalizedIndex - 1];
+        if (normalizedIndex === 0) {
+            input.value = inputValueRef.current;
+        } else {
+            const { city } = autocompleteData[normalizedIndex - 1];
+            input.value = city;
+        }
     }
 
     const handleSelectionPrevious = (e: React.KeyboardEvent<HTMLInputElement>) => handleSelection(e, selectedIndex - 1);
@@ -125,7 +128,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
         resolve(autocompleteData[Math.max(0, selectedIndex - 1)]);
     }, [autocompleteData]);
 
-    const dropdownIsVisible = !dropdownIsHidden && entries.length > 0;
+    const dropdownIsVisible = !dropdownIsHidden && autocompleteData.length > 0;
 
-    return [entries, selectedIndex, dropdownIsVisible, handleFocus, handleBlur, handleChange, handleSelectionPrevious, handleSelectionNext, handleSelect];
+    return [autocompleteData, selectedIndex, dropdownIsVisible, handleFocus, handleBlur, handleChange, handleSelectionPrevious, handleSelectionNext, handleSelect];
 }

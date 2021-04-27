@@ -6,11 +6,12 @@ export default async function fetchLocationDataFromIP() {
     const baseUrl = "http://api.ipstack.com/check";
     const query = `?access_key=${key}`;
     return axios.get(baseUrl + query).then((response: AxiosResponse<any>) => {
-        const { city, latitude, longitude } = response.data;
+        const { city, country, latitude, longitude } = response.data;
         const result: LocationData = {
-            city: city,
-            lat: latitude,
-            lon: longitude
+            city:    city,
+            country: country,
+            lat:     latitude,
+            lon:     longitude
         };
         return result;
     });

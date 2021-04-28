@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { LocationData } from "$src/types";
 
-export default async function fetchLocationDataFromIP() {
+export default function fetchLocationDataFromIP() {
     const key = __IPSTACK_API_KEY__;
     const baseUrl = "http://api.ipstack.com/check";
     const query = `?access_key=${key}`;

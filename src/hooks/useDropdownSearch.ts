@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import useDelay from "$hooks/useDelay";
 import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import { clamp } from "$src/utils";
@@ -38,6 +37,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
 
     const inputValueRef                = useRef("");
+    const cancelFunctionRef            = useRef<(() => void)|null>(null);
     const deferrableRef                = useRef<Deferrable<LocationData>|null>(null);
     const canResolvePromiseRef         = useRef(false);
     const shouldResolvePromiseLaterRef = useRef(false);
@@ -47,32 +47,32 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     const handleFocus = () => setDropdownIsHidden(false);
     const handleBlur  = () => setDropdownIsHidden(true);
 
-    const handleChangeWithDelay = useDelay((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target as HTMLInputElement;
         const value = input.value;
+        inputValueRef.current = value;
+
+        canResolvePromiseRef.current = false;
+
         if (value === "") {
             setWrapper(makeWrapper());
             return;
         }
 
-        // @Todo: Particular inputs could produce no search results,
-        // which would mean autocompleteData would never be set
-        // and callbacks depending on the resolution of this promise
-        // would never be executed, so we need to handle that case
-        // as well.
-        fetchAutocompleteData(value).then((data: AutocompleteData) => {
+        if (cancelFunctionRef.current !== null) {
+            cancelFunctionRef.current();
+        }
+
+        const [promise, cancel] = fetchAutocompleteData(value);
+        cancelFunctionRef.current = cancel;
+
+        promise.then((data: AutocompleteData) => {
+            cancelFunctionRef.current = null;
             canResolvePromiseRef.current = true;
             setWrapper(makeWrapper(data));
+        }).catch(error => {
+            // @Todo: Handle 404.
         });
-    }, 500);
-
-    // @Todo: Think about the order of setDropdownIsHidden here, when
-    // it should be set to true or false and it's relation to
-    // entrie.length.
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        inputValueRef.current = (e.target as HTMLInputElement).value;
-        canResolvePromiseRef.current = false;
-        handleChangeWithDelay(e);
     }
 
     const handleSelection = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {

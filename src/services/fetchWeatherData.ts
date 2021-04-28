@@ -5,7 +5,7 @@ import {
     ForecastedWeatherData
 } from "$src/types";
 
-export default async function fetchWeatherData(lat: number, lon: number) {
+export default function fetchWeatherData(lat: number, lon: number) {
     const key = __OPEN_WEATHER_MAP_API_KEY__;
     const baseUrl = "https://api.openweathermap.org/data/2.5/onecall";
     const query = `?lat=${lat}&lon=${lon}&units=metric&appid=${key}`; // @Note: Assuming metric system for now.

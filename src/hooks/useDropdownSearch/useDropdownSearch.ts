@@ -2,31 +2,9 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import { clamp } from "$src/utils";
-import {
-    AutocompleteData,
-    LocationData,
-    Deferrable
-} from "$types/common";
 
-type OnStartSelectFunctionType = () => void;
-type OnEndSelectFunctionType = (locationData: LocationData) => void;
-
-type ReturnValueType = [
-    AutocompleteData,
-    number,
-    boolean,
-    () => void,
-    () => void,
-    (e: React.ChangeEvent<HTMLInputElement>) => void,
-    (e: React.KeyboardEvent<HTMLInputElement>) => void,
-    (e: React.KeyboardEvent<HTMLInputElement>) => void,
-    (e: React.KeyboardEvent<HTMLInputElement>) => void
-];
-
-type Wrapper = {
-    data:  AutocompleteData;
-    index: number;
-}
+import { AutocompleteData, LocationData, Deferrable } from "$types/common";
+import { ReturnValueType, Wrapper, OnStartSelectFunctionType, OnEndSelectFunctionType } from "./types";
 
 function makeWrapper(data: AutocompleteData = [], index: number = 0) {
     return { data, index };

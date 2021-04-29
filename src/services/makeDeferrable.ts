@@ -2,7 +2,7 @@ import {
     Deferrable,
     ResolveFunctionType,
     RejectFunctionType
-} from "$src/types";
+} from "$types/common";
 
 export default function makeDeferrable<T>(): Deferrable<T> {
     const deferreds: any = {resolve: null, reject: null};

@@ -11,7 +11,7 @@ import {
     LocationData,
     WeatherData,
     SelectedWeatherData,
-} from "$src/types";
+} from "$types/common";
 import "./App.scss";
 
 export function App() {

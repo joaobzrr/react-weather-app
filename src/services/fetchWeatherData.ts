@@ -3,7 +3,7 @@ import {
     WeatherData,
     CurrentWeatherData,
     ForecastedWeatherData
-} from "$src/types";
+} from "$types/common";
 
 export default function fetchWeatherData(lat: number, lon: number) {
     const key = __OPEN_WEATHER_MAP_API_KEY__;

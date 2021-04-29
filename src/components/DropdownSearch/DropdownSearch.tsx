@@ -2,7 +2,7 @@ import React from "react";
 import TextInputContainer from "$components/TextInputContainer";
 import Dropdown from "$components/Dropdown";
 import useDropdownSearch from "$hooks/useDropdownSearch";
-import { LocationData } from "$src/types";
+import { LocationData } from "$types/common";
 import "./DropdownSearch.scss";
 
 type PropsType = {

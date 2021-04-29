@@ -6,7 +6,7 @@ import {
     AutocompleteData,
     LocationData,
     Deferrable
-} from "$src/types";
+} from "$types/common";
 
 type OnStartSelectFunctionType = () => void;
 type OnEndSelectFunctionType = (locationData: LocationData) => void;

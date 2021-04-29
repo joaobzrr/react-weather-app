@@ -1,4 +1,4 @@
-import { NamedComponent } from "$src/types";
+import { NamedComponent } from "$types/common";
 
 export function getFunctionalComponentName<P>(Component: NamedComponent<P>): string | undefined {
     if (Component._name !== undefined) {

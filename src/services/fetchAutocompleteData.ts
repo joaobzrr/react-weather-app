@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { AutocompleteData } from "$src/types";
+import { AutocompleteData } from "$types/common";
 
 type ReturnValueType = [Promise<AutocompleteData>, () => void];
 
@@ -40,9 +40,5 @@ export default function fetchAutocompleteData(text: string): ReturnValueType {
         return result;
     })();
 
-    const cancel = () => {
-        cancelTokenSource.cancel();
-    }
-
-    return [promise, cancel];
+    return [promise, cancelTokenSource.cancel];
 }

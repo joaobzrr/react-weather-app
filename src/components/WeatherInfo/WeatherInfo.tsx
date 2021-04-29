@@ -4,7 +4,7 @@ import SevenDayForecast from "$components/SevenDayForecast";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
 import { AppDataContext } from "$contexts/AppDataContext";
-import { SelectedWeatherData } from "$src/types";
+import { SelectedWeatherData } from "$types/common";
 import "./WeatherInfo.scss";
 
 type PropsType = {

@@ -112,6 +112,7 @@ module.exports = env => {
                 "$hooks":      HOOKS_DIR,
                 "$services":   SERVICES_DIR,
                 "$contexts":   CONTEXTS_DIR,
+                "$types":      TYPES_DIR,
                 "$assets":     ASSETS_DIR
             },
             extensions: [".js", ".jsx", ".json", ".ts", ".tsx"]

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { LocationData } from "$src/types";
+import { LocationData } from "$types/common";
 
 export default function fetchLocationDataFromIP() {
     const key = __IPSTACK_API_KEY__;

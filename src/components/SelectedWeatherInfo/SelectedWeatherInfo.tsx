@@ -5,7 +5,7 @@ import {
     CurrentWeatherData,
     ForecastedWeatherData,
     LocationData
-} from "$src/types";
+} from "$types/common";
 import "./SelectedWeatherInfo.scss";
 
 type PropsType = {

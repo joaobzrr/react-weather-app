@@ -19,10 +19,15 @@ export type ReturnValueType = [
     HandleSelect
 ];
 
-export type Wrapper = {
-    data:  AutocompleteData;
-    index: number;
-}
-
 export type OnStartSelectFunctionType = () => void;
 export type OnEndSelectFunctionType = (locationData: LocationData) => void;
+
+export type DataAndIndex = {
+    data:  AutocompleteData;
+    index: number;
+};
+
+export type DataAndIndexAction =
+    | { type: "reinit" }
+    | { type: "set-data", data: AutocompleteData }
+    | { type: "set-index", index: number };

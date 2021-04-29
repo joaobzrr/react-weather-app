@@ -1,17 +1,13 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useReducer, useRef, useEffect, useMemo } from "react";
+import useDataAndIndex from "./useDataAndIndex";
 import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import { clamp } from "$src/utils";
-
 import { AutocompleteData, LocationData, Deferrable } from "$types/common";
-import { ReturnValueType, Wrapper, OnStartSelectFunctionType, OnEndSelectFunctionType } from "./types";
-
-function makeWrapper(data: AutocompleteData = [], index: number = 0) {
-    return { data, index };
-}
+import { ReturnValueType, OnStartSelectFunctionType, OnEndSelectFunctionType } from "./types";
 
 export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionType, onEndSelect: OnEndSelectFunctionType): ReturnValueType {
-    const [wrapper, setWrapper]                   = useState<Wrapper>(makeWrapper());
+    const [autocompleteData, selectedIndex, dispatch] = useDataAndIndex();
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
 
     const inputValueRef                = useRef("");
@@ -19,8 +15,6 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     const deferrableRef                = useRef<Deferrable<LocationData>|null>(null);
     const canResolvePromiseRef         = useRef(false);
     const shouldResolvePromiseLaterRef = useRef(false);
-
-    const { data: autocompleteData, index: selectedIndex } = wrapper;
 
     const handleFocus = () => setDropdownIsHidden(false);
     const handleBlur  = () => setDropdownIsHidden(true);
@@ -33,7 +27,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
         canResolvePromiseRef.current = false;
 
         if (value === "") {
-            setWrapper(makeWrapper());
+            dispatch({type: "reinit"});
             return;
         }
 
@@ -47,7 +41,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
         promise.then((data: AutocompleteData) => {
             cancelFunctionRef.current = null;
             canResolvePromiseRef.current = true;
-            setWrapper(makeWrapper(data));
+            dispatch({type: "set-data", data: data});
         }).catch(error => {
             // @Todo: Handle 404.
         });
@@ -55,7 +49,7 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
 
     const handleSelection = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         const normalizedIndex = clamp(index, 0, autocompleteData.length);
-        setWrapper(({data}) => makeWrapper(data, normalizedIndex));
+        dispatch({type: "set-index", index: normalizedIndex});
 
         const input = e.target as HTMLInputElement;
         if (normalizedIndex === 0) {

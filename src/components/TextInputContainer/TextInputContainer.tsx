@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import TextInput from "$components/TextInput";
+import { AutocompleteData } from "$types/common";
 import "./TextInputContainer.scss";
 
 type PropsType = {
-    onChange:    (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSelect:    (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onArrowUp:   (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onArrowDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onChange:    (value: string) => void;
+    onSelect:    (value: string) => void;
+    onArrowUp:   () => void;
+    onArrowDown: () => void;
     onBlur:      () => void;
     onFocus:     () => void;
+
+    text: string;
 
     noRoundBottomCorners: boolean;
 }

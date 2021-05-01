@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useRef, useEffect, useMemo } from "react";
-import useDataAndIndex from "./useDataAndIndex";
+import useDataAndIndex from "./useDropdownSearchData";
 import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import { clamp } from "$src/utils";
@@ -7,10 +7,9 @@ import { AutocompleteData, LocationData, Deferrable } from "$types/common";
 import { ReturnValueType, OnStartSelectFunctionType, OnEndSelectFunctionType } from "./types";
 
 export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionType, onEndSelect: OnEndSelectFunctionType): ReturnValueType {
-    const [autocompleteData, selectedIndex, dispatch] = useDataAndIndex();
+    const [autocompleteData, selectedIndex, inputText, dispatch] = useDataAndIndex();
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
 
-    const inputValueRef                = useRef("");
     const cancelFunctionRef            = useRef<(() => void)|null>(null);
     const deferrableRef                = useRef<Deferrable<LocationData>|null>(null);
     const canResolvePromiseRef         = useRef(false);
@@ -19,21 +18,18 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
     const handleFocus = () => setDropdownIsHidden(false);
     const handleBlur  = () => setDropdownIsHidden(true);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const input = e.target as HTMLInputElement;
-        const value = input.value;
-        inputValueRef.current = value;
-
-        canResolvePromiseRef.current = false;
-
-        if (value === "") {
-            dispatch({type: "reinit"});
-            return;
-        }
+    const handleChange = (value: string) => {
+        dispatch({type: "INPUT_VALUE_CHANGED", value: value});
 
         if (cancelFunctionRef.current !== null) {
             cancelFunctionRef.current();
         }
+
+        if (value === "") {
+            return;
+        }
+
+        canResolvePromiseRef.current = false;
 
         const [promise, cancel] = fetchAutocompleteData(value);
         cancelFunctionRef.current = cancel;
@@ -41,31 +37,24 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
         promise.then((data: AutocompleteData) => {
             cancelFunctionRef.current = null;
             canResolvePromiseRef.current = true;
-            dispatch({type: "set-data", data: data});
+            dispatch({type: "FETCHED_AUTOCOMPLETE_DATA", data: data});
         }).catch(error => {
             // @Todo: Handle 404.
         });
     }
 
-    const handleSelection = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-        const normalizedIndex = clamp(index, 0, autocompleteData.length);
-        dispatch({type: "set-index", index: normalizedIndex});
-
-        const input = e.target as HTMLInputElement;
-        if (normalizedIndex === 0) {
-            input.value = inputValueRef.current;
-        } else {
-            const { city } = autocompleteData[normalizedIndex - 1];
-            input.value = city;
-        }
+    const handleSelectionPrevious = () => {
+        const index = clamp(selectedIndex - 1, -1, autocompleteData.length - 1);
+        dispatch({type: "CHANGED_HIGHLIGHTED_ENTRY", index: index});
     }
 
-    const handleSelectionPrevious = (e: React.KeyboardEvent<HTMLInputElement>) => handleSelection(e, selectedIndex - 1);
-    const handleSelectionNext     = (e: React.KeyboardEvent<HTMLInputElement>) => handleSelection(e, selectedIndex + 1);
+    const handleSelectionNext = () => {
+        const index = clamp(selectedIndex + 1, -1, autocompleteData.length - 1);
+        dispatch({type: "CHANGED_HIGHLIGHTED_ENTRY", index: index});
+    }
 
-    const handleSelect = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const target = e.target as HTMLInputElement;
-        if (target.value === "") {
+    const handleSelect = (value: string) => {
+        if (value === "") {
             return;
         }
 
@@ -102,5 +91,5 @@ export default function useDropdownSearch(onStartSelect: OnStartSelectFunctionTy
 
     const dropdownIsVisible = !dropdownIsHidden && autocompleteData.length > 0;
 
-    return [autocompleteData, selectedIndex, dropdownIsVisible, handleFocus, handleBlur, handleChange, handleSelectionPrevious, handleSelectionNext, handleSelect];
+    return [autocompleteData, selectedIndex, inputText, dropdownIsVisible, handleFocus, handleBlur, handleChange, handleSelectionPrevious, handleSelectionNext, handleSelect];
 }

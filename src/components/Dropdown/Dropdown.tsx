@@ -14,7 +14,7 @@ export default function Dropdown(props: PropsType) {
     const items = useMemo(() => {
         return autocompleteData.map((data, index) => {
             const { city, country } = data;
-            const selected = (index + 1) === selectedIndex;
+            const selected = index === selectedIndex;
 
             return (
                 <DropdownItem

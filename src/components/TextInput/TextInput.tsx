@@ -4,7 +4,7 @@ import "./TextInput.scss";
 // @Todo: Export this so TextInputContainer can use it.
 type PropsType = {
     onChange:    (value: string) => void;
-    onSelect:    (value: string) => void;
+    onEnter:     (value: string) => void;
     onArrowUp:   () => void;
     onArrowDown: () => void;
     onBlur:      () => void;
@@ -19,7 +19,7 @@ type PropsType = {
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
 export default function TextInput(props: PropsType) {
-    const { onChange, onSelect, onArrowUp, onArrowDown, onBlur, onFocus, text } = props;
+    const { onChange, onEnter, onArrowUp, onArrowDown, onBlur, onFocus, text } = props;
 
     const textInputRef = useRef<HTMLInputElement>(null!);
 
@@ -39,7 +39,7 @@ export default function TextInput(props: PropsType) {
             case "Enter": {
                 e.preventDefault();
                 input.blur();
-                onSelect(input.value);
+                onEnter(input.value);
             } break;
             case "ArrowUp": {
                 e.preventDefault();

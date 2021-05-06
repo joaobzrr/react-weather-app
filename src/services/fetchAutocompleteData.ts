@@ -1,24 +1,19 @@
 import axios, { AxiosResponse } from "axios";
 import { AutocompleteData } from "$types/common";
 
-type ReturnValueType = [Promise<AutocompleteData>, () => void];
-
-export default function fetchAutocompleteData(text: string): ReturnValueType {
+export default function fetchAutocompleteData(text: string): Promise<AutocompleteData> {
     const key = __LOCATION_IQ_API_KEY__;
     const input = encodeURIComponent(text);
     const baseUrl = "https://api.locationiq.com/v1/autocomplete.php";
     const limit = 5;
     const query = `?key=${key}&q=${input}&limit=${limit}&tag=place:city&accept-language=en`;
 
-    const cancelTokenSource = axios.CancelToken.source();
-    const promise = (async () => {
+    return (async () => {
         let response: AxiosResponse<any> = null!;
 
         while (true) {
             try {
-                response = await axios.get(baseUrl + query, {
-                    cancelToken: cancelTokenSource.token
-                });
+                response = await axios.get(baseUrl + query);
                 break;
             } catch (error) {
                 if (error.response.status !== 429) {
@@ -39,6 +34,4 @@ export default function fetchAutocompleteData(text: string): ReturnValueType {
 
         return result;
     })();
-
-    return [promise, cancelTokenSource.cancel];
 }

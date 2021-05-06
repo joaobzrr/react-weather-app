@@ -14,9 +14,12 @@ export type ResolveFunctionType<T> = (value?: T | PromiseLike<T>) => void;
 export type RejectFunctionType  = (reason?: any) => void;
 
 export type Deferrable<T> = {
-    promise: Promise<T>,
-    resolve: ResolveFunctionType<T>
-    reject:  RejectFunctionType
+    promise:     Promise<T>,
+    resolve:     ResolveFunctionType<T>
+    reject:      RejectFunctionType
+    isSettled:   () => boolean;
+    isFulfilled: () => boolean;
+    isRejected:  () => boolean;
 }
 
 type BaseWeatherData = {

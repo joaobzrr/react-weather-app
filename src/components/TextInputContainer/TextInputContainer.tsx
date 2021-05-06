@@ -6,14 +6,13 @@ import "./TextInputContainer.scss";
 
 type PropsType = {
     onChange:    (value: string) => void;
-    onSelect:    (value: string) => void;
+    onEnter:     (value: string) => void;
     onArrowUp:   () => void;
     onArrowDown: () => void;
     onBlur:      () => void;
     onFocus:     () => void;
 
     text: string;
-
     noRoundBottomCorners: boolean;
 }
 

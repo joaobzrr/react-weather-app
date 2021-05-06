@@ -17,9 +17,6 @@ export type Deferrable<T> = {
     promise:     Promise<T>,
     resolve:     ResolveFunctionType<T>
     reject:      RejectFunctionType
-    isSettled:   () => boolean;
-    isFulfilled: () => boolean;
-    isRejected:  () => boolean;
 }
 
 type BaseWeatherData = {

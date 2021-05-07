@@ -29,11 +29,11 @@ export function App() {
         });
     });
 
-    const handleDropdownSearchStartSelect = () => {
+    const onBeginLoadingAutocompleteData = () => {
         setIsLoading(true);
     }
 
-    const handleDropdownSearchEndSelect = (locationData: LocationData) => {
+    const onEndLoadingAutocompleteData = (locationData: LocationData) => {
         const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
             setAppData({weather: weatherData, location: locationData});
@@ -49,8 +49,8 @@ export function App() {
     return (
         <div className="App flex flex-column">
             <DropdownSearch
-                onStartSelect={handleDropdownSearchStartSelect}
-                onEndSelect={handleDropdownSearchEndSelect}
+                onBeginLoadingAutocompleteData={onBeginLoadingAutocompleteData}
+                onEndLoadingAutocompleteData={onEndLoadingAutocompleteData}
             />
             <AppDataProvider data={appData}>
                 <WeatherInfo

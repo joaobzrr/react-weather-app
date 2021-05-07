@@ -5,7 +5,7 @@ import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
 import { AutocompleteData, Deferrable } from "$types/common";
 
-export default function useAutosuggest() {
+export default function useAutocomplete() {
     const change = useLazyRef(makeInitialDeferrable);
     const enter  = useLazyRef(makeInitialDeferrable);
 

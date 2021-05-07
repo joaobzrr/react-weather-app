@@ -12,12 +12,12 @@ import {
 import "./DropdownSearch.scss";
 
 type PropsType = {
-    onStartSelect: () => void;
-    onEndSelect:   (locationData: LocationData) => void;
+    onBeginLoadingAutocompleteData: () => void;
+    onEndLoadingAutocompleteData: (locationData: LocationData) => void;
 }
 
 export default function DropdownSearch(props: PropsType) {
-    const { onStartSelect, onEndSelect } = props;
+    const { onBeginLoadingAutocompleteData, onEndLoadingAutocompleteData } = props;
 
     const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>([]);
     const [selected,         setSelected]         = useState(-1);
@@ -47,11 +47,11 @@ export default function DropdownSearch(props: PropsType) {
             return;
         }
 
-        onStartSelect();
+        onBeginLoadingAutocompleteData();
 
         try {
             const data = await onEnter(value);
-            onEndSelect(data[0]);
+            onEndLoadingAutocompleteData(data[0]);
         } catch (error) {
             /* @Todo: Handle 404. */
         }
@@ -96,8 +96,8 @@ export default function DropdownSearch(props: PropsType) {
 
     const handleDropdownItemClick = (selected: number) => {
         setDropdownIsHidden(true);
-        onStartSelect();
-        onEndSelect(autocompleteData[selected]);
+        onBeginLoadingAutocompleteData();
+        onEndLoadingAutocompleteData(autocompleteData[selected]);
     }
 
     const handleDropdownItemEnter = (selected: number) => {

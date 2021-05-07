@@ -10,18 +10,6 @@ export function getFunctionalComponentName<P>(Component: NamedComponent<P>): str
     }
 }
 
-export function formatTemperature(value: number) {
-    return value.toString() + " º";
-}
-
-export function clamp(n: number, lower: number, upper: number) {
+export function clamp(n: number, lower: number, upper: number): number {
     return Math.max(lower, Math.min(n, upper));
-}
-
-export function isNumber(value: any) {
-    return typeof value === "number";
-}
-
-export function isFunction(obj: any): boolean {
-    return obj && Object.prototype.toString.call(obj) === '[object Function]';
 }

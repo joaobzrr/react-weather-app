@@ -1,5 +1,5 @@
 import React from "react";
-import { getFunctionalComponentName } from "$src/utils";
+import { getFunctionalComponentName } from "$utils/common";
 
 type ContainerPropsType = {
     name?: string;

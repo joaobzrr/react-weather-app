@@ -6,12 +6,7 @@ import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
-import {
-    AppData,
-    LocationData,
-    WeatherData,
-    SelectedWeatherData,
-} from "$types/common";
+import { AppData, LocationData, WeatherData } from "$types/common";
 import "./App.scss";
 
 export function App() {
@@ -29,11 +24,11 @@ export function App() {
         });
     });
 
-    const onBeginLoadingAutocompleteData = () => {
+    const handleBeginLoadingAutocompleteData = () => {
         setIsLoading(true);
     }
 
-    const onEndLoadingAutocompleteData = (locationData: LocationData) => {
+    const handleEndLoadingAutocompleteData = (locationData: LocationData) => {
         const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
             setAppData({weather: weatherData, location: locationData});
@@ -42,19 +37,19 @@ export function App() {
         });
     }
 
-    const handleSelectWeekDay = (value: number) => {
+    const handleSelectWeatherData = (value: number) => {
         setSelectedWeatherData(value);
     }
 
     return (
         <div className="App flex flex-column">
             <DropdownSearch
-                onBeginLoadingAutocompleteData={onBeginLoadingAutocompleteData}
-                onEndLoadingAutocompleteData={onEndLoadingAutocompleteData}
+                onBeginLoadingAutocompleteData={handleBeginLoadingAutocompleteData}
+                onEndLoadingAutocompleteData={handleEndLoadingAutocompleteData}
             />
             <AppDataProvider data={appData}>
                 <WeatherInfo
-                    handleSelectWeekDay={handleSelectWeekDay}
+                    onSelectWeatherData={handleSelectWeatherData}
                     selectedWeatherData={selectedWeatherData}
                     isLoading={isLoading}
                 />

@@ -1,6 +1,6 @@
 import React from "react";
 import Loader from "$components/Loader";
-import { getFunctionalComponentName } from "$src/utils";
+import { getFunctionalComponentName } from "$utils/common";
 
 export default function withLoading<P>(Component: React.ComponentType<P>) {
     const result = (props: P & {isLoading: boolean}) => {

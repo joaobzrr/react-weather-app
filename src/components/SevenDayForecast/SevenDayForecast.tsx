@@ -4,11 +4,11 @@ import { AppDataContext } from "$contexts/AppDataContext";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 
 type PropsType = {
-    handleSelectWeekDay: (value: number) => void;
+    onSelectWeatherData: (value: number) => void;
 }
 
 export default function SevenDayForecast(props: PropsType) {
-    const { handleSelectWeekDay } = props;
+    const { onSelectWeatherData } = props;
 
     const [appData, setAppData] = useContext(AppDataContext);
 
@@ -19,7 +19,7 @@ export default function SevenDayForecast(props: PropsType) {
             const weekDayName = getWeekDayNameFromDate(data.dt, true);
             result.push(
                 <WeekDayButton
-                    handlePress={handleSelectWeekDay}
+                    handlePress={onSelectWeatherData}
                     maxTemperature={maxTemperature}
                     minTemperature={minTemperature}
                     iconCode={iconCode}

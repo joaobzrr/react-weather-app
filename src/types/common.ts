@@ -35,6 +35,8 @@ export type ForecastedWeatherData = BaseWeatherData & {
     minTemperature: number;
 }
 
+export type NormalizedWeatherData = CurrentWeatherData;
+
 export type WeatherData = {
     current: CurrentWeatherData;
     daily:   ForecastedWeatherData[]

@@ -1,6 +1,5 @@
 import React from "react";
 import WeatherIcon from "$components/WeatherIcon";
-import { formatTemperature } from "$src/utils";
 import "./WeekDayButton.scss";
 
 type PropsType = {
@@ -26,10 +25,10 @@ export default function WeekDayButton(props: PropsType) {
             <WeatherIcon iconCode={iconCode} />
             <div className="WeekDayButton_temperature">
                 <span className="WeekDayButton_max">
-                    {formatTemperature(maxTemperature)}
+                    {maxTemperature}º
                 </span>
                 <span className="WeekDayButton_min">
-                    {formatTemperature(minTemperature)}
+                    {minTemperature}º
                 </span>
             </div>
         </div>

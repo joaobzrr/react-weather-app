@@ -3,12 +3,8 @@ import TextInputContainer from "$components/TextInputContainer";
 import Dropdown from "$components/Dropdown";
 import useAutocomplete from "$hooks/useAutocomplete";
 import makeDeferrable from "$services/makeDeferrable";
-import { clamp } from "$src/utils";
-import {
-    LocationData,
-    AutocompleteData,
-    Deferrable
-} from "$types/common";
+import { clamp } from "$utils/common";
+import { LocationData, AutocompleteData, Deferrable } from "$types/common";
 import "./DropdownSearch.scss";
 
 type PropsType = {

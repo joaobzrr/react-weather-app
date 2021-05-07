@@ -16,7 +16,7 @@ import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
-    const [selectedWeatherData, setSelectedWeatherData] = useState<SelectedWeatherData>("current");
+    const [selectedWeatherData, setSelectedWeatherData] = useState(-1);
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
@@ -37,7 +37,7 @@ export function App() {
         const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
             setAppData({weather: weatherData, location: locationData});
-            setSelectedWeatherData("current");
+            setSelectedWeatherData(-1);
             setIsLoading(false);
         });
     }

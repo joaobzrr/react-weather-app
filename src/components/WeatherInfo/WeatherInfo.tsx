@@ -9,7 +9,7 @@ import "./WeatherInfo.scss";
 
 type PropsType = {
     handleSelectWeekDay: (value: number) => void;
-    selectedWeatherData: SelectedWeatherData;
+    selectedWeatherData: number;
 };
 
 function WeatherInfo(props: PropsType) {
@@ -18,7 +18,7 @@ function WeatherInfo(props: PropsType) {
     const [appData, setAppData] = useContext(AppDataContext);
 
     const locationData = appData.location;
-    const weatherData = (selectedWeatherData === "current") ?
+    const weatherData = (selectedWeatherData === -1) ?
         appData.weather.current :
         appData.weather.daily[selectedWeatherData];
 

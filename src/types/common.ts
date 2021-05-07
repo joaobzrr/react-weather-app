@@ -7,8 +7,6 @@ export type UseStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>]
 
 export type NamedComponent<T> = React.ComponentType<T> & { _name?: string; };
 
-export type TimeoutType = ReturnType<typeof setTimeout>;
-
 export type ResolveFunctionType<T> = (value?: T | PromiseLike<T>) => void;
 
 export type RejectFunctionType  = (reason?: any) => void;
@@ -54,11 +52,4 @@ export type AppData = {
     location: LocationData;
 }
 
-export type SelectedWeatherData = "current" | number;
-
 export type AutocompleteData = LocationData[];
-
-export type DropdownEntry = {
-    id:   number;
-    data: LocationData;
-}

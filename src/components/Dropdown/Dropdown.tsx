@@ -4,12 +4,13 @@ import { AutocompleteData } from "$types/common";
 import "./Dropdown.scss";
 
 type PropsType = {
+    onSelect: (selected: number) => void;
     autocompleteData: AutocompleteData;
     selectedIndex:    number;
 }
 
 export default function Dropdown(props: PropsType) {
-    const { autocompleteData, selectedIndex } = props;
+    const { onSelect, autocompleteData, selectedIndex } = props;
 
     const items = useMemo(() => {
         return autocompleteData.map((data, index) => {
@@ -18,6 +19,8 @@ export default function Dropdown(props: PropsType) {
 
             return (
                 <DropdownItem
+                    onSelect={onSelect}
+                    index={index}
                     city={city}
                     country={country}
                     selected={selected}

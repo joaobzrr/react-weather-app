@@ -28,7 +28,7 @@ export default function DropdownSearch(props: PropsType) {
 
     const [onChange, onEnter] = useAutocomplete();
 
-    const handleChange = async (value: string) => {
+    const handleInputChange = async (value: string) => {
         lastTyped.current = value;
 
         try {
@@ -44,7 +44,7 @@ export default function DropdownSearch(props: PropsType) {
         }
     }
 
-    const handleEnter = async (value: string) => {
+    const handleInputEnter = async (value: string) => {
         if (value === "") {
             return;
         }
@@ -64,7 +64,7 @@ export default function DropdownSearch(props: PropsType) {
     }
 
     // @Rename
-    const handleSelectionPrevious = () => {
+    const handleInputArrowUp = () => {
         setSelected((selected) => {
             const index = normalizedIndex(selected - 1);
             const value = (index > -1) ?
@@ -76,7 +76,7 @@ export default function DropdownSearch(props: PropsType) {
     }
 
     // @Rename
-    const handleSelectionNext = () => {
+    const handleInputArrowDown = () => {
         setSelected((selected) => {
             const index = normalizedIndex(selected + 1);
             setInputValue(autocompleteData[index].city);
@@ -84,25 +84,30 @@ export default function DropdownSearch(props: PropsType) {
         });
     }
 
-    const handleFocus = () => setDropdownIsHidden(false);
-    const handleBlur  = () => setDropdownIsHidden(true);
+    const handleDropdownItemHover = (selected: number) => {
+        setSelected(selected);
+    }
+
+    const handleInputFocus = () => setDropdownIsHidden(false);
+    const handleInputBlur  = () => setDropdownIsHidden(true);
 
     const dropdownIsVisible = !dropdownIsHidden && autocompleteData.length > 0;
 
     return (
         <div className="DropdownSearch">
             <TextInputContainer
-                onChange={handleChange}
-                onEnter={handleEnter}
-                onArrowUp={handleSelectionPrevious}
-                onArrowDown={handleSelectionNext}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
+                onChange={handleInputChange}
+                onEnter={handleInputEnter}
+                onArrowUp={handleInputArrowUp}
+                onArrowDown={handleInputArrowDown}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
                 text={inputValue}
                 noRoundBottomCorners={dropdownIsVisible}
             />
             {dropdownIsVisible &&
                 <Dropdown
+                    onSelect={handleDropdownItemHover}
                     autocompleteData={autocompleteData}
                     selectedIndex={selected}
                 />

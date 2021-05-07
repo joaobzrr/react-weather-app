@@ -10,7 +10,7 @@ type PropsType = {
     onClick:     () => void;
     onBlur:      () => void;
 
-    text: string;
+    value: string;
 }
 
 // @Todo: Add placeholder text.
@@ -19,7 +19,7 @@ type PropsType = {
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
 export default function TextInput(props: PropsType) {
-    const { onChange, onEnter, onArrowUp, onArrowDown, onClick, onBlur, text } = props;
+    const { onChange, onEnter, onArrowUp, onArrowDown, onClick, onBlur, value } = props;
 
     const textInputRef = useRef<HTMLInputElement>(null!);
 
@@ -28,9 +28,7 @@ export default function TextInput(props: PropsType) {
         onChange(input.value);
     }
 
-    useEffect(() => {
-        textInputRef.current.value = text;
-    }, [text]);
+    useEffect(() => { textInputRef.current.value = value; }, [value]);
 
     // @Todo: Make sure that this works on mobile too.
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

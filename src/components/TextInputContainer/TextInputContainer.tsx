@@ -12,7 +12,7 @@ type PropsType = {
     onClick:     () => void;
     onBlur:      () => void;
 
-    text: string;
+    value: string;
     noRoundBottomCorners: boolean;
 }
 

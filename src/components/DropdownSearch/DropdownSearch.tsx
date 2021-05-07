@@ -22,14 +22,12 @@ export default function DropdownSearch(props: PropsType) {
     const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>([]);
     const [selected,         setSelected]         = useState(-1);
     const [dropdownIsHidden, setDropdownIsHidden] = useState(false);
-    const [inputValue,       setInputValue]       = useState("");
-
-    const lastTyped = useRef("");
+    const [inputValue,       setInputValue]       = useState({current: "", typed: ""})
 
     const [onChange, onEnter] = useAutocomplete();
 
     const handleInputChange = async (value: string) => {
-        lastTyped.current = value;
+        setInputValue({current: value, typed: value});
 
         try {
             const data = await onChange(value);
@@ -66,10 +64,11 @@ export default function DropdownSearch(props: PropsType) {
     const handleInputArrowUp = () => {
         setSelected((selected) => {
             const index = normalizedIndex(selected - 1);
-            const value = (index > -1) ?
+            const current = (index > -1) ?
                 autocompleteData[index].city :
-                lastTyped.current;
-            setInputValue(value);
+                inputValue.typed;
+            const typed = inputValue.typed;
+            setInputValue({current, typed});
             return index;
         });
     }
@@ -77,7 +76,9 @@ export default function DropdownSearch(props: PropsType) {
     const handleInputArrowDown = () => {
         setSelected((selected) => {
             const index = normalizedIndex(selected + 1);
-            setInputValue(autocompleteData[index].city);
+            const current = autocompleteData[index].city;
+            const typed = inputValue.typed;
+            setInputValue({current, typed});
             return index;
         });
     }
@@ -106,7 +107,7 @@ export default function DropdownSearch(props: PropsType) {
                 onArrowDown={handleInputArrowDown}
                 onClick={handleInputClick}
                 onBlur={handleInputBlur}
-                text={inputValue}
+                value={inputValue.current}
                 noRoundBottomCorners={dropdownIsVisible}
             />
             {dropdownIsVisible &&

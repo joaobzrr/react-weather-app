@@ -7,8 +7,8 @@ type PropsType = {
     onEnter:     (value: string) => void;
     onArrowUp:   () => void;
     onArrowDown: () => void;
+    onClick:     () => void;
     onBlur:      () => void;
-    onFocus:     () => void;
 
     text: string;
 }
@@ -19,7 +19,7 @@ type PropsType = {
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
 export default function TextInput(props: PropsType) {
-    const { onChange, onEnter, onArrowUp, onArrowDown, onBlur, onFocus, text } = props;
+    const { onChange, onEnter, onArrowUp, onArrowDown, onClick, onBlur, text } = props;
 
     const textInputRef = useRef<HTMLInputElement>(null!);
 
@@ -60,7 +60,7 @@ export default function TextInput(props: PropsType) {
             ref={textInputRef}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            onFocus={onFocus}
+            onClick={onClick}
             onBlur={onBlur}
             type="text"
             className="TextInput"

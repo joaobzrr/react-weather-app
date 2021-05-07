@@ -3,26 +3,37 @@ import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import "./DropdownItem.scss";
 
 type PropsType = {
-    onSelect: (selected: number) => void;
-    index: number;
+    onMouseClick: (selected: number) => void;
+    onMouseEnter: (selected: number) => void;
+    index:    number;
     city:     string;
     country:  string;
     selected: boolean;
 }
 
 export default function DropdownItem(props: PropsType) {
-    const { onSelect, index, city, country, selected } = props;
+    const { onMouseClick, onMouseEnter, index, city, country, selected } = props;
 
     const {classes, setClasses} = useClasses("DropdownItem");
     useEffect(() => setClasses({"DropdownItem__selected": selected}), [selected]);
 
-    const onMouseEnter = (e: React.MouseEvent<HTMLLIElement>) => {
-        onSelect(index);
+    const handleMouseClick = (e: React.MouseEvent<HTMLLIElement>) => {
+        onMouseClick(index);
+    }
+
+    const handleMouseEnter = (e: React.MouseEvent<HTMLLIElement>) => {
+        onMouseEnter(index);
+    }
+
+    const handleMouseDown = (e: React.MouseEvent<HTMLLIElement>) => {
+        e.preventDefault();
     }
 
     return (
         <li
-            onMouseEnter={onMouseEnter}
+            onClick={handleMouseClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseDown={handleMouseDown}
             className={serializeClasses(classes)}
         >
             <span className="DropdownItem_city">{city}</span>

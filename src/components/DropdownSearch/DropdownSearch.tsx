@@ -63,7 +63,6 @@ export default function DropdownSearch(props: PropsType) {
         return clamp(selected, -1, autocompleteData.length - 1);
     }
 
-    // @Rename
     const handleInputArrowUp = () => {
         setSelected((selected) => {
             const index = normalizedIndex(selected - 1);
@@ -75,7 +74,6 @@ export default function DropdownSearch(props: PropsType) {
         });
     }
 
-    // @Rename
     const handleInputArrowDown = () => {
         setSelected((selected) => {
             const index = normalizedIndex(selected + 1);
@@ -84,12 +82,18 @@ export default function DropdownSearch(props: PropsType) {
         });
     }
 
-    const handleDropdownItemHover = (selected: number) => {
-        setSelected(selected);
+    const handleInputClick = () => setDropdownIsHidden(false);
+    const handleInputBlur  = () => setDropdownIsHidden(true);
+
+    const handleDropdownItemClick = (selected: number) => {
+        setDropdownIsHidden(true);
+        onStartSelect();
+        onEndSelect(autocompleteData[selected]);
     }
 
-    const handleInputFocus = () => setDropdownIsHidden(false);
-    const handleInputBlur  = () => setDropdownIsHidden(true);
+    const handleDropdownItemEnter = (selected: number) => {
+        setSelected(selected);
+    }
 
     const dropdownIsVisible = !dropdownIsHidden && autocompleteData.length > 0;
 
@@ -100,14 +104,15 @@ export default function DropdownSearch(props: PropsType) {
                 onEnter={handleInputEnter}
                 onArrowUp={handleInputArrowUp}
                 onArrowDown={handleInputArrowDown}
-                onFocus={handleInputFocus}
+                onClick={handleInputClick}
                 onBlur={handleInputBlur}
                 text={inputValue}
                 noRoundBottomCorners={dropdownIsVisible}
             />
             {dropdownIsVisible &&
                 <Dropdown
-                    onSelect={handleDropdownItemHover}
+                    onDropdownItemMouseClick={handleDropdownItemClick}
+                    onDropdownItemMouseEnter={handleDropdownItemEnter}
                     autocompleteData={autocompleteData}
                     selectedIndex={selected}
                 />

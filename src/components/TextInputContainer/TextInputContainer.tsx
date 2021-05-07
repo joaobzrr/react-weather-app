@@ -9,8 +9,8 @@ type PropsType = {
     onEnter:     (value: string) => void;
     onArrowUp:   () => void;
     onArrowDown: () => void;
+    onClick:     () => void;
     onBlur:      () => void;
-    onFocus:     () => void;
 
     text: string;
     noRoundBottomCorners: boolean;

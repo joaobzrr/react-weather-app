@@ -96,6 +96,11 @@ export default function DropdownSearch(props: PropsType) {
 
     const handleDropdownItemClick = (selected: number) => {
         setDropdownIsHidden(true);
+
+        const current = autocompleteData[selected].city;
+        const typed = inputValue.typed;
+        setInputValue({current, typed});
+
         onBeginLoadingAutocompleteData();
         onEndLoadingAutocompleteData(autocompleteData[selected]);
     }

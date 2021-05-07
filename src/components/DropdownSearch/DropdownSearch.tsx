@@ -62,6 +62,10 @@ export default function DropdownSearch(props: PropsType) {
     }
 
     const handleInputArrowUp = () => {
+        if (autocompleteData.length === 0) {
+            return;
+        }
+
         setSelected((selected) => {
             const index = normalizedIndex(selected - 1);
             const current = (index > -1) ?
@@ -74,6 +78,10 @@ export default function DropdownSearch(props: PropsType) {
     }
 
     const handleInputArrowDown = () => {
+        if (autocompleteData.length === 0) {
+            return;
+        }
+
         setSelected((selected) => {
             const index = normalizedIndex(selected + 1);
             const current = autocompleteData[index].city;

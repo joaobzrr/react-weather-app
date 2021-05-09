@@ -3,21 +3,18 @@ import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
-import { AppDataContext } from "$contexts/AppDataContext";
 import normalizeWeatherData from "$utils/normalizeWeatherData";
+import { AppData } from "$types/common";
 import "./WeatherInfo.scss";
 
 type PropsType = {
     onSelectWeatherData: (value: number) => void;
     selectedWeatherData: number;
+    appData: AppData;
 };
 
 function WeatherInfo(props: PropsType) {
-    const { onSelectWeatherData, selectedWeatherData } = props;
-
-    // @Todo: Instead of using a context we could just pass
-    // the data directly as props.
-    const [appData, setAppData] = useContext(AppDataContext);
+    const { onSelectWeatherData, selectedWeatherData, appData } = props;
 
     const locationData = appData.location;
     const weatherData = normalizeWeatherData(appData.weather, selectedWeatherData);
@@ -30,6 +27,7 @@ function WeatherInfo(props: PropsType) {
             />
             <SevenDayForecast
                 onSelectWeatherData={onSelectWeatherData}
+                appData={appData}
             />
         </div>
     );

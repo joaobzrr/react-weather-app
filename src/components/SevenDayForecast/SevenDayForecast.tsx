@@ -1,16 +1,15 @@
 import React, { useContext, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
-import { AppDataContext } from "$contexts/AppDataContext";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
+import { AppData } from "$types/common";
 
 type PropsType = {
     onSelectWeatherData: (value: number) => void;
+    appData: AppData;
 }
 
 export default function SevenDayForecast(props: PropsType) {
-    const { onSelectWeatherData } = props;
-
-    const [appData, setAppData] = useContext(AppDataContext);
+    const { onSelectWeatherData, appData } = props;
 
     const buttons = useMemo(() => {
         const result = [];

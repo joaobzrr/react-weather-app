@@ -11,7 +11,6 @@ const SRC_DIR        = path.resolve(ROOT_DIR,   "src");
 const COMPONENTS_DIR = path.resolve(SRC_DIR,    "components");
 const HOOKS_DIR      = path.resolve(SRC_DIR,    "hooks");
 const SERVICES_DIR   = path.resolve(SRC_DIR,    "services");
-const CONTEXTS_DIR   = path.resolve(SRC_DIR,    "contexts");
 const UTILS_DIR      = path.resolve(SRC_DIR,    "utils");
 const TYPES_DIR      = path.resolve(SRC_DIR,    "types");
 const ASSETS_DIR     = path.resolve(SRC_DIR,    "assets");
@@ -112,7 +111,6 @@ module.exports = env => {
                 "$components": COMPONENTS_DIR,
                 "$hooks":      HOOKS_DIR,
                 "$services":   SERVICES_DIR,
-                "$contexts":   CONTEXTS_DIR,
                 "$utils":      UTILS_DIR,
                 "$types":      TYPES_DIR,
                 "$assets":     ASSETS_DIR

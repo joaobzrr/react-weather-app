@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import withContainer from "$components/withContainer";
-import { AppDataProvider } from "$contexts/AppDataContext";
 import useOnce from "$hooks/useOnce";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
@@ -47,13 +46,12 @@ export function App() {
                 onBeginLoadingAutocompleteData={handleBeginLoadingAutocompleteData}
                 onEndLoadingAutocompleteData={handleEndLoadingAutocompleteData}
             />
-            <AppDataProvider data={appData}>
-                <WeatherInfo
-                    onSelectWeatherData={handleSelectWeatherData}
-                    selectedWeatherData={selectedWeatherData}
-                    isLoading={isLoading}
-                />
-            </AppDataProvider>
+            <WeatherInfo
+                onSelectWeatherData={handleSelectWeatherData}
+                selectedWeatherData={selectedWeatherData}
+                appData={appData}
+                isLoading={isLoading}
+            />
         </div>
     );
 }

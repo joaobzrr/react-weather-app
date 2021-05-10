@@ -35,8 +35,6 @@ export type ForecastedWeatherData = BaseWeatherData & {
     minTemperature: number;
 }
 
-export type NormalizedWeatherData = CurrentWeatherData;
-
 export type WeatherData = {
     current: CurrentWeatherData;
     daily:   ForecastedWeatherData[]
@@ -50,8 +48,8 @@ export type LocationData = {
 }
 
 export type AppData = {
-    weather:  WeatherData;
-    location: LocationData;
+    weatherData:  WeatherData;
+    locationData: LocationData;
 }
 
 export type AutocompleteData = LocationData[];

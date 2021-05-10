@@ -2,13 +2,13 @@ import React from "react";
 import WeatherIcon from "$components/WeatherIcon";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import {
-    NormalizedWeatherData,
+    CurrentWeatherData,
     LocationData
 } from "$types/common";
 import "./SelectedWeatherInfo.scss";
 
 type PropsType = {
-    weatherData: NormalizedWeatherData;
+    weatherData: CurrentWeatherData;
     locationData: LocationData;
 }
 

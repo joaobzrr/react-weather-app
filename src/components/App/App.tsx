@@ -10,14 +10,14 @@ import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
-    const [selectedWeatherData, setSelectedWeatherData] = useState(-1);
+    const [selectedWeekDay, setSelectedWeekDay] = useState(-1);
     const [isLoading, setIsLoading] = useState(true);
 
     useOnce(() => {
         fetchLocationDataFromIP().then((locationData: LocationData) => {
             const { lat, lon } = locationData;
             fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-                setAppData({weather: weatherData, location: locationData});
+                setAppData({weatherData, locationData});
                 setIsLoading(false);
             });
         });
@@ -30,14 +30,14 @@ export function App() {
     const handleEndLoadingAutocompleteData = (locationData: LocationData) => {
         const { lat, lon } = locationData;
         fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-            setAppData({weather: weatherData, location: locationData});
-            setSelectedWeatherData(-1);
+            setAppData({weatherData, locationData});
+            setSelectedWeekDay(-1);
             setIsLoading(false);
         });
     }
 
     const handleSelectWeatherData = (value: number) => {
-        setSelectedWeatherData(value);
+        setSelectedWeekDay(value);
     }
 
     return (
@@ -48,8 +48,8 @@ export function App() {
             />
             <WeatherInfo
                 onSelectWeatherData={handleSelectWeatherData}
-                selectedWeatherData={selectedWeatherData}
                 appData={appData}
+                selectedWeekDay={selectedWeekDay}
                 isLoading={isLoading}
             />
         </div>

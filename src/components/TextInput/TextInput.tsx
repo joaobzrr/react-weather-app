@@ -2,8 +2,6 @@ import React, { useRef, useEffect } from "react";
 import { Callback, TextInputPropsType } from "$types/common";
 import "./TextInput.scss";
 
-// @Todo: Add placeholder text.
-
 // @Todo: Refactor this in two components: a more specific
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
@@ -44,13 +42,14 @@ export default function TextInput(props: TextInputPropsType) {
 
     return (
         <input
-            ref={textInputRef}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onClick={onClick}
             onBlur={onBlur}
             type="text"
             className="TextInput"
+            placeholder={"Enter city name"}
+            ref={textInputRef}
         />
     );
 }

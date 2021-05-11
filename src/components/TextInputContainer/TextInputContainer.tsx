@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import TextInput from "$components/TextInput";
-import {
-    Callback,
-    TextInputPropsType,
-    AutocompleteData
-} from "$types/common";
+import { TextInputPropsType } from "$types/common";
 import "./TextInputContainer.scss";
 
 type PropsType = TextInputPropsType & {

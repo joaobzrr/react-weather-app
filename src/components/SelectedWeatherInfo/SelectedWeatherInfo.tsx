@@ -1,7 +1,6 @@
 import React from "react";
 import MeasurementSystemSelector from "$components/MeasurementSystemSelector";
 import WeatherIcon from "$components/WeatherIcon";
-import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import {
     Callback,
     CurrentWeatherData,

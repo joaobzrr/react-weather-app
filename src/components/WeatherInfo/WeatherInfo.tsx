@@ -1,4 +1,4 @@
-import React, { useState, useContext }  from "react";
+import React from "react";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
 import forecastedToCurrentWeatherData from "$utils/forecastedToCurrentWeatherData";

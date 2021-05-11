@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { Callback, WeatherData } from "$types/common";

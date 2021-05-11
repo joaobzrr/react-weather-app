@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Callback, TextInputPropsType } from "$types/common";
+import { TextInputPropsType } from "$types/common";
 import "./TextInput.scss";
 
 // @Todo: Refactor this in two components: a more specific

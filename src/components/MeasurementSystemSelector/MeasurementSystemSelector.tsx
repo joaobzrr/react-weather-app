@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import MeasurementSystemButton from "$components/MeasurementSystemButton";
 import { Callback, MeasurementSystem } from "$types/common";
 import "./MeasurementSystemSelector.scss";

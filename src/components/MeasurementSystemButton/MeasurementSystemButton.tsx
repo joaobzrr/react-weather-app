@@ -2,7 +2,7 @@ import React, { useEffect, FC } from "react";
 import Button from "$components/Button";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import { makeClassName } from "$utils/common";
-import { ButtonPropsType, MeasurementSystem } from "$types/common";
+import { ButtonPropsType } from "$types/common";
 import "./MeasurementSystemButton.scss";
 
 type PropsType = ButtonPropsType & {

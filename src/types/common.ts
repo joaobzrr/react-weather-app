@@ -52,4 +52,6 @@ export type AppData = {
     locationData: LocationData;
 }
 
+export type MeasurementSystem = "metric"|"imperial";
+
 export type AutocompleteData = LocationData[];

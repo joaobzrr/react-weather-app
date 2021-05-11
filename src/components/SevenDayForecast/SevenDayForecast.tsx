@@ -4,12 +4,12 @@ import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { WeatherData } from "$types/common";
 
 type PropsType = {
-    onSelectWeatherData: (value: number) => void;
+    onSelectWeekDay: (value: number) => void;
     weatherData: WeatherData;
 }
 
 export default function SevenDayForecast(props: PropsType) {
-    const { onSelectWeatherData, weatherData } = props;
+    const { onSelectWeekDay, weatherData } = props;
 
     const buttons = useMemo(() => {
         const result = [];
@@ -18,7 +18,7 @@ export default function SevenDayForecast(props: PropsType) {
             const weekDayName = getWeekDayNameFromDate(data.dt, true);
             result.push(
                 <WeekDayButton
-                    handlePress={onSelectWeatherData}
+                    handlePress={onSelectWeekDay}
                     maxTemperature={maxTemperature}
                     minTemperature={minTemperature}
                     iconCode={iconCode}

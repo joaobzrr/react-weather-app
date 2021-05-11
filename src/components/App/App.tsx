@@ -36,7 +36,7 @@ export function App() {
         });
     }
 
-    const handleSelectWeatherData = (value: number) => {
+    const handleSelectWeekDay = (value: number) => {
         setSelectedWeekDay(value);
     }
 
@@ -47,7 +47,7 @@ export function App() {
                 onEndLoadingAutocompleteData={handleEndLoadingAutocompleteData}
             />
             <WeatherInfo
-                onSelectWeatherData={handleSelectWeatherData}
+                onSelectWeekDay={handleSelectWeekDay}
                 appData={appData}
                 selectedWeekDay={selectedWeekDay}
                 isLoading={isLoading}

@@ -43,7 +43,10 @@ export default function SelectedWeatherInfo(props: PropsType) {
                             <div>Wind: {weatherData.windSpeed} {speedUnit}</div>
                         </div>
                     </div>
-                    <WeatherIcon iconCode={weatherData.iconCode}/>
+                    <WeatherIcon
+                        iconCode={weatherData.iconCode}
+                        className="SelectedWeatherInfo_icon"
+                    />
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, FC } from "react";
 import Button from "$components/Button";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
-import { makeClassName } from "$utils/common";
+import { popFromObject } from "$utils/common";
 import { ButtonPropsType } from "$types/common";
 import "./MeasurementSystemButton.scss";
 
@@ -18,7 +18,12 @@ const MeasurementSystemButton: FC<PropsType> = props => {
         setClasses({MeasurementSystemButton__selected: selected});
     }, [selected]);
 
-    const className = makeClassName(buttonProps, serializeClasses(classes));
+    // @Todo: Remember to change this when we update serializeClasses
+    // to handle arrays.
+    const className = [
+        popFromObject(buttonProps, "className", ""),
+        serializeClasses(classes)
+    ].join(" ");
 
     return <Button className={className} {...buttonProps}/>;
 }

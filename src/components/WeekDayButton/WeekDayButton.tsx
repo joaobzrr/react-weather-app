@@ -2,6 +2,7 @@ import React from "react";
 import Button from "$components/Button";
 import WeatherIcon from "$components/WeatherIcon";
 import { ButtonPropsType } from "$types/common";
+
 import "./WeekDayButton.scss";
 
 type PropsType = ButtonPropsType & {
@@ -17,7 +18,10 @@ export default function WeekDayButton(props: PropsType) {
     return (
         <Button className="WeekDayButton" {...buttonProps}>
             <p className="WeekDayButton_day">{weekDayName}</p>
-            <WeatherIcon iconCode={iconCode} />
+            <WeatherIcon
+                iconCode={iconCode}
+                className="WeekDayButton_icon"
+            />
             <div className="WeekDayButton_temperature">
                 <span className="WeekDayButton_max">
                     {maxTemperature}º

@@ -1,3 +1,13 @@
+export function popFromObject(obj: Record<string, any>, key: string, defaultValue?: any) {
+    if (!obj.hasOwnProperty(key)) {
+        return defaultValue;
+    }
+
+    const result = obj[key];
+    delete obj[key];
+    return result;
+}
+
 export function clamp(n: number, lower: number, upper: number): number {
     return Math.max(lower, Math.min(n, upper));
 }
@@ -12,16 +22,4 @@ export function kphToMph(kph: number): number {
 
 export function cloneDate(date: Date): Date {
     return new Date(date.getTime());
-}
-
-export function makeClassName(obj: any, ...classes: string[]): string {
-    if (!obj.hasOwnProperty("className")) {
-        return "";
-    }
-
-    const temp = obj.className;
-    delete obj.className;
-
-    const result = [temp, ...classes].join(" ");
-    return result;
 }

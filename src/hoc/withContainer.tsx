@@ -1,5 +1,5 @@
 import React from "react";
-import { makeClassName } from "$utils/common";
+import { popFromObject } from "$utils/common";
 import { NamedComponent } from "$types/common";
 
 export default function withContainer<P>(
@@ -8,7 +8,13 @@ export default function withContainer<P>(
 ) {
     const componentName = Component._name;
     const containerClassName = componentName + "_container";
-    const className = makeClassName(containerProps, containerClassName);
+
+    // @Todo: Remember to change this when we update serializeClasses
+    // to handle arrays.
+    const className = [
+        popFromObject(containerProps, "className", ""),
+        containerClassName
+    ].join(" ");
 
     const result = (props: P) => (
         <div className={className} {...containerProps}>

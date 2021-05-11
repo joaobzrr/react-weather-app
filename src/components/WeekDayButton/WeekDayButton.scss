@@ -7,8 +7,9 @@
     cursor: pointer;
 }
 
-.WeekDayButton .WeatherIcon {
-    transform: scale(0.75);
+.WeekDayButton_icon {
+    width:  6rem;
+    height: 6rem;
 }
 
 .WeekDayButton_day {

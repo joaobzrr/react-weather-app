@@ -34,6 +34,11 @@ export type TextInputPropsType = {
     value:       string;
 }
 
+export type IconPropsType = {
+    fileName:   string;
+    className?: string;
+}
+
 type BaseWeatherData = {
     dt:            Date;
     description:   string;

@@ -1,8 +1,6 @@
 import React, { useState, useContext }  from "react";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
-import withLoading from "$components/withLoading";
-import withContainer from "$components/withContainer";
 import forecastedToCurrentWeatherData from "$utils/forecastedToCurrentWeatherData";
 import convertWeatherData from "$utils/convertWeatherData";
 import { AppData, MeasurementSystem } from "$types/common";
@@ -16,7 +14,7 @@ type PropsType = {
     selectedWeekDay: number;
 };
 
-function WeatherInfo(props: PropsType) {
+export default function WeatherInfo(props: PropsType) {
     const { onSelectMeasurementSystem, onSelectWeekDay, appData, measurementSystem, selectedWeekDay } = props;
     const { weatherData: _weatherData, locationData } = appData;
 
@@ -41,7 +39,3 @@ function WeatherInfo(props: PropsType) {
         </div>
     );
 }
-
-export default withContainer(withLoading(WeatherInfo), {
-    classes: "flex justify-content-center align-items-center"
-});

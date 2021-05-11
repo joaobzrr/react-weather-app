@@ -1,8 +1,8 @@
 import React from "react";
 import Loader from "$components/Loader";
-import { getFunctionalComponentName } from "$utils/common";
+import { NamedComponent } from "$types/common";
 
-export default function withLoading<P>(Component: React.ComponentType<P>) {
+export default function withLoading<P>(Component: NamedComponent<P>) {
     const result = (props: P & {isLoading: boolean}) => {
         const { isLoading, ...componentProps } = props;
 
@@ -11,11 +11,7 @@ export default function withLoading<P>(Component: React.ComponentType<P>) {
             <Component {...componentProps as unknown as P}/>;
     }
 
-    const componentName = getFunctionalComponentName(Component);
-    if (componentName === undefined) {
-        throw new Error("Wrapped component does not have a name");
-    }
-
+    const componentName = Component._name;
     result._name = componentName;
     result.displayName = `withLoading(${componentName})`;
     return result;

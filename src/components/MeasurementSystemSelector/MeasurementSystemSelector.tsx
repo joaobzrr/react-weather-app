@@ -15,14 +15,14 @@ export default function MeasurementSystemSelector(props: PropsType) {
         <div className="MeasurementSystemSelector">
             <MeasurementSystemButton
                 onClick={() => onSelectMeasurementSystem("metric")}
-                isSelected={measurementSystem === "metric"}
+                selected={measurementSystem === "metric"}
                 className="MeasurementSystemSelector_button MeasurementSystemSelector_first"
             >
                 Cº
             </MeasurementSystemButton>
             <MeasurementSystemButton
                 onClick={() => onSelectMeasurementSystem("imperial")}
-                isSelected={measurementSystem === "imperial"}
+                selected={measurementSystem === "imperial"}
                 className="MeasurementSystemSelector_button"
             >
                 Fº

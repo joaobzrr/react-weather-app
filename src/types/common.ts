@@ -3,10 +3,6 @@ import React from "react";
 export type ArrayElementType<ArrayType extends readonly unknown[]> =
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
-export type UseStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
-
-export type NamedComponent<T> = React.ComponentType<T> & { _name?: string; };
-
 export type ResolveFunctionType<T> = (value?: T | PromiseLike<T>) => void;
 
 export type RejectFunctionType  = (reason?: any) => void;
@@ -15,6 +11,15 @@ export type Deferrable<T> = {
     promise:     Promise<T>,
     resolve:     ResolveFunctionType<T>
     reject:      RejectFunctionType
+}
+
+export type UseStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
+
+export type NamedComponent<T> = React.ComponentType<T> & { _name?: string; };
+
+export type ButtonPropsType = {
+    onClick: () => void;
+    className?: string;
 }
 
 type BaseWeatherData = {

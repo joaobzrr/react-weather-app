@@ -14,9 +14,11 @@
         "paths": {
             "$src/*":        ["src/*"],
             "$components/*": ["src/components/*"],
+            "$hoc/*":        ["src/hoc/*"],
             "$hooks/*":      ["src/hooks/*"],
             "$services/*":   ["src/services/*"],
-            "$contexts/*":   ["src/contexts/*"],
+            "$utils/*":      ["src/utils/*"],
+            "$types/*":      ["src/types/*"],
             "$assets/*":     ["src/assets/*"]
         }
     }

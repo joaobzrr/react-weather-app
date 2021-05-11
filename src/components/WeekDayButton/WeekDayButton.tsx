@@ -1,26 +1,21 @@
 import React from "react";
+import Button from "$components/Button";
 import WeatherIcon from "$components/WeatherIcon";
+import { ButtonPropsType } from "$types/common";
 import "./WeekDayButton.scss";
 
-type PropsType = {
-    handlePress:    (value: number) => void;
+type PropsType = ButtonPropsType & {
     minTemperature: number;
     maxTemperature: number;
     iconCode:       string;
     weekDayName:    string;
-    weekDayIndex:   number;
 };
 
 export default function WeekDayButton(props: PropsType) {
-    const { handlePress, weekDayIndex, weekDayName, iconCode, minTemperature, maxTemperature } = props;
-
-    const onClick = () => handlePress(weekDayIndex);
+    const { weekDayName, iconCode, minTemperature, maxTemperature, ...buttonProps } = props;
 
     return (
-        <div
-            className="WeekDayButton flex flex-column justify-content-center align-items-center"
-            onClick={onClick}
-        >
+        <Button className="WeekDayButton" {...buttonProps}>
             <p className="WeekDayButton_day">{weekDayName}</p>
             <WeatherIcon iconCode={iconCode} />
             <div className="WeekDayButton_temperature">
@@ -31,6 +26,6 @@ export default function WeekDayButton(props: PropsType) {
                     {minTemperature}º
                 </span>
             </div>
-        </div>
+        </Button>
     );
 }

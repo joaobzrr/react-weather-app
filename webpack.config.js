@@ -9,6 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ROOT_DIR       = __dirname;
 const SRC_DIR        = path.resolve(ROOT_DIR,   "src");
 const COMPONENTS_DIR = path.resolve(SRC_DIR,    "components");
+const HOC_DIR        = path.resolve(SRC_DIR,    "hoc");
 const HOOKS_DIR      = path.resolve(SRC_DIR,    "hooks");
 const SERVICES_DIR   = path.resolve(SRC_DIR,    "services");
 const UTILS_DIR      = path.resolve(SRC_DIR,    "utils");
@@ -109,6 +110,7 @@ module.exports = env => {
             alias: {
                 "$src":        SRC_DIR,
                 "$components": COMPONENTS_DIR,
+                "$hoc":        HOC_DIR,
                 "$hooks":      HOOKS_DIR,
                 "$services":   SERVICES_DIR,
                 "$utils":      UTILS_DIR,

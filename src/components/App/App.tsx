@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
-import withContainer from "$components/withContainer";
 import useOnce from "$hooks/useOnce";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
@@ -13,7 +12,7 @@ import {
 } from "$types/common";
 import "./App.scss";
 
-export function App() {
+export default function App() {
     const [appData, setAppData] = useState<AppData>(null!);
     const [measurementSystem, setMeasurementSystem] = useState<MeasurementSystem>("metric");
     const [selectedWeekDay, setSelectedWeekDay] = useState(-1);
@@ -67,7 +66,3 @@ export function App() {
         </div>
     );
 }
-
-export default withContainer(App, {
-    classes: "flex justify-content-center align-items-center"
-});

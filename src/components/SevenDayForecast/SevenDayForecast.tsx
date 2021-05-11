@@ -18,12 +18,11 @@ export default function SevenDayForecast(props: PropsType) {
             const weekDayName = getWeekDayNameFromDate(data.dt, true);
             result.push(
                 <WeekDayButton
-                    handlePress={onSelectWeekDay}
+                    onClick={() => onSelectWeekDay(index)}
                     maxTemperature={maxTemperature}
                     minTemperature={minTemperature}
                     iconCode={iconCode}
                     weekDayName={weekDayName}
-                    weekDayIndex={index}
                     key={index}
                 />
             );

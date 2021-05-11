@@ -1,34 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
+import Button from "$components/Button";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
-import { MeasurementSystem } from "$types/common";
+import { makeClassName } from "$utils/common";
+import { ButtonPropsType, MeasurementSystem } from "$types/common";
 import "./MeasurementSystemButton.scss";
 
-type PropsType = {
-    onClick: () => void;
-    isSelected: boolean;
-    children?: React.ReactNode;
-    className: string;
+type PropsType = ButtonPropsType & {
+    selected: boolean;
 }
 
-// @Todo: Replace this with a general Button component.
-export default function MeasurementSystemButton(props: PropsType) {
-    const { onClick, isSelected, children, className } = props;
+const MeasurementSystemButton: FC<PropsType> = props => {
+    const { selected, ...buttonProps } = props;
 
     const {classes, setClasses} = useClasses("MeasurementSystemButton");
 
     useEffect(() => {
-        setClasses({MeasurementSystemButton__selected: isSelected});
-    }, [isSelected]);
+        setClasses({MeasurementSystemButton__selected: selected});
+    }, [selected]);
 
-    const _className = `${serializeClasses(classes)} ${className}`;
+    const className = makeClassName(buttonProps, serializeClasses(classes));
 
-    const handleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-        onClick();
-    }
-
-    return (
-        <span onClick={handleClick} className={_className}>
-            {children}
-        </span>
-    );
+    return <Button className={className} {...buttonProps}/>;
 }
+
+export default MeasurementSystemButton;

@@ -1,4 +1,5 @@
-import { cloneWeatherData, celsiusToFahrenheit } from "$utils/common";
+import cloneWeatherData from "$utils/cloneWeatherData";
+import { celsiusToFahrenheit, kphToMph } from "$utils/common";
 import { WeatherData, MeasurementSystem } from "$types/common";
 
 export default function convertWeatherData(weatherData: WeatherData, units: MeasurementSystem) {
@@ -11,6 +12,10 @@ export default function convertWeatherData(weatherData: WeatherData, units: Meas
     const newTemperature = Math.round(celsiusToFahrenheit(oldTemperature));
     result.current.temperature = newTemperature;
 
+    const oldWindSpeed = result.current.windSpeed;
+    const newWindSpeed = Math.round(kphToMph(oldWindSpeed));
+    result.current.windSpeed = newWindSpeed;
+
     for (const forecasted of result.daily) {
         const oldMaxTemperature = forecasted.maxTemperature;
         const newMaxTemperature = Math.round(celsiusToFahrenheit(oldMaxTemperature));
@@ -19,6 +24,10 @@ export default function convertWeatherData(weatherData: WeatherData, units: Meas
         const oldMinTemperature = forecasted.minTemperature;
         const newMinTemperature = Math.round(celsiusToFahrenheit(oldMinTemperature));
         forecasted.minTemperature = newMinTemperature;
+
+        const oldWindSpeed = forecasted.windSpeed;
+        const newWindSpeed = Math.round(kphToMph(oldWindSpeed));
+        forecasted.windSpeed = newWindSpeed;
     }
 
     return result;

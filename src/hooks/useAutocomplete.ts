@@ -12,7 +12,7 @@ export default function useAutocomplete() {
     const fetch = useDebounce(async (value, ...deferrables) => {
         const data = await fetchAutocompleteData(value);
         deferrables.forEach(d => d.resolve(data));
-    }, 500);
+    }, 100);
 
     const handleChange = (value: string): Promise<AutocompleteData> => {
         change.current.reject({isCancelled: true});

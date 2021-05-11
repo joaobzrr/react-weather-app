@@ -5,11 +5,17 @@ import withContainer from "$components/withContainer";
 import useOnce from "$hooks/useOnce";
 import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
-import { AppData, LocationData, WeatherData } from "$types/common";
+import {
+    AppData,
+    LocationData,
+    WeatherData,
+    MeasurementSystem
+} from "$types/common";
 import "./App.scss";
 
 export function App() {
     const [appData, setAppData] = useState<AppData>(null!);
+    const [measurementSystem, setMeasurementSystem] = useState<MeasurementSystem>("metric");
     const [selectedWeekDay, setSelectedWeekDay] = useState(-1);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -36,6 +42,10 @@ export function App() {
         });
     }
 
+    const handleSelectMeasurementSystem = (measurementSystem: MeasurementSystem) => {
+        setMeasurementSystem(measurementSystem);
+    }
+
     const handleSelectWeekDay = (value: number) => {
         setSelectedWeekDay(value);
     }
@@ -47,8 +57,10 @@ export function App() {
                 onEndLoadingAutocompleteData={handleEndLoadingAutocompleteData}
             />
             <WeatherInfo
+                onSelectMeasurementSystem={handleSelectMeasurementSystem}
                 onSelectWeekDay={handleSelectWeekDay}
                 appData={appData}
+                measurementSystem={measurementSystem}
                 selectedWeekDay={selectedWeekDay}
                 isLoading={isLoading}
             />

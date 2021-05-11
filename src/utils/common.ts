@@ -18,22 +18,10 @@ export function celsiusToFahrenheit(celsius: number) {
     return (celsius * 1.8) + 32;
 }
 
-export function cloneDate(date: Date) {
-    return new Date(date.getTime());
+export function kphToMph(kph: number) {
+    return kph / 1.609;
 }
 
-export function cloneWeatherData(data: WeatherData): WeatherData {
-    const result = {} as WeatherData;
-
-    result.current = Object.assign({}, data.current);
-    result.current.dt = new Date(cloneDate(result.current.dt));
-
-    result.daily = [];
-    for (const item of data.daily) {
-        const forecasted = Object.assign({}, item);
-        forecasted.dt = cloneDate(item.dt);
-        result.daily.push(forecasted);
-    }
-
-    return result;
+export function cloneDate(date: Date) {
+    return new Date(date.getTime());
 }

@@ -3,41 +3,40 @@ import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
 import withLoading from "$components/withLoading";
 import withContainer from "$components/withContainer";
+import forecastedToCurrentWeatherData from "$utils/forecastedToCurrentWeatherData";
 import convertWeatherData from "$utils/convertWeatherData";
-import { AppData, CurrentWeatherData, MeasurementSystem } from "$types/common";
+import { AppData, MeasurementSystem } from "$types/common";
 import "./WeatherInfo.scss";
 
 type PropsType = {
+    onSelectMeasurementSystem: (measurementSystem: MeasurementSystem) => void;
     onSelectWeekDay: (value: number) => void;
     appData: AppData;
+    measurementSystem: MeasurementSystem;
     selectedWeekDay: number;
 };
 
 function WeatherInfo(props: PropsType) {
-    const { onSelectWeekDay, appData, selectedWeekDay } = props;
-    const { weatherData, locationData } = appData;
+    const { onSelectMeasurementSystem, onSelectWeekDay, appData, measurementSystem, selectedWeekDay } = props;
+    const { weatherData: _weatherData, locationData } = appData;
 
-    const [measurementSystem, setMeasurementSystem] = useState<MeasurementSystem>("imperial");
+    const weatherData = convertWeatherData(_weatherData, measurementSystem);
 
-    let _weatherData = convertWeatherData(weatherData, measurementSystem);
-
-    let selectedWeatherData = {} as CurrentWeatherData;
-    if (selectedWeekDay > -1) {
-        const { maxTemperature, minTemperature, ...rest } = _weatherData.daily[selectedWeekDay];
-        selectedWeatherData = Object.assign({}, {temperature: maxTemperature}, rest);
-    } else {
-        selectedWeatherData = _weatherData.current;
-    }
+    const selectedWeatherData = (selectedWeekDay > -1) ?
+        forecastedToCurrentWeatherData(weatherData.daily[selectedWeekDay]) :
+        weatherData.current;
 
     return (
         <div className="WeatherInfo">
             <SelectedWeatherInfo
+                onSelectMeasurementSystem={onSelectMeasurementSystem}
                 weatherData={selectedWeatherData}
                 locationData={locationData}
+                measurementSystem={measurementSystem}
             />
             <SevenDayForecast
                 onSelectWeekDay={onSelectWeekDay}
-                weatherData={_weatherData}
+                weatherData={weatherData}
             />
         </div>
     );

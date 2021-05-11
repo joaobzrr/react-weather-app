@@ -1,11 +1,11 @@
 import React, { useContext, useMemo } from "react";
 import WeekDayButton from "$components/WeekDayButton";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
-import { WeatherData } from "$types/common";
+import { Callback, WeatherData } from "$types/common";
 
 type PropsType = {
-    onSelectWeekDay: (value: number) => void;
-    weatherData: WeatherData;
+    onSelectWeekDay: Callback<[number]>;
+    weatherData:     WeatherData;
 }
 
 export default function SevenDayForecast(props: PropsType) {

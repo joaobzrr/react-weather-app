@@ -1,16 +1,16 @@
 import React, { useRef, useEffect } from "react";
+import { Callback } from "$types/common";
 import "./TextInput.scss";
 
 // @Todo: Export this so TextInputContainer can use it.
 type PropsType = {
-    onChange:    (value: string) => void;
-    onEnter:     (value: string) => void;
-    onArrowUp:   () => void;
-    onArrowDown: () => void;
-    onClick:     () => void;
-    onBlur:      () => void;
-
-    value: string;
+    onChange:    Callback<[string]>;
+    onEnter:     Callback<[string]>;
+    onArrowUp:   Callback;
+    onArrowDown: Callback;
+    onClick:     Callback;
+    onBlur:      Callback;
+    value:       string;
 }
 
 // @Todo: Add placeholder text.

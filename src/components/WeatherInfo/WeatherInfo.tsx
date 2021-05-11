@@ -3,15 +3,19 @@ import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
 import forecastedToCurrentWeatherData from "$utils/forecastedToCurrentWeatherData";
 import convertWeatherData from "$utils/convertWeatherData";
-import { AppData, MeasurementSystem } from "$types/common";
+import {
+    Callback,
+    AppData,
+    MeasurementSystem
+} from "$types/common";
 import "./WeatherInfo.scss";
 
 type PropsType = {
-    onSelectMeasurementSystem: (measurementSystem: MeasurementSystem) => void;
-    onSelectWeekDay: (value: number) => void;
-    appData: AppData;
-    measurementSystem: MeasurementSystem;
-    selectedWeekDay: number;
+    onSelectMeasurementSystem: Callback<[MeasurementSystem]>;
+    onSelectWeekDay:           Callback<[number]>;
+    appData:                   AppData;
+    measurementSystem:         MeasurementSystem;
+    selectedWeekDay:           number;
 };
 
 export default function WeatherInfo(props: PropsType) {

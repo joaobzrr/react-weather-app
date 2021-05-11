@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
 import TextInput from "$components/TextInput";
-import { AutocompleteData } from "$types/common";
+import { Callback, AutocompleteData } from "$types/common";
 import "./TextInputContainer.scss";
 
 type PropsType = {
-    onChange:    (value: string) => void;
-    onEnter:     (value: string) => void;
-    onArrowUp:   () => void;
-    onArrowDown: () => void;
-    onClick:     () => void;
-    onBlur:      () => void;
+    onChange:    Callback<[string]>;
+    onEnter:     Callback<[string]>;
+    onArrowUp:   Callback;
+    onArrowDown: Callback;
+    onClick:     Callback;
+    onBlur:      Callback;
+    value:       string;
 
-    value: string;
     noRoundBottomCorners: boolean;
 }
 

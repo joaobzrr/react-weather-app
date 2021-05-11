@@ -3,6 +3,8 @@ import React from "react";
 export type ArrayElementType<ArrayType extends readonly unknown[]> =
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
+export type Callback<T extends unknown[] = [], R = void> = (...args: T) => R;
+
 export type ResolveFunctionType<T> = (value?: T | PromiseLike<T>) => void;
 
 export type RejectFunctionType  = (reason?: any) => void;

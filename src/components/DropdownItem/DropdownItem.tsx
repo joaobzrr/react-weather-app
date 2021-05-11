@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useClasses, serializeClasses } from "@bzrr/useclasses";
+import { Callback } from "$types/common";
 import "./DropdownItem.scss";
 
 type PropsType = {
-    onMouseClick: (selected: number) => void;
-    onMouseEnter: (selected: number) => void;
-    index:    number;
-    city:     string;
-    country:  string;
-    selected: boolean;
+    onMouseClick: Callback<[number]>;
+    onMouseEnter: Callback<[number]>;
+    index:        number;
+    city:         string;
+    country:      string;
+    selected:     boolean;
 }
 
 export default function DropdownItem(props: PropsType) {

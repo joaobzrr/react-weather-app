@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import MeasurementSystemButton from "$components/MeasurementSystemButton";
-import { MeasurementSystem } from "$types/common";
+import { Callback, MeasurementSystem } from "$types/common";
 import "./MeasurementSystemSelector.scss";
 
 type PropsType = {
-    onSelectMeasurementSystem: (measurementSystem: MeasurementSystem) => void;
-    measurementSystem: MeasurementSystem;
+    onSelectMeasurementSystem: Callback<[MeasurementSystem]>;
+    measurementSystem:         MeasurementSystem;
 }
 
 export default function MeasurementSystemSelector(props: PropsType) {

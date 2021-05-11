@@ -1,13 +1,13 @@
 import React, { useMemo } from "react";
 import DropdownItem from "$components/DropdownItem";
-import { AutocompleteData } from "$types/common";
+import { Callback, AutocompleteData } from "$types/common";
 import "./Dropdown.scss";
 
 type PropsType = {
-    onDropdownItemMouseClick: (selected: number) => void;
-    onDropdownItemMouseEnter: (selected: number) => void;
-    autocompleteData: AutocompleteData;
-    selectedIndex: number;
+    onDropdownItemMouseClick: Callback<[number]>;
+    onDropdownItemMouseEnter: Callback<[number]>;
+    autocompleteData:         AutocompleteData;
+    selectedIndex:            number;
 }
 
 export default function Dropdown(props: PropsType) {

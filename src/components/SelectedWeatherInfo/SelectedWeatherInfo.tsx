@@ -3,6 +3,7 @@ import MeasurementSystemSelector from "$components/MeasurementSystemSelector";
 import WeatherIcon from "$components/WeatherIcon";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import {
+    Callback,
     CurrentWeatherData,
     LocationData,
     MeasurementSystem
@@ -10,10 +11,10 @@ import {
 import "./SelectedWeatherInfo.scss";
 
 type PropsType = {
-    onSelectMeasurementSystem: (measurementSystem: MeasurementSystem) => void;
-    weatherData: CurrentWeatherData;
-    locationData: LocationData;
-    measurementSystem: MeasurementSystem;
+    onSelectMeasurementSystem: Callback<[MeasurementSystem]>;
+    weatherData:               CurrentWeatherData;
+    locationData:              LocationData;
+    measurementSystem:         MeasurementSystem;
 }
 
 export default function SelectedWeatherInfo(props: PropsType) {

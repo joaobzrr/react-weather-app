@@ -4,12 +4,17 @@ import Dropdown from "$components/Dropdown";
 import useAutocomplete from "$hooks/useAutocomplete";
 import makeDeferrable from "$services/makeDeferrable";
 import { clamp } from "$utils/common";
-import { LocationData, AutocompleteData, Deferrable } from "$types/common";
+import {
+    Callback,
+    LocationData,
+    AutocompleteData,
+    Deferrable
+} from "$types/common";
 import "./DropdownSearch.scss";
 
 type PropsType = {
-    onBeginLoadingAutocompleteData: () => void;
-    onEndLoadingAutocompleteData: (locationData: LocationData) => void;
+    onBeginLoadingAutocompleteData: Callback;
+    onEndLoadingAutocompleteData:   Callback<[LocationData]>;
 }
 
 export default function DropdownSearch(props: PropsType) {

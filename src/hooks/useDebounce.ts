@@ -1,8 +1,7 @@
 import { useRef } from "react";
+import { Callback } from "$types/common";
 
-type CallbackType = (...args: any[]) => void;
-
-export default function useDebounce(callback: CallbackType, delay: number) {
+export default function useDebounce(callback: Callback<any[]>, delay: number) {
     const timeoutRef = useRef<number|undefined>();
 
     const debounced = (...args: any[]) => {

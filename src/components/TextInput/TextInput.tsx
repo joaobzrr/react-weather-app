@@ -1,24 +1,13 @@
 import React, { useRef, useEffect } from "react";
-import { Callback } from "$types/common";
+import { Callback, TextInputPropsType } from "$types/common";
 import "./TextInput.scss";
-
-// @Todo: Export this so TextInputContainer can use it.
-type PropsType = {
-    onChange:    Callback<[string]>;
-    onEnter:     Callback<[string]>;
-    onArrowUp:   Callback;
-    onArrowDown: Callback;
-    onClick:     Callback;
-    onBlur:      Callback;
-    value:       string;
-}
 
 // @Todo: Add placeholder text.
 
 // @Todo: Refactor this in two components: a more specific
 // <TextInput /> component, and a <CustomInput /> component
 // that does sanitization.
-export default function TextInput(props: PropsType) {
+export default function TextInput(props: TextInputPropsType) {
     const { onChange, onEnter, onArrowUp, onArrowDown, onClick, onBlur, value } = props;
 
     const textInputRef = useRef<HTMLInputElement>(null!);

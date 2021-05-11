@@ -20,8 +20,18 @@ export type UseStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>]
 export type NamedComponent<T> = React.ComponentType<T> & { _name?: string; };
 
 export type ButtonPropsType = {
-    onClick: () => void;
+    onClick:    Callback;
     className?: string;
+}
+
+export type TextInputPropsType = {
+    onChange:    Callback<[string]>;
+    onEnter:     Callback<[string]>;
+    onArrowUp:   Callback;
+    onArrowDown: Callback;
+    onClick:     Callback;
+    onBlur:      Callback;
+    value:       string;
 }
 
 type BaseWeatherData = {

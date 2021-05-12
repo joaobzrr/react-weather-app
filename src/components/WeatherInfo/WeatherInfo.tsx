@@ -39,6 +39,7 @@ export default function WeatherInfo(props: PropsType) {
             <SevenDayForecast
                 onSelectWeekDay={onSelectWeekDay}
                 weatherData={weatherData}
+                selectedWeekDay={selectedWeekDay}
             />
         </div>
     );

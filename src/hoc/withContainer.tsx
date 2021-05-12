@@ -12,8 +12,8 @@ export default function withContainer<P>(
     // @Todo: Remember to change this when we update serializeClasses
     // to handle arrays.
     const className = [
+        containerClassName,
         popFromObject(containerProps, "className", ""),
-        containerClassName
     ].join(" ");
 
     const result = (props: P) => (

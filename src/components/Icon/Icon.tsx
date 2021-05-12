@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, ComponentType, SVGProps } from "react";
-import { popFromObject } from "$utils/common";
 import { IconPropsType } from "$types/common";
 
 export default function Icon(props: IconPropsType) {

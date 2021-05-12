@@ -21,8 +21,8 @@ const MeasurementSystemButton: FC<PropsType> = props => {
     // @Todo: Remember to change this when we update serializeClasses
     // to handle arrays.
     const className = [
+        serializeClasses(classes),
         popFromObject(buttonProps, "className", ""),
-        serializeClasses(classes)
     ].join(" ");
 
     return <Button className={className} {...buttonProps}/>;

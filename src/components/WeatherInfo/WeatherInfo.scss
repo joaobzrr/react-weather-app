@@ -1,0 +1,20 @@
+@import "$assets/css/globals";
+
+.WeatherInfo_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: $main-height;
+}
+
+.WeatherInfo {
+    /* @Note Setting the width directly, like so:
+
+    width: $main-width;
+
+    caused WeatherInfo to "move" a bit when going
+    from loading new data to displaying it again.
+    Using flex to set the width fixed the problem.
+    */
+    flex: 0 0 $main-width;
+}

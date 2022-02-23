@@ -1,0 +1,8 @@
+// @Todo: Setting the width and height like this is very
+// error-prone since, whenever we make a change to the UI,
+// we have to check again what the "natural" computed
+// width and height are and update the variables below
+// accordingly. We should figure out a better way to do
+// this.
+$main-width:  69rem;
+$main-height: 35rem;

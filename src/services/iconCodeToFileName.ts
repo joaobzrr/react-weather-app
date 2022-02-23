@@ -11,6 +11,5 @@ const codeToFileName: {[key: string]: string} = {
 }
 
 export default function iconCodeToFileName(code: string) {
-    debugger;
     return codeToFileName[code];
 }

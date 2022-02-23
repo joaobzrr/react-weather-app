@@ -27,7 +27,7 @@ const FAVICON_OUTPUT_PATH = "static/images/";
 const dotenv = require("dotenv").parse(fs.readFileSync('.env'));
 
 const globals = {
-    "__OPEN_WEATHER_MAP_API_KEY__": JSON.stringify(dotenv.OPEN_WEATHER_MAP_API_KEY), // @Remove
+    "__BIG_DATA_CLOUD_KEY__": JSON.stringify(dotenv.BIG_DATA_CLOUD_KEY),
     "__LOCATION_IQ_API_KEY__": JSON.stringify(dotenv.LOCATION_IQ_API_KEY),
     "__IPSTACK_API_KEY__": JSON.stringify(dotenv.IPSTACK_API_KEY),
     "__VISUAL_CROSSING_WEATHER_API_KEY__": JSON.stringify(dotenv.VISUAL_CROSSING_WEATHER_API_KEY)

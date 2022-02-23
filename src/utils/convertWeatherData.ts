@@ -20,6 +20,7 @@ export default function convertWeatherData(weatherData: WeatherData, units: Meas
         const oldMaxTemperature = forecasted.maxTemperature;
         const newMaxTemperature = Math.round(celsiusToFahrenheit(oldMaxTemperature));
         forecasted.maxTemperature = newMaxTemperature;
+        forecasted.temperature = newMaxTemperature;
 
         const oldMinTemperature = forecasted.minTemperature;
         const newMinTemperature = Math.round(celsiusToFahrenheit(oldMinTemperature));

@@ -1,7 +1,6 @@
 import React from "react";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import SevenDayForecast from "$components/SevenDayForecast";
-import forecastedToCurrentWeatherData from "$utils/forecastedToCurrentWeatherData";
 import convertWeatherData from "$utils/convertWeatherData";
 import {
     Callback,
@@ -23,10 +22,10 @@ export default function WeatherInfo(props: PropsType) {
     const { weatherData: _weatherData, locationData } = appData;
 
     const weatherData = convertWeatherData(_weatherData, measurementSystem);
+    const { current: currentData, daily: dailyData, hourly: hourlyData } = weatherData;
 
     const selectedWeatherData = (selectedWeekDay > -1) ?
-        forecastedToCurrentWeatherData(weatherData.daily[selectedWeekDay]) :
-        weatherData.current;
+        dailyData[selectedWeekDay] : currentData;
 
     return (
         <div className="WeatherInfo">
@@ -38,7 +37,7 @@ export default function WeatherInfo(props: PropsType) {
             />
             <SevenDayForecast
                 onSelectWeekDay={onSelectWeekDay}
-                weatherData={weatherData}
+                weatherData={dailyData}
                 selectedWeekDay={selectedWeekDay}
             />
         </div>

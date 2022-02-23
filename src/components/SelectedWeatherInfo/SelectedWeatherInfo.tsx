@@ -4,6 +4,7 @@ import WeatherIcon from "$components/WeatherIcon";
 import {
     Callback,
     CurrentWeatherData,
+    DailyWeatherData,
     LocationData,
     MeasurementSystem
 } from "$types/common";
@@ -11,11 +12,12 @@ import "./SelectedWeatherInfo.scss";
 
 type PropsType = {
     onSelectMeasurementSystem: Callback<[MeasurementSystem]>;
-    weatherData:               CurrentWeatherData;
+    weatherData:               CurrentWeatherData|DailyWeatherData;
     locationData:              LocationData;
     measurementSystem:         MeasurementSystem;
 }
 
+// @Temporary Using placeholder iconCode for now.
 export default function SelectedWeatherInfo(props: PropsType) {
     const { onSelectMeasurementSystem, weatherData, locationData, measurementSystem } = props;
 
@@ -38,13 +40,13 @@ export default function SelectedWeatherInfo(props: PropsType) {
                     <div className="mr2 flex flex-column justify-content-center align-items-flex-end">
                         <div className="SelectedWeatherInfo_description">{weatherData.description}</div>
                         <div className="SelectedWeatherInfo_details flex flex-column align-items-flex-end">
-                            <div>Precipitation: {weatherData.precipitation}%</div>
+                            <div>Precipitation: {weatherData.precipitationProbability}%</div>
                             <div>Humidity: {weatherData.humidity}%</div>
                             <div>Wind: {weatherData.windSpeed} {speedUnit}</div>
                         </div>
                     </div>
                     <WeatherIcon
-                        iconCode={weatherData.iconCode}
+                        iconCode={weatherData.icon}
                         className="SelectedWeatherInfo_icon"
                     />
                 </div>

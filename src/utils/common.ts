@@ -19,7 +19,3 @@ export function celsiusToFahrenheit(celsius: number): number {
 export function kphToMph(kph: number): number {
     return kph / 1.609;
 }
-
-export function cloneDate(date: Date): Date {
-    return new Date(date.getTime());
-}

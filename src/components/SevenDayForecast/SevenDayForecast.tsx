@@ -25,7 +25,7 @@ export default function SevenDayForecast(props: PropsType) {
                     selected={selected}
                     maxTemperature={maxTemperature}
                     minTemperature={minTemperature}
-                    iconCode={icon} // @nocommit
+                    iconCode={icon}
                     weekDayName={weekDayName}
                     key={index}
                 />

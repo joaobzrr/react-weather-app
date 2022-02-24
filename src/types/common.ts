@@ -1,3 +1,5 @@
+import { WeatherDataContainer } from "../WeatherDataContainer";
+
 import React from "react";
 
 export type ArrayElementType<ArrayType extends readonly unknown[]> =
@@ -81,8 +83,8 @@ export type LocationData = {
 }
 
 export type AppData = {
-    weatherData:  WeatherData;
-    locationData: LocationData;
+    weatherDataContainer: WeatherDataContainer;
+    locationData:         LocationData;
 }
 
 export type MeasurementSystem = "metric"|"imperial";

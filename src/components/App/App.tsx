@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DropdownSearch from "$components/DropdownSearch";
 import WeatherInfo from "$components/WeatherInfo";
 import useOnce from "$hooks/useOnce";
-import fetchWeatherData from "$services/fetchWeatherData";
 import fetchLocationDataFromIP from "$services/fetchLocationDataFromIP";
 import {
     AppData,
@@ -11,6 +10,8 @@ import {
     MeasurementSystem
 } from "$types/common";
 import "./App.scss";
+
+import { WeatherDataContainer } from "$src/WeatherDataContainer";
 
 export default function App() {
     const [appData, setAppData] = useState<AppData>(null!);
@@ -21,8 +22,8 @@ export default function App() {
     useOnce(() => {
         fetchLocationDataFromIP().then((locationData: LocationData) => {
             const { lat, lon } = locationData;
-            fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-                setAppData({weatherData, locationData});
+            WeatherDataContainer.fetch(lat, lon).then((weatherDataContainer: WeatherDataContainer) => {
+                setAppData({weatherDataContainer, locationData});
                 setIsLoading(false);
             });
         });
@@ -34,8 +35,8 @@ export default function App() {
 
     const handleEndLoadingAutocompleteData = (locationData: LocationData) => {
         const { lat, lon } = locationData;
-        fetchWeatherData(lat, lon).then((weatherData: WeatherData) => {
-            setAppData({weatherData, locationData});
+        WeatherDataContainer.fetch(lat, lon).then((weatherDataContainer: WeatherDataContainer) => {
+            setAppData({weatherDataContainer, locationData});
             setSelectedWeekDay(-1);
             setIsLoading(false);
         });

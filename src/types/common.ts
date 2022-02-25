@@ -1,5 +1,3 @@
-import { WeatherDataContainer } from "../WeatherDataContainer";
-
 import React from "react";
 
 export type ArrayElementType<ArrayType extends readonly unknown[]> =
@@ -73,6 +71,11 @@ export type WeatherData = {
     current: CurrentWeatherData;
     daily:   DailyWeatherData[];
     hourly:  HourlyWeatherData[];
+}
+
+export type WeatherDataContainer = {
+    metric:   WeatherData;
+    imperial: WeatherData;
 }
 
 export type LocationData = {

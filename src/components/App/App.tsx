@@ -7,11 +7,12 @@ import {
     AppData,
     LocationData,
     WeatherData,
+    WeatherDataContainer,
     MeasurementSystem
 } from "$types/common";
 import "./App.scss";
 
-import { WeatherDataContainer } from "$src/WeatherDataContainer";
+import { fetchWeatherData } from "$services/fetchWeatherData";
 
 export default function App() {
     const [appData, setAppData] = useState<AppData>(null!);
@@ -19,27 +20,24 @@ export default function App() {
     const [selectedWeekDay, setSelectedWeekDay] = useState(-1);
     const [isLoading, setIsLoading] = useState(true);
 
-    useOnce(() => {
-        fetchLocationDataFromIP().then((locationData: LocationData) => {
-            const { lat, lon } = locationData;
-            WeatherDataContainer.fetch(lat, lon).then((weatherDataContainer: WeatherDataContainer) => {
-                setAppData({weatherDataContainer, locationData});
-                setIsLoading(false);
-            });
-        });
+    useOnce(async () => {
+        const locationData = await fetchLocationDataFromIP();
+        const { lat, lon } = locationData;
+        const weatherDataContainer = await fetchWeatherData(lat, lon);
+        setAppData({weatherDataContainer, locationData});
+        setIsLoading(false);
     });
 
     const handleBeginLoadingAutocompleteData = () => {
         setIsLoading(true);
     }
 
-    const handleEndLoadingAutocompleteData = (locationData: LocationData) => {
+    const handleEndLoadingAutocompleteData = async (locationData: LocationData) => {
         const { lat, lon } = locationData;
-        WeatherDataContainer.fetch(lat, lon).then((weatherDataContainer: WeatherDataContainer) => {
-            setAppData({weatherDataContainer, locationData});
-            setSelectedWeekDay(-1);
-            setIsLoading(false);
-        });
+        const weatherDataContainer = await fetchWeatherData(lat, lon);
+        setAppData({weatherDataContainer, locationData});
+        setSelectedWeekDay(-1);
+        setIsLoading(false);
     }
 
     const handleSelectMeasurementSystem = (measurementSystem: MeasurementSystem) => {

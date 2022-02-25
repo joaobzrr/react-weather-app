@@ -32,7 +32,7 @@ export default function SevenDayForecast(props: PropsType) {
             );
         }
         return result;
-    }, [weatherData]);
+    }, [weatherData, selectedWeekDay]);
 
     return (
         <div className="SevenDayForecast">

@@ -49,7 +49,7 @@ function makeCurrentWeatherData(data: Record<string, any>, currentHourIndex: num
 function makeDailyWeatherData(data: Record<string, any>): DailyWeatherData[] {
     const result = <DailyWeatherData[]>[];
 
-    for (const item of data.days.slice(0, 9)) {
+    for (const item of data.days.slice(0, 8)) {
         const d = <DailyWeatherData>makeBaseWeatherData(item);
         d.temperature              = Math.round(item.tempmax); // @Note This is on purpose.
         d.maxTemperature           = Math.round(item.tempmax);
@@ -69,7 +69,7 @@ function makeDailyWeatherData(data: Record<string, any>): DailyWeatherData[] {
 function makeHourlyWeatherData(data: Record<string, any>, currentHourIndex: number): HourlyWeatherData[] {
     const result = <HourlyWeatherData[]>[];
 
-    for (const dailyData of data.days.slice(0, 9)) {
+    for (const dailyData of data.days.slice(0, 8)) {
         for (const hourlyData of dailyData.hours) {
             const d = <HourlyWeatherData>makeBaseWeatherData(hourlyData);
             d.temperature =              Math.round(hourlyData.temp);

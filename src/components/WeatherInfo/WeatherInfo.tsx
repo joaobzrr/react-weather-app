@@ -1,6 +1,8 @@
 import React from "react";
+import SelectedCoordinates from "$components/SelectedCoordinates";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import DailyForecast from "$components/DailyForecast";
+import HourlyForecast from "$components/HourlyForecast";
 import {
     Callback,
     AppData,
@@ -27,12 +29,16 @@ export default function WeatherInfo(props: PropsType) {
 
     return (
         <div className="WeatherInfo">
+            <SelectedCoordinates
+                locationData={locationData}
+            />
             <SelectedWeatherInfo
                 onSelectMeasurementSystem={onSelectMeasurementSystem}
                 weatherData={selectedWeatherData}
                 locationData={locationData}
                 measurementSystem={measurementSystem}
             />
+            <HourlyForecast weatherData={hourlyData} />
             <DailyForecast
                 onSelectWeekDay={onSelectWeekDay}
                 weatherData={dailyData}

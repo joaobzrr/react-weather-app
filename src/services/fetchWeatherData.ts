@@ -75,6 +75,12 @@ function makeHourlyWeatherData(data: Record<string, any>, currentHourIndex: numb
             d.temperature =              Math.round(hourlyData.temp);
             d.precipitationProbability = Math.round(hourlyData.precipprob);
 
+            const date = new Date(hourlyData.datetimeEpoch * 1000);
+            const hourIndex = date.getHours();
+            const half = (hourIndex <= 12) ? "AM" : "PM";
+            const hour = (hourIndex % 12) + 1;
+            d.time = `${hour} ${half}`;
+
             result.push(d);
         }
     }
@@ -105,17 +111,26 @@ function convertMetricWeatherDataToImperialUnits(metric: WeatherData): WeatherDa
         forecasted.temperature    = forecasted.maxTemperature;
     }
 
+    for (const forecasted of result.hourly) {
+        forecasted.windSpeed   = Math.round(kphToMph(forecasted.windSpeed));
+        forecasted.temperature = Math.round(celsiusToFahrenheit(forecasted.temperature));
+    }
+
     return result;
 }
 
 function cloneWeatherData(data: WeatherData): WeatherData {
-    const result = {} as WeatherData;
+    const result = { daily: [], hourly: [] } as unknown as WeatherData;
     result.current = Object.assign({}, data.current);
-    result.daily = [];
 
     for (const item of data.daily) {
         const forecasted = Object.assign({}, item);
         result.daily.push(forecasted);
+    }
+
+    for (const item of data.hourly) {
+        const forecasted = Object.assign({}, item);
+        result.hourly.push(forecasted);
     }
 
     return result;

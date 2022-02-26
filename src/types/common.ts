@@ -65,6 +65,7 @@ export type DailyWeatherData = BaseWeatherData & {
 export type HourlyWeatherData = BaseWeatherData & {
     temperature: number;
     precipitationProbability: number;
+    time: string;
 }
 
 export type WeatherData = {

@@ -25,7 +25,6 @@ export default function SelectedWeatherInfo(props: PropsType) {
 
     return (
         <div className="SelectedWeatherInfo">
-            <div className="SelectedWeatherInfo_city">{locationData.city}</div>
             <div className="flex justify-content-between">
                 <div className="flex">
                     <span className="SelectedWeatherInfo_temperature">

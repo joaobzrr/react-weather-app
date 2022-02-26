@@ -1,12 +1,9 @@
 .SelectedWeatherInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 2rem 0;
     border-bottom: 1px solid #ddd;
-}
-
-.SelectedWeatherInfo_icon {
-    width: 9rem;
-    height: 9rem;
-    margin-left: 1rem;
 }
 
 .SelectedWeatherInfo_city {
@@ -30,16 +27,21 @@
     font-size: 9rem;
 }
 
-.SelectedWeatherInfo_description {
-    margin-bottom: 1rem;
+.SelectedWeatherInfo_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-right: 3rem;
     font-size: 2rem;
 }
 
-.SelectedWeatherInfo_details {
-    font-size: 1.4rem;
-    color: #70757A;
+.SelectedWeatherInfo_icon {
+    width: 10rem;
+    height: 10rem;
+}
 
-    div:not(:last-child) {
-        margin-bottom: 0.8rem;
-    }
+.SelectedWeatherInfo_description {
+    font-size: 2rem;
+    font-weight: 600;
 }

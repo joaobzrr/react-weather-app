@@ -25,29 +25,23 @@ export default function SelectedWeatherInfo(props: PropsType) {
 
     return (
         <div className="SelectedWeatherInfo">
-            <div className="flex justify-content-between">
-                <div className="flex">
-                    <span className="SelectedWeatherInfo_temperature">
-                        {weatherData.temperature}º
-                    </span>
-                    <MeasurementSystemSelector
-                        onSelectMeasurementSystem={onSelectMeasurementSystem}
-                        measurementSystem={measurementSystem}
-                    />
+            <div className="flex">
+                <span className="SelectedWeatherInfo_temperature">
+                    {weatherData.temperature}º
+                </span>
+            </div>
+            <div className="flex">
+                <div className="SelectedWeatherInfo_details">
+                    <div>Precipitation: {weatherData.precipitationProbability}%</div>
+                    <div>Humidity: {weatherData.humidity}%</div>
+                    <div>Wind: {weatherData.windSpeed} {speedUnit}</div>
                 </div>
-                <div className="flex">
-                    <div className="mr2 flex flex-column justify-content-center align-items-flex-end">
-                        <div className="SelectedWeatherInfo_description">{"Clear"}</div>
-                        <div className="SelectedWeatherInfo_details flex flex-column align-items-flex-end">
-                            <div>Precipitation: {weatherData.precipitationProbability}%</div>
-                            <div>Humidity: {weatherData.humidity}%</div>
-                            <div>Wind: {weatherData.windSpeed} {speedUnit}</div>
-                        </div>
-                    </div>
+                <div className="flex flex-column justify-content-center align-items-center">
                     <WeatherIcon
                         iconCode={weatherData.icon}
                         className="SelectedWeatherInfo_icon"
                     />
+                    <div className="SelectedWeatherInfo_description">{"Clear"}</div>
                 </div>
             </div>
         </div>

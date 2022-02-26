@@ -1,9 +1,14 @@
 .SelectedCoordinates {
-    padding: 2rem 0;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #ccc;
 }
 
 .SelectedCoordinates_city {
     font-size: 4rem;
     font-weight: 600;
+
+    // @Note: We don't know why this increases the width of the container element when text gets broken in multiple lines, but it does.
+    word-break: break-word;
+    // This seems to fix it, though. Maybe there's a way to circumvent this problem altogether?
+    max-width: 100%;
 }

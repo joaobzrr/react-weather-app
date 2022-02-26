@@ -2,16 +2,15 @@
 
 .App_container {
     height: 100%;
-    margin-top: 4rem;
-    padding-left: 4rem;
-    padding-right: 4rem;
 }
 
 .App {
+    width: $main-width;
+    margin-top: 4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
 
     @media screen and (max-width: $main-width) {
         width: 100%;
     }
-
-    width: $main-width;
 }

@@ -12,13 +12,9 @@ html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){htm
 
 .DropdownSearch{position:relative}
 
-.SelectedCoordinates{padding:2rem 0;border-bottom:1px solid #ccc}.SelectedCoordinates_city{font-size:4rem;font-weight:600}
+.SelectedCoordinates{padding-bottom:1rem;border-bottom:1px solid #ccc}.SelectedCoordinates_city{font-size:4rem;font-weight:600;word-break:break-word;max-width:100%}
 
-.MeasurementSystemButton{box-sizing:border-box;padding:0.7rem;cursor:pointer}.MeasurementSystemButton__selected{background-color:lightblue;border-radius:10px}
-
-.MeasurementSystemSelector{display:flex;flex-direction:column;font-size:2rem}.MeasurementSystemSelector_first{margin-bottom:0.5rem}
-
-.SelectedWeatherInfo{padding:2rem 0;border-bottom:1px solid #ddd}.SelectedWeatherInfo_icon{width:9rem;height:9rem;margin-left:1rem}.SelectedWeatherInfo_city{word-break:break-word;max-width:100%;margin-bottom:2rem;font-size:3rem;color:black}.SelectedWeatherInfo_temperature{display:inline-block;margin-right:2rem;font-size:9rem}.SelectedWeatherInfo_description{margin-bottom:1rem;font-size:2rem}.SelectedWeatherInfo_details{font-size:1.4rem;color:#70757A}.SelectedWeatherInfo_details div:not(:last-child){margin-bottom:0.8rem}
+.SelectedWeatherInfo{display:flex;justify-content:space-between;align-items:center;padding:2rem 0;border-bottom:1px solid #ddd}.SelectedWeatherInfo_city{word-break:break-word;max-width:100%;margin-bottom:2rem;font-size:3rem;color:black}.SelectedWeatherInfo_temperature{display:inline-block;margin-right:2rem;font-size:9rem}.SelectedWeatherInfo_details{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;margin-right:3rem;font-size:2rem}.SelectedWeatherInfo_icon{width:10rem;height:10rem}.SelectedWeatherInfo_description{font-size:2rem;font-weight:600}
 
 .DailyForecast{padding-top:2rem;border-top:1px solid #ddd;font-size:2rem}.DailyForecast table{text-align:left;width:100%}.DailyForecast td{padding:0.5rem 0}.DailyForecast td:nth-child(1),.DailyForecast td:nth-child(2){width:30%}.DailyForecast td:nth-child(3),.DailyForecast td:nth-child(4){width:15%;text-align:right}.DailyForecast table,.DailyForecast tr,.DailyForecast th,.DailyForecast td{vertical-align:middle}.DailyForecast .WeatherIcon{width:4.5rem;height:4.5rem}
 
@@ -26,9 +22,9 @@ html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){htm
 
 .HourlyForecast{display:flex;justify-content:space-between;padding:2rem 0}
 
-.WeatherInfo_container{display:flex;justify-content:center;align-items:center;margin-top:2rem}.WeatherInfo{width:100%}
+.WeatherInfo_container{display:flex;justify-content:center;align-items:center;margin-top:4rem}.WeatherInfo{width:100%}
 
 .Loader{width:5rem;height:5rem;fill:gray;-webkit-animation-name:spin;animation-name:spin;-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;-webkit-animation-timing-function:linear;animation-timing-function:linear}@-webkit-keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-.App_container{height:100%}.App{width:691.2px;margin:4rem}@media screen and (max-width: 691.2px){.App{width:100%}}
+.App_container{height:100%;margin-top:4rem;padding-left:4rem;padding-right:4rem}.App{width:691.2px}@media screen and (max-width: 691.2px){.App{width:100%}}
 

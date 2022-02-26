@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import WeekDayButton from "$components/WeekDayButton";
+import WeatherIcon from "$components/WeatherIcon";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { Callback, DailyWeatherData } from "$types/common";
 import "./SevenDayForecast.scss";
@@ -13,30 +13,25 @@ type PropsType = {
 export default function SevenDayForecast(props: PropsType) {
     const { onSelectWeekDay, weatherData, selectedWeekDay } = props;
 
-    const buttons = useMemo(() => {
+    const rows = useMemo(() => {
         const result = [];
         for (const [index, data] of weatherData.entries()) {
             const { weekday, icon, maxTemperature, minTemperature } = data;
-            const weekDayName = weekday.substring(0, 3);
-            const selected = index === selectedWeekDay;
             result.push(
-                <WeekDayButton
-                    onClick={() => onSelectWeekDay(index)}
-                    selected={selected}
-                    maxTemperature={maxTemperature}
-                    minTemperature={minTemperature}
-                    iconCode={icon}
-                    weekDayName={weekDayName}
-                    key={index}
-                />
+                <tr key={index}>
+                    <th>{weekday}</th>
+                    <td><WeatherIcon iconCode={icon} className="WeatherIcon"/></td>
+                    <td>{maxTemperature}º</td>
+                    <td>{minTemperature}º</td>
+                </tr>
             );
         }
         return result;
-    }, [weatherData, selectedWeekDay]);
+    }, [weatherData]);
 
     return (
         <div className="SevenDayForecast">
-            {buttons}
+            <table><tbody>{rows}</tbody></table>
         </div>
     );
 }

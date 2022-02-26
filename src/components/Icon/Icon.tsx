@@ -32,6 +32,8 @@ export default function Icon(props: IconPropsType) {
         className = `${className} ${_className}`
     }
 
+    console.log(className);
+
     return (
         <div className={className}>
             {ImportedIcon}

@@ -1,4 +1,26 @@
 .SevenDayForecast {
-    display: flex;
-    justify-content: space-between;
+    padding-top: 4rem;
+    border-top: 1px solid #ccc;
+    font-size: 2rem;
+
+    table {
+        text-align: left;
+        width: 100%;
+    }
+
+    td {
+        padding: 0.5rem 0;
+
+        &:nth-child(1), &:nth-child(2) { width: 30%; }
+        &:nth-child(3), &:nth-child(4) { width: 15%; text-align: right; }
+    }
+
+    table, tr, th, td {
+        vertical-align: middle;
+    }
+
+    .WeatherIcon {
+        width: 3.2rem;
+        height: 3.2rem;
+    }
 }

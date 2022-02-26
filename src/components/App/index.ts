@@ -4,7 +4,7 @@ import withContainer from "$hoc/withContainer";
 import { compose, normalize } from "$utils/compose";
 
 const containerProps = {
-    className: "flex justify-content-center align-items-center"
+    className: "flex justify-content-center"
 };
 
 export default compose(

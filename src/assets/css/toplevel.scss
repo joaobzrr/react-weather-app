@@ -3,6 +3,10 @@
 html, body {
     height: 100%;
     font-size: 62.5%;
+
+    @media screen and (max-width: $main-width) {
+        font-size: 40%;
+    }
 }
 
 body {

@@ -11,7 +11,7 @@ export default function SelectedCoordinates(props: PropsType) {
 
     return (
         <div className="SelectedCoordinates">
-            <span className="SelectedWeatherInfo_city">{locationData.city}</span>
+            <span className="SelectedCoordinates_city">{locationData.city}</span>
         </div>
     );
 }

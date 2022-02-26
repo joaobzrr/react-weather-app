@@ -5,6 +5,11 @@
 }
 
 .App {
+
+    @media screen and (max-width: $main-width) {
+        width: 100%;
+    }
+
     width: $main-width;
     margin: 4rem;
 }

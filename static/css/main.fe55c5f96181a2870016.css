@@ -26,7 +26,7 @@ html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){htm
 
 .HourlyForecast{display:flex;justify-content:space-between;padding:2rem 0}
 
-.WeatherInfo_container{display:flex;justify-content:center;align-items:center;min-height:35rem;margin-top:2rem}.WeatherInfo{width:100%}
+.WeatherInfo_container{display:flex;justify-content:center;align-items:center;margin-top:2rem}.WeatherInfo{width:100%}
 
 .Loader{width:5rem;height:5rem;fill:gray;-webkit-animation-name:spin;animation-name:spin;-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;-webkit-animation-timing-function:linear;animation-timing-function:linear}@-webkit-keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 

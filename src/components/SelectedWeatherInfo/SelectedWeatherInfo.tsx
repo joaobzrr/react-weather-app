@@ -37,7 +37,7 @@ export default function SelectedWeatherInfo(props: PropsType) {
                 </div>
                 <div className="flex">
                     <div className="mr2 flex flex-column justify-content-center align-items-flex-end">
-                        <div className="SelectedWeatherInfo_description">{weatherData.description}</div>
+                        <div className="SelectedWeatherInfo_description">{"Clear"}</div>
                         <div className="SelectedWeatherInfo_details flex flex-column align-items-flex-end">
                             <div>Precipitation: {weatherData.precipitationProbability}%</div>
                             <div>Humidity: {weatherData.humidity}%</div>

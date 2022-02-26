@@ -38,7 +38,10 @@ export default function WeatherInfo(props: PropsType) {
                 locationData={locationData}
                 measurementSystem={measurementSystem}
             />
-            <HourlyForecast weatherData={hourlyData} />
+            <HourlyForecast
+                weatherData={hourlyData}
+                timezone={_weatherDataContainer.timezone}
+            />
             <DailyForecast
                 onSelectWeekDay={onSelectWeekDay}
                 weatherData={dailyData}

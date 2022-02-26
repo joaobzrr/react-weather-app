@@ -21,26 +21,38 @@ export async function fetchWeatherData(lat: number, lon: number): Promise<Weathe
 }
 
 function processWeatherData(data: Record<string, any>): WeatherDataContainer {
-    const currentHourIndex = (new Date()).getHours();
-
-    const metric = <WeatherData>{};
-    metric.current = makeCurrentWeatherData(data, currentHourIndex);
-    metric.daily   = makeDailyWeatherData(data);
-    metric.hourly  = makeHourlyWeatherData(data, currentHourIndex);
-
+    const metric   = makeMetricWeatherData(data);
     const imperial = convertMetricWeatherDataToImperialUnits(metric);
+    const timezone = data.timezone;
 
-    return { metric, imperial };
+    return { metric, imperial, timezone };
 }
 
-function makeCurrentWeatherData(data: Record<string, any>, currentHourIndex: number): CurrentWeatherData {
+function makeMetricWeatherData(data: Record<string, any>): WeatherData {
+    const flattenedHourData    = flattenHourData(data);
+    const currentHourDataIndex = findCurrentHourData(flattenedHourData);
+    console.assert(currentHourDataIndex !== -1); // @Note: This should never trigger.
+
+    const currentHourData = flattenedHourData[currentHourDataIndex];
+    const current = makeCurrentWeatherData(data, currentHourData);
+
+    const pertinentHourData = flattenedHourData.slice(currentHourDataIndex + 1);
+    const hourly = makeHourlyWeatherData(pertinentHourData);
+    hourly.unshift(current);
+
+    const daily = makeDailyWeatherData(data);
+
+    return { current, hourly, daily };
+}
+
+function makeCurrentWeatherData(
+    data:            Record<string, any>,
+    currentHourData: Record<string, any>
+): CurrentWeatherData {
     const { currentConditions } = data;
 
     const result = <CurrentWeatherData>makeBaseWeatherData(currentConditions);
-    result.temperature = Math.round(currentConditions.temp);
-    result.description = "Clear"; // @Temporary
-
-    const currentHourData = data.days[0].hours[currentHourIndex];
+    result.temperature              = Math.round(currentConditions.temp);
     result.precipitationProbability = Math.round(currentHourData.precipprob);
 
     return result;
@@ -55,7 +67,6 @@ function makeDailyWeatherData(data: Record<string, any>): DailyWeatherData[] {
         d.maxTemperature           = Math.round(item.tempmax);
         d.minTemperature           = Math.round(item.tempmin);
         d.precipitationProbability = Math.round(item.precipprob);
-        d.description              = "Clear"; // @Temporary
 
         const date = new Date(item.datetimeEpoch * 1000);
         d.weekday = daysOfTheWeek[date.getDay()];
@@ -66,23 +77,14 @@ function makeDailyWeatherData(data: Record<string, any>): DailyWeatherData[] {
     return result;
 }
 
-function makeHourlyWeatherData(data: Record<string, any>, currentHourIndex: number): HourlyWeatherData[] {
+function makeHourlyWeatherData(data: Record<string, any>[]): HourlyWeatherData[] {
     const result = <HourlyWeatherData[]>[];
+    for (const hd of data.slice(0, 5)) {
+        const d = <HourlyWeatherData>makeBaseWeatherData(hd);
+        d.temperature =              Math.round(hd.temp);
+        d.precipitationProbability = Math.round(hd.precipprob);
 
-    for (const dailyData of data.days.slice(0, 7)) {
-        for (const hourlyData of dailyData.hours) {
-            const d = <HourlyWeatherData>makeBaseWeatherData(hourlyData);
-            d.temperature =              Math.round(hourlyData.temp);
-            d.precipitationProbability = Math.round(hourlyData.precipprob);
-
-            const date = new Date(hourlyData.datetimeEpoch * 1000);
-            const hourIndex = date.getHours();
-            const half = (hourIndex <= 12) ? "AM" : "PM";
-            const hour = (hourIndex % 12) + 1;
-            d.time = `${hour} ${half}`;
-
-            result.push(d);
-        }
+        result.push(d);
     }
 
     return result;
@@ -90,11 +92,11 @@ function makeHourlyWeatherData(data: Record<string, any>, currentHourIndex: numb
 
 function makeBaseWeatherData(data: Record<string, any>): BaseWeatherData {
     const result = {} as BaseWeatherData;
-    result.humidity        = Math.round(data.humidity);
-    result.windSpeed       = Math.round(data.windspeed);
-    result.windDirection   = Math.round(data.winddir);
-    result.timestamp       = data.datetimeEpoch;
-    result.icon            = data.icon;
+    result.humidity      = Math.round(data.humidity);
+    result.windSpeed     = Math.round(data.windspeed);
+    result.windDirection = Math.round(data.winddir);
+    result.date          = new Date(data.datetimeEpoch * 1000);
+    result.icon          = data.icon;
     return result;
 }
 
@@ -134,4 +136,30 @@ function cloneWeatherData(data: WeatherData): WeatherData {
     }
 
     return result;
+}
+
+function flattenHourData(data: Record<string, any>): Record<string, any>[] {
+    const result = <any[]>[];
+    for (const dd of data.days) {
+        for (const hd of dd.hours) {
+            result.push(hd);
+        }
+    }
+    return result;
+}
+
+function findCurrentHourData(flattenedHourData: Record<string, any>[]): number {
+    const nowTimestamp = new Date().getTime();
+
+    for (const [hi, hd] of flattenedHourData.entries()) {
+        const timestamp = hd.datetimeEpoch * 1000;
+
+        if (timestamp == nowTimestamp) {
+            return hi;
+        } else if (timestamp > nowTimestamp) {
+            return hi - 1;
+        }
+    }
+
+    return -1;
 }

@@ -40,33 +40,27 @@ export type IconPropsType = {
 }
 
 export type BaseWeatherData = {
-    timestamp: number;
-    icon: string;
-    humidity: number;
-    windSpeed: number;
+    date:          Date;
+    icon:          string;
+    humidity:      number;
+    windSpeed:     number;
     windDirection: number;
 }
 
 export type CurrentWeatherData = BaseWeatherData & {
-    description: string;
     temperature: number;
     precipitationProbability: number;
 }
 
 export type DailyWeatherData = BaseWeatherData & {
     weekday: string;
-    description: string;
     temperature: number;
     maxTemperature: number;
     minTemperature: number;
     precipitationProbability: number;
 }
 
-export type HourlyWeatherData = BaseWeatherData & {
-    temperature: number;
-    precipitationProbability: number;
-    time: string;
-}
+export type HourlyWeatherData = CurrentWeatherData;
 
 export type WeatherData = {
     current: CurrentWeatherData;
@@ -77,6 +71,7 @@ export type WeatherData = {
 export type WeatherDataContainer = {
     metric:   WeatherData;
     imperial: WeatherData;
+    timezone: string;
 }
 
 export type LocationData = {

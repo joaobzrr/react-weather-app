@@ -1,6 +1,6 @@
 import React from "react";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
-import SevenDayForecast from "$components/SevenDayForecast";
+import DailyForecast from "$components/DailyForecast";
 import {
     Callback,
     AppData,
@@ -33,7 +33,7 @@ export default function WeatherInfo(props: PropsType) {
                 locationData={locationData}
                 measurementSystem={measurementSystem}
             />
-            <SevenDayForecast
+            <DailyForecast
                 onSelectWeekDay={onSelectWeekDay}
                 weatherData={dailyData}
                 selectedWeekDay={selectedWeekDay}

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import WeatherIcon from "$components/WeatherIcon";
 import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { Callback, DailyWeatherData } from "$types/common";
-import "./SevenDayForecast.scss";
+import "./DailyForecast.scss";
 
 type PropsType = {
     onSelectWeekDay: Callback<[number]>;
@@ -10,7 +10,7 @@ type PropsType = {
     selectedWeekDay: number;
 }
 
-export default function SevenDayForecast(props: PropsType) {
+export default function DailyForecast(props: PropsType) {
     const { onSelectWeekDay, weatherData, selectedWeekDay } = props;
 
     const rows = useMemo(() => {
@@ -30,7 +30,7 @@ export default function SevenDayForecast(props: PropsType) {
     }, [weatherData]);
 
     return (
-        <div className="SevenDayForecast">
+        <div className="DailyForecast">
             <table><tbody>{rows}</tbody></table>
         </div>
     );

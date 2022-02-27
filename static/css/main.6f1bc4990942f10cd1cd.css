@@ -26,5 +26,5 @@ html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){htm
 
 .Loader{width:5rem;height:5rem;fill:gray;-webkit-animation-name:spin;animation-name:spin;-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;-webkit-animation-timing-function:linear;animation-timing-function:linear}@-webkit-keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-.App_container{height:100%;margin-top:4rem;padding-left:4rem;padding-right:4rem}.App{width:691.2px}@media screen and (max-width: 691.2px){.App{width:100%}}
+.App_container{height:100%}.App{width:691.2px;margin-top:4rem;padding-left:4rem;padding-right:4rem}@media screen and (max-width: 691.2px){.App{width:100%}}
 

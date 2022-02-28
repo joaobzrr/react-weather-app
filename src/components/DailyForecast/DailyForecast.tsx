@@ -21,8 +21,8 @@ export default function DailyForecast(props: PropsType) {
                 <tr key={index}>
                     <th>{weekday}</th>
                     <td><WeatherIcon iconCode={icon} className="WeatherIcon"/></td>
-                    <td>{maxTemperature}º</td>
-                    <td>{minTemperature}º</td>
+                    <td>{maxTemperature}&#x00B0;</td>
+                    <td>{minTemperature}&#x00B0;</td>
                 </tr>
             );
         }

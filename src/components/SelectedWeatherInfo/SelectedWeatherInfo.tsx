@@ -27,7 +27,8 @@ export default function SelectedWeatherInfo(props: PropsType) {
         <div className="SelectedWeatherInfo">
             <div className="flex">
                 <span className="SelectedWeatherInfo_temperature">
-                    {weatherData.temperature}º
+                    {weatherData.temperature}&#x00B0;
+
                 </span>
             </div>
             <div className="flex">

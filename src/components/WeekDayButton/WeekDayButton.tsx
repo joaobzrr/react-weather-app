@@ -28,7 +28,7 @@ export default function WeekDayButton(props: PropsType) {
                 className="WeekDayButton_icon"
             />
             <div className="WeekDayButton_temperature">
-                {maxTemperature}º
+                {maxTemperature}&#x00B0;
             </div>
         </Button>
     );

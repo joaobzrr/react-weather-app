@@ -2,13 +2,13 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){html,body{font-size:40%}}body{font-family:arial, sans-serif}#root{height:100%}.flex{display:flex}.flex-column{flex-direction:column}.justify-content-center{justify-content:center}.justify-content-between{justify-content:space-between}.align-items-center{align-items:center}.align-items-flex-end{align-items:end}.mr2{margin-right:2rem}
 
-.TextInput{width:100%;font-size:2rem;outline:0;border:0}
+.TextInput{width:100%;outline:0;border:0;font-size:2rem}
 
 .TextInputContainer{padding:1rem 2rem;border:1px solid #DFE1E5;border-radius:24px;box-shadow:0 2px 8px 1px rgba(64,60,67,0.24)}.TextInputContainer__noRoundBottomCorners{border-bottom-left-radius:0;border-bottom-right-radius:0}
 
 .DropdownItem{display:flex;justify-content:space-between;padding:1rem 2rem;background-color:white}.DropdownItem_country{color:#777777}.DropdownItem__selected{background-color:lightblue}
 
-.Dropdown{box-sizing:border-box;position:absolute;width:100%;overflow:overlay;z-index:1;font-size:2rem;border:1px solid #DFE1E5;border-top-width:0;border-bottom-left-radius:24px;border-bottom-right-radius:24px;box-shadow:0 9px 8px -3px rgba(64,60,67,0.24),8px 0 8px -7px rgba(64,60,67,0.24),-8px 0 8px -7px rgba(64,60,67,0.24)}
+.Dropdown{box-sizing:border-box;position:absolute;width:100%;overflow:overlay;z-index:1;border:1px solid #DFE1E5;border-top-width:0;border-bottom-left-radius:24px;border-bottom-right-radius:24px;box-shadow:0 9px 8px -3px rgba(64,60,67,0.24),8px 0 8px -7px rgba(64,60,67,0.24),-8px 0 8px -7px rgba(64,60,67,0.24);font-size:2rem}
 
 .DropdownSearch{position:relative}
 
@@ -18,7 +18,7 @@ html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){htm
 
 .DailyForecast{padding-top:2rem;border-top:1px solid #ddd;font-size:2rem}.DailyForecast table{text-align:left;width:100%}.DailyForecast td{padding:0.5rem 0}.DailyForecast td:nth-child(1),.DailyForecast td:nth-child(2){width:30%}.DailyForecast td:nth-child(3),.DailyForecast td:nth-child(4){width:15%;text-align:right}.DailyForecast table,.DailyForecast tr,.DailyForecast th,.DailyForecast td{vertical-align:middle}.DailyForecast .WeatherIcon{width:4.5rem;height:4.5rem}
 
-.WeekDayButton{display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box;border-radius:10px;padding:1rem;font-size:2rem;cursor:pointer}.WeekDayButton_icon{width:6rem;height:6rem}.WeekDayButton_day{margin-bottom:1rem}.WeekDayButton_temperature{margin-top:1rem}.WeekDayButton__selected{background-color:lightblue}
+.DailyForecastButton{display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box;border-radius:10px;padding:1rem;font-size:2rem;cursor:pointer}.DailyForecastButton_icon{width:6rem;height:6rem}.DailyForecastButton_day{margin-bottom:1rem}.DailyForecastButton_temperature{margin-top:1rem}.DailyForecastButton__selected{background-color:lightblue}
 
 .HourlyForecast{display:flex;justify-content:space-between;padding:2rem 0}
 

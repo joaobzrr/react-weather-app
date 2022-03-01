@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import WeatherIcon from "$components/WeatherIcon";
-import getWeekDayNameFromDate from "$services/getWeekDayNameFromDate";
 import { Callback, DailyWeatherData } from "$types/common";
 import "./DailyForecast.scss";
 

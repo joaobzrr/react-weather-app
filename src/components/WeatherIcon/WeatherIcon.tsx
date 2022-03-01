@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import Icon from "$components/Icon";
-import iconCodeToFileName from "$services/iconCodeToFileName";
+import iconCodeToFileName from "$utils/iconCodeToFileName";
 import { IconPropsType } from "$types/common";
 
 type PropsType = Omit<IconPropsType, "fileName"> & {

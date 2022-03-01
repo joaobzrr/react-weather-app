@@ -1,7 +1,7 @@
 import useLazyRef from "$hooks/useLazyRef";
 import useDebounce from "$hooks/useDebounce";
-import makeDeferrable from "$services/makeDeferrable";
 import fetchAutocompleteData from "$services/fetchAutocompleteData";
+import makeDeferrable from "$utils/makeDeferrable";
 import { AutocompleteData, Deferrable } from "$types/common";
 
 export default function useAutocomplete() {

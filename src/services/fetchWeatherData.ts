@@ -17,6 +17,8 @@ export async function fetchWeatherData(lat: number, lon: number): Promise<Weathe
     const lang = "id";
     const query = `${lat},${lon}?key=${key}&unitGroup=${unitGroup}&lang=${lang}`;
     const response = await axios.get(baseUrl + query); // @Todo: handle errors.
+    debugger;
+
     return processWeatherData(response.data);
 }
 
@@ -31,7 +33,7 @@ function processWeatherData(data: Record<string, any>): WeatherDataContainer {
 function makeMetricWeatherData(data: Record<string, any>): WeatherData {
     const flattenedHourData    = flattenHourData(data);
     const currentHourDataIndex = findCurrentHourData(flattenedHourData);
-    console.assert(currentHourDataIndex !== -1); // @Note: This should never trigger.
+    console.assert(currentHourDataIndex !== -1); // @Note: This should never raise an exception.
 
     const currentHourData = flattenedHourData[currentHourDataIndex];
     const current = makeCurrentWeatherData(data, currentHourData);
@@ -63,7 +65,7 @@ function makeDailyWeatherData(data: Record<string, any>): DailyWeatherData[] {
 
     for (const item of data.days.slice(0, 7)) {
         const d = <DailyWeatherData>makeBaseWeatherData(item);
-        d.temperature              = Math.round(item.tempmax); // @Note This is on purpose.
+        d.temperature              = Math.round(item.tempmax); // @Note: This is on purpose.
         d.maxTemperature           = Math.round(item.tempmax);
         d.minTemperature           = Math.round(item.tempmin);
         d.precipitationProbability = Math.round(item.precipprob);

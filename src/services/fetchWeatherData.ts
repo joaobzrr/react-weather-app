@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { celsiusToFahrenheit, kphToMph } from "$utils/common";
 import {
     BaseWeatherData,
     CurrentWeatherData,
@@ -15,7 +14,8 @@ export async function fetchWeatherData(lat: number, lon: number): Promise<Weathe
     const key = __VISUAL_CROSSING_WEATHER_API_KEY__;
     const baseUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
     const unitGroup = "metric";
-    const query = `${lat},${lon}?key=${key}&unitGroup=${unitGroup}&lang=id`;
+    const lang = "id";
+    const query = `${lat},${lon}?key=${key}&unitGroup=${unitGroup}&lang=${lang}`;
     const response = await axios.get(baseUrl + query); // @Todo: handle errors.
     return processWeatherData(response.data);
 }
@@ -162,4 +162,12 @@ function findCurrentHourData(flattenedHourData: Record<string, any>[]): number {
     }
 
     return -1;
+}
+
+function celsiusToFahrenheit(celsius: number): number {
+    return (celsius * 1.8) + 32;
+}
+
+function kphToMph(kph: number): number {
+    return kph / 1.609;
 }

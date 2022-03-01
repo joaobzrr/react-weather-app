@@ -4,7 +4,7 @@ import Button from "$components/Button";
 import WeatherIcon from "$components/WeatherIcon";
 import { ButtonPropsType } from "$types/common";
 
-import "./WeekDayButton.scss";
+import "./DailyForecastButton.scss";
 
 type PropsType = ButtonPropsType & {
     selected:       boolean;
@@ -13,21 +13,21 @@ type PropsType = ButtonPropsType & {
     time:           string;
 };
 
-export default function WeekDayButton(props: PropsType) {
+export default function DailyForecastButton(props: PropsType) {
     const { selected, maxTemperature, iconCode, time, ...buttonProps } = props;
 
-    const { classes, setClasses } = useClasses("WeekDayButton");
+    const { classes, setClasses } = useClasses("DailyForecastButton");
 
-    useEffect(() => setClasses({WeekDayButton__selected: selected}), [selected]);
+    useEffect(() => setClasses({DailyForecastButton__selected: selected}), [selected]);
 
     return (
         <Button className={serializeClasses(classes)} {...buttonProps}>
-            <p className="WeekDayButton_day">{time + ""}</p>
+            <p className="DailyForecastButton_day">{time + ""}</p>
             <WeatherIcon
                 iconCode={iconCode}
-                className="WeekDayButton_icon"
+                className="DailyForecastButton_icon"
             />
-            <div className="WeekDayButton_temperature">
+            <div className="DailyForecastButton_temperature">
                 {maxTemperature}&#x00B0;
             </div>
         </Button>

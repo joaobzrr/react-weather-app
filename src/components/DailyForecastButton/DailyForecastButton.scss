@@ -1,4 +1,4 @@
-.WeekDayButton {
+.DailyForecastButton {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,19 +10,19 @@
     cursor: pointer;
 }
 
-.WeekDayButton_icon {
+.DailyForecastButton_icon {
     width:  6rem;
     height: 6rem;
 }
 
-.WeekDayButton_day {
+.DailyForecastButton_day {
     margin-bottom: 1rem;
 }
 
-.WeekDayButton_temperature {
+.DailyForecastButton_temperature {
     margin-top: 1rem;
 }
 
-.WeekDayButton__selected {
+.DailyForecastButton__selected {
     background-color: lightblue;
 }

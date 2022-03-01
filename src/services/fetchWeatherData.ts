@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from "axios";
+import { iconCodeToDescription } from "$utils/iconCodeToDescription";
+import { celsiusToFahrenheit, kphToMph } from "$utils/common";
 import {
     BaseWeatherData,
     CurrentWeatherData,
@@ -17,8 +19,6 @@ export async function fetchWeatherData(lat: number, lon: number): Promise<Weathe
     const lang = "id";
     const query = `${lat},${lon}?key=${key}&unitGroup=${unitGroup}&lang=${lang}`;
     const response = await axios.get(baseUrl + query); // @Todo: handle errors.
-    debugger;
-
     return processWeatherData(response.data);
 }
 
@@ -99,6 +99,8 @@ function makeBaseWeatherData(data: Record<string, any>): BaseWeatherData {
     result.windDirection = Math.round(data.winddir);
     result.date          = new Date(data.datetimeEpoch * 1000);
     result.icon          = data.icon;
+    result.description   = iconCodeToDescription(data.icon);
+
     return result;
 }
 
@@ -166,10 +168,3 @@ function findCurrentHourData(flattenedHourData: Record<string, any>[]): number {
     return -1;
 }
 
-function celsiusToFahrenheit(celsius: number): number {
-    return (celsius * 1.8) + 32;
-}
-
-function kphToMph(kph: number): number {
-    return kph / 1.609;
-}

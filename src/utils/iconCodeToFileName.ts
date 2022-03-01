@@ -10,6 +10,6 @@ const codeToFileName: {[key: string]: string} = {
     "clear-night":         "clearSkyNight"
 }
 
-export default function iconCodeToFileName(code: string) {
+export default function iconCodeToFileName(code: string): string {
     return codeToFileName[code];
 }

@@ -42,6 +42,7 @@ export type IconPropsType = {
 export type BaseWeatherData = {
     date:          Date;
     icon:          string;
+    description:   string;
     humidity:      number;
     windSpeed:     number;
     windDirection: number;

@@ -42,7 +42,7 @@ export default function SelectedWeatherInfo(props: PropsType) {
                         iconCode={weatherData.icon}
                         className="SelectedWeatherInfo_icon"
                     />
-                    <div className="SelectedWeatherInfo_description">{"Clear"}</div>
+                    <div className="SelectedWeatherInfo_description">{weatherData.description}</div>
                 </div>
             </div>
         </div>

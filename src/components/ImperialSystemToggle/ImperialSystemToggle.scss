@@ -1,0 +1,59 @@
+.ImperialSystemToggle {
+    position: relative;
+    display: inline-block;
+    width: 6rem;
+    height: 3.4rem;
+}
+
+.ImperialSystemToggle_text {
+    font-size: 2rem;
+}
+
+.ImperialSystemToggle_checkbox {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.ImperialSystemToggle_checkbox:checked {
+    background-color: #2196F3;
+    transform: translateX(2.6rem);
+}
+
+.ImperialSystemToggle_slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    border-radius: 3.4rem;
+    background-color: #CCC;
+    transition-property: background-color;
+    transition-duration: .4s;
+}
+
+.ImperialSystemToggle_slider:before {
+    position: absolute;
+    left: 0.4rem;
+    bottom: 0.4rem;
+    content: "";
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background-color: white;
+    transition-property: transform;
+    transition-duration: .4s;
+}
+
+.ImperialSystemToggle_checkbox:checked + .ImperialSystemToggle_slider {
+    background-color: #2196F3;
+}
+
+.ImperialSystemToggle_checkbox:checked + .ImperialSystemToggle_slider:before {
+    transform: translateX(2.6rem);
+}
+
+.ImperialSystemToggle_checkbox:focus + .ImperialSystemToggle_slider {
+    box-shadow: 0 0 1px #2196F3;
+}

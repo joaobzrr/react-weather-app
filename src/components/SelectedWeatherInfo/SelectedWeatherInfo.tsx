@@ -1,34 +1,30 @@
 import React from "react";
-import MeasurementSystemSelector from "$components/MeasurementSystemSelector";
 import WeatherIcon from "$components/WeatherIcon";
 import {
     Callback,
     CurrentWeatherData,
     DailyWeatherData,
-    LocationData,
-    MeasurementSystem
+    LocationData
 } from "$types/common";
 import "./SelectedWeatherInfo.scss";
 
 type PropsType = {
-    onSelectMeasurementSystem: Callback<[MeasurementSystem]>;
-    weatherData:               CurrentWeatherData|DailyWeatherData;
-    locationData:              LocationData;
-    measurementSystem:         MeasurementSystem;
+    weatherData:         CurrentWeatherData|DailyWeatherData;
+    locationData:        LocationData;
+    usingImperialSystem: boolean;
 }
 
 // @Temporary Using placeholder iconCode for now.
 export default function SelectedWeatherInfo(props: PropsType) {
-    const { onSelectMeasurementSystem, weatherData, locationData, measurementSystem } = props;
+    const { weatherData, locationData, usingImperialSystem } = props;
 
-    const speedUnit = (measurementSystem === "metric") ? "km/h" : "mph";
+    const speedUnit = usingImperialSystem ? "mph" : "km/h";
 
     return (
         <div className="SelectedWeatherInfo">
             <div className="flex">
                 <span className="SelectedWeatherInfo_temperature">
                     {weatherData.temperature}&#x00B0;
-
                 </span>
             </div>
             <div className="flex">

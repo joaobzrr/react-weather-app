@@ -7,8 +7,7 @@ import {
     AppData,
     LocationData,
     WeatherData,
-    WeatherDataContainer,
-    MeasurementSystem
+    WeatherDataContainer
 } from "$types/common";
 import "./App.scss";
 
@@ -16,7 +15,7 @@ import { fetchWeatherData } from "$services/fetchWeatherData";
 
 export default function App() {
     const [appData, setAppData] = useState<AppData>(null!);
-    const [measurementSystem, setMeasurementSystem] = useState<MeasurementSystem>("metric");
+    const [usingImperialSystem, setUsingImperialSystem] = useState(false);
     const [selectedWeekDay, setSelectedWeekDay] = useState(-1);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -40,8 +39,8 @@ export default function App() {
         setIsLoading(false);
     }
 
-    const handleSelectMeasurementSystem = (measurementSystem: MeasurementSystem) => {
-        setMeasurementSystem(measurementSystem);
+    const handleToggleImperialSystem = (usingImperialSystem: boolean) => {
+        setUsingImperialSystem(!usingImperialSystem);
     }
 
     const handleSelectWeekDay = (value: number) => {
@@ -55,10 +54,10 @@ export default function App() {
                 onEndLoadingAutocompleteData={handleEndLoadingAutocompleteData}
             />
             <WeatherInfo
-                onSelectMeasurementSystem={handleSelectMeasurementSystem}
+                onToggleImperialSystem={handleToggleImperialSystem}
                 onSelectWeekDay={handleSelectWeekDay}
                 appData={appData}
-                measurementSystem={measurementSystem}
+                usingImperialSystem={usingImperialSystem}
                 selectedWeekDay={selectedWeekDay}
                 isLoading={isLoading}
             />

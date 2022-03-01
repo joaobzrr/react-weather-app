@@ -3,26 +3,22 @@ import SelectedCoordinates from "$components/SelectedCoordinates";
 import SelectedWeatherInfo from "$components/SelectedWeatherInfo";
 import DailyForecast from "$components/DailyForecast";
 import HourlyForecast from "$components/HourlyForecast";
-import {
-    Callback,
-    AppData,
-    MeasurementSystem
-} from "$types/common";
+import { Callback, AppData } from "$types/common";
 import "./WeatherInfo.scss";
 
 type PropsType = {
-    onSelectMeasurementSystem: Callback<[MeasurementSystem]>;
-    onSelectWeekDay:           Callback<[number]>;
-    appData:                   AppData;
-    measurementSystem:         MeasurementSystem;
-    selectedWeekDay:           number;
+    onToggleImperialSystem: Callback<[boolean]>;
+    onSelectWeekDay:        Callback<[number]>;
+    appData:                AppData;
+    usingImperialSystem:    boolean;
+    selectedWeekDay:        number;
 };
 
 export default function WeatherInfo(props: PropsType) {
-    const { onSelectMeasurementSystem, onSelectWeekDay, appData, measurementSystem, selectedWeekDay } = props;
+    const { onToggleImperialSystem, onSelectWeekDay, appData, usingImperialSystem, selectedWeekDay } = props;
     const { weatherDataContainer: _weatherDataContainer, locationData } = appData;
 
-    const weatherData = (measurementSystem === "metric") ? _weatherDataContainer.metric : _weatherDataContainer.imperial;
+    const weatherData = usingImperialSystem ? _weatherDataContainer.imperial : _weatherDataContainer.metric;
     const { current: currentData, daily: dailyData, hourly: hourlyData } = weatherData;
 
     const selectedWeatherData = (selectedWeekDay > -1) ? dailyData[selectedWeekDay] : currentData;
@@ -31,12 +27,13 @@ export default function WeatherInfo(props: PropsType) {
         <div className="WeatherInfo">
             <SelectedCoordinates
                 locationData={locationData}
+                onToggleImperialSystem={onToggleImperialSystem}
+                usingImperialSystem={usingImperialSystem}
             />
             <SelectedWeatherInfo
-                onSelectMeasurementSystem={onSelectMeasurementSystem}
                 weatherData={selectedWeatherData}
                 locationData={locationData}
-                measurementSystem={measurementSystem}
+                usingImperialSystem={usingImperialSystem}
             />
             <HourlyForecast
                 weatherData={hourlyData}

@@ -1,4 +1,6 @@
 .SelectedCoordinates {
+    display: flex;
+    justify-content: space-between;
     padding-bottom: 1rem;
     border-bottom: 1px solid #ccc;
 }

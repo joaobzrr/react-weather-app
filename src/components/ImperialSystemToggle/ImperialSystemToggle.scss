@@ -1,12 +1,18 @@
-.ImperialSystemToggle {
-    position: relative;
-    display: inline-block;
-    width: 6rem;
-    height: 3.4rem;
+.ImperialSystemToggle_container {
+    display: flex;
+    align-items: center;
 }
 
 .ImperialSystemToggle_text {
-    font-size: 2rem;
+    font-size: 2.4rem;
+    margin-right: 1rem;
+}
+
+.ImperialSystemToggle {
+    position: relative;
+    display: inline-block;
+    width: 5.2rem;
+    height: 3rem;
 }
 
 .ImperialSystemToggle_checkbox {
@@ -17,7 +23,6 @@
 
 .ImperialSystemToggle_checkbox:checked {
     background-color: #2196F3;
-    transform: translateX(2.6rem);
 }
 
 .ImperialSystemToggle_slider {
@@ -27,7 +32,7 @@
     right: 0;
     bottom: 0;
     cursor: pointer;
-    border-radius: 3.4rem;
+    border-radius: 3rem;
     background-color: #CCC;
     transition-property: background-color;
     transition-duration: .4s;
@@ -35,11 +40,11 @@
 
 .ImperialSystemToggle_slider:before {
     position: absolute;
-    left: 0.4rem;
-    bottom: 0.4rem;
+    left: 0.346rem;
+    bottom: 0.346rem;
     content: "";
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 2.253rem;
+    height: 2.253rem;
     border-radius: 50%;
     background-color: white;
     transition-property: transform;
@@ -51,7 +56,7 @@
 }
 
 .ImperialSystemToggle_checkbox:checked + .ImperialSystemToggle_slider:before {
-    transform: translateX(2.6rem);
+    transform: translateX(2.253rem);
 }
 
 .ImperialSystemToggle_checkbox:focus + .ImperialSystemToggle_slider {

@@ -7,11 +7,10 @@
 }
 
 .SelectedCoordinates_city {
+    display: inline-block;
+    text-overflow: ellipsis;
     font-size: 3rem;
     font-weight: 600;
-
-    // @Note: We don't know why this increases the width of the container element when text gets broken in multiple lines, but it does.
-    word-break: break-word;
-    // This seems to fix it, though. Maybe there's a way to circumvent this problem altogether?
-    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }

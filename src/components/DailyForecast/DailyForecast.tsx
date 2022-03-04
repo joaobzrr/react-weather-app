@@ -15,12 +15,12 @@ export default function DailyForecast(props: PropsType) {
         for (const [index, data] of weatherData.entries()) {
             const { weekday, icon, maxTemperature, minTemperature } = data;
             result.push(
-                <tr key={index}>
-                    <th>{weekday}</th>
-                    <td><WeatherIcon iconCode={icon} className="WeatherIcon"/></td>
-                    <td>{maxTemperature}&#x00B0;</td>
-                    <td>{minTemperature}&#x00B0;</td>
-                </tr>
+                <div className="DailyForecast_row" key={index}>
+                    <span className="DailyForecast_weekday">{weekday}</span>
+                    <span className="DailyForecast_icon"><WeatherIcon iconCode={icon} className="WeatherIcon"/></span>
+                    <span className="DailyForecast_maxTemp">{maxTemperature}&#x00B0;</span>
+                    <span className="DailyForecast_minTemp">{minTemperature}&#x00B0;</span>
+                </div>
             );
         }
         return result;
@@ -28,7 +28,7 @@ export default function DailyForecast(props: PropsType) {
 
     return (
         <div className="DailyForecast">
-            <table><tbody>{rows}</tbody></table>
+            {rows}
         </div>
     );
 }

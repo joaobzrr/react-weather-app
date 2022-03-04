@@ -1,26 +1,42 @@
 .DailyForecast {
-    padding-top: 1rem;
     border-top: 1px solid #ddd;
+    padding: 1rem 0;
     font-size: 2rem;
-
-    table {
-        text-align: left;
-        width: 100%;
-    }
-
-    td {
-        padding: 0.5rem 0;
-
-        &:nth-child(1), &:nth-child(2) { width: 30%; }
-        &:nth-child(3), &:nth-child(4) { width: 15%; text-align: right; }
-    }
-
-    table, tr, th, td {
-        vertical-align: middle;
-    }
 
     .WeatherIcon {
         width: 4.5rem;
         height: 4.5rem;
     }
+}
+
+.DailyForecast_row {
+    margin-bottom: 2rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    * {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.DailyForecast_weekday {
+    text-align: left;
+}
+
+.DailyForecast_icon {
+    text-align: center;
+}
+
+.DailyForecast_weekday,
+.DailyForecast_icon {
+    width: 35%;
+}
+
+.DailyForecast_maxTemp,
+.DailyForecast_minTemp {
+    width: 15%;
+    text-align: right;
 }

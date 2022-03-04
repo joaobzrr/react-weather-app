@@ -20,7 +20,7 @@ html,body{height:100%;font-size:62.5%}@media screen and (max-width: 691.2px){htm
 
 .DailyForecast{padding-top:1rem;border-top:1px solid #ddd;font-size:2rem}.DailyForecast table{text-align:left;width:100%}.DailyForecast td{padding:0.5rem 0}.DailyForecast td:nth-child(1),.DailyForecast td:nth-child(2){width:30%}.DailyForecast td:nth-child(3),.DailyForecast td:nth-child(4){width:15%;text-align:right}.DailyForecast table,.DailyForecast tr,.DailyForecast th,.DailyForecast td{vertical-align:middle}.DailyForecast .WeatherIcon{width:4.5rem;height:4.5rem}
 
-.DailyForecastButton{display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box;border-radius:10px;font-size:2rem;cursor:pointer}.DailyForecastButton_icon{width:6rem;height:6rem}.DailyForecastButton_day{margin-bottom:1rem}.DailyForecastButton_temperature{margin-top:1rem}.DailyForecastButton__selected{background-color:lightblue}
+.HourlyForecastItem{display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box;border-radius:10px;font-size:2rem;cursor:pointer}.HourlyForecastItem_icon{width:6rem;height:6rem}.HourlyForecastItem_day{margin-bottom:1rem}.HourlyForecastItem_temperature{margin-top:1rem}.HourlyForecastItem__selected{background-color:lightblue}
 
 .HourlyForecast{display:flex;justify-content:space-between;padding:2rem 0}
 

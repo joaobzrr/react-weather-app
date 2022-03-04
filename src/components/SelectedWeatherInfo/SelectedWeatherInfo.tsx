@@ -22,16 +22,14 @@ export default function SelectedWeatherInfo(props: PropsType) {
 
     return (
         <div className="SelectedWeatherInfo">
-            <div className="flex">
-                <span className="SelectedWeatherInfo_temperature">
-                    {weatherData.temperature}&#x00B0;
-                </span>
-            </div>
+            <span className="SelectedWeatherInfo_temperature">
+                {weatherData.temperature}&#x00B0;
+            </span>
             <div className="flex">
                 <div className="SelectedWeatherInfo_details">
-                    <div>Precipitation: {weatherData.precipitationProbability}%</div>
-                    <div>Humidity: {weatherData.humidity}%</div>
-                    <div>Wind: {weatherData.windSpeed} {speedUnit}</div>
+                    <span>Precipitation: {weatherData.precipitationProbability}%</span>
+                    <span>Humidity: {weatherData.humidity}%</span>
+                    <span>Wind: {weatherData.windSpeed} {speedUnit}</span>
                 </div>
                 <div className="flex flex-column justify-content-center align-items-center">
                     <WeatherIcon

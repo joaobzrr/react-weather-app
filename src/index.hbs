@@ -5,6 +5,7 @@
         <!-- @Todo: Add meta description tag -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Weather App</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter">
         <link rel="icon" href="{{ webpackConfig.output.publicPath }}{{ favicon.outputPath }}{{ favicon.fileName }}"/>
         {{#each htmlWebpackPlugin.files.css}}
             <link href="{{this}}" rel="stylesheet">

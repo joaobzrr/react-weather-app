@@ -4,13 +4,11 @@ import { Callback, DailyWeatherData } from "$types/common";
 import "./DailyForecast.scss";
 
 type PropsType = {
-    onSelectWeekDay: Callback<[number]>;
-    weatherData:     DailyWeatherData[];
-    selectedWeekDay: number;
+    weatherData: DailyWeatherData[];
 }
 
 export default function DailyForecast(props: PropsType) {
-    const { onSelectWeekDay, weatherData, selectedWeekDay } = props;
+    const { weatherData } = props;
 
     const rows = useMemo(() => {
         const result = [];

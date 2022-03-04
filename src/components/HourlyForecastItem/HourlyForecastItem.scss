@@ -1,4 +1,4 @@
-.DailyForecastButton {
+.HourlyForecastItem {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,19 +9,19 @@
     cursor: pointer;
 }
 
-.DailyForecastButton_icon {
+.HourlyForecastItem_icon {
     width:  6rem;
     height: 6rem;
 }
 
-.DailyForecastButton_day {
+.HourlyForecastItem_day {
     margin-bottom: 1rem;
 }
 
-.DailyForecastButton_temperature {
+.HourlyForecastItem_temperature {
     margin-top: 1rem;
 }
 
-.DailyForecastButton__selected {
+.HourlyForecastItem__selected {
     background-color: lightblue;
 }

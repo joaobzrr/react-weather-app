@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { AutocompleteData } from "$types/common";
 
-export default function fetchAutocompleteData(text: string): Promise<AutocompleteData> {
+export function fetchAutocompleteData(text: string): Promise<AutocompleteData> {
     const key = __LOCATION_IQ_API_KEY__;
     const input = encodeURIComponent(text);
     const baseUrl = "https://api.locationiq.com/v1/autocomplete.php";

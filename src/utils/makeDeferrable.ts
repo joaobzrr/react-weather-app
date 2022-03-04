@@ -1,6 +1,6 @@
 import { Deferrable, ResolveFunctionType, RejectFunctionType } from "$types/common";
 
-export default function makeDeferrable<T>(): Deferrable<T> {
+export function makeDeferrable<T>(): Deferrable<T> {
     let _resolve: ResolveFunctionType<T>;
     let _reject:  RejectFunctionType;
 

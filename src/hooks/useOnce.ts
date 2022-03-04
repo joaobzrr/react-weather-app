@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-export default function useOnce(callback: () => any) {
+export function useOnce(callback: () => any) {
     const hasBeenCalled = useRef(false);
     if (hasBeenCalled.current) {
         return;

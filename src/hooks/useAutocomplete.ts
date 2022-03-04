@@ -1,10 +1,10 @@
-import useLazyRef from "$hooks/useLazyRef";
-import useDebounce from "$hooks/useDebounce";
-import fetchAutocompleteData from "$services/fetchAutocompleteData";
-import makeDeferrable from "$utils/makeDeferrable";
+import { useLazyRef } from "$hooks/useLazyRef";
+import { useDebounce } from "$hooks/useDebounce";
+import { fetchAutocompleteData } from "$services/fetchAutocompleteData";
+import { makeDeferrable } from "$utils/makeDeferrable";
 import { AutocompleteData, Deferrable } from "$types/common";
 
-export default function useAutocomplete() {
+export function useAutocomplete() {
     const change = useLazyRef(makeInitialDeferrable);
     const enter  = useLazyRef(makeInitialDeferrable);
 

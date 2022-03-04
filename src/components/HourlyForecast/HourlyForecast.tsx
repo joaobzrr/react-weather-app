@@ -7,8 +7,7 @@ import {
     nativeJs
 } from "@js-joda/core";
 import "@js-joda/timezone";
-
-import DailyForecastButton from "$components/DailyForecastButton";
+import HourlyForecastItem from "$components/HourlyForecastItem";
 import { HourlyWeatherData } from "$types/common";
 import "./HourlyForecast.scss";
 
@@ -29,12 +28,11 @@ export default function HourlyForecast(props: PropsType) {
             const timeString = (index > 0) ?  dt.format(DateTimeFormatter.ofPattern("HH:mm")) :"NOW";
 
             result.push(
-                <DailyForecastButton
+                <HourlyForecastItem
                     selected={false}
                     maxTemperature={temperature}
                     iconCode={icon}
                     time={timeString}
-                    onClick={() => 1}
                     key={index}
                 />
             );

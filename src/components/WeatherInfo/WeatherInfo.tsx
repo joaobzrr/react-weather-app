@@ -8,20 +8,16 @@ import "./WeatherInfo.scss";
 
 type PropsType = {
     onToggleImperialSystem: Callback<[boolean]>;
-    onSelectWeekDay:        Callback<[number]>;
     appData:                AppData;
     usingImperialSystem:    boolean;
-    selectedWeekDay:        number;
 };
 
 export default function WeatherInfo(props: PropsType) {
-    const { onToggleImperialSystem, onSelectWeekDay, appData, usingImperialSystem, selectedWeekDay } = props;
+    const { onToggleImperialSystem, appData, usingImperialSystem } = props;
     const { weatherDataContainer: _weatherDataContainer, locationData } = appData;
 
     const weatherData = usingImperialSystem ? _weatherDataContainer.imperial : _weatherDataContainer.metric;
     const { current: currentData, daily: dailyData, hourly: hourlyData } = weatherData;
-
-    const selectedWeatherData = (selectedWeekDay > -1) ? dailyData[selectedWeekDay] : currentData;
 
     return (
         <div className="WeatherInfo">
@@ -31,7 +27,7 @@ export default function WeatherInfo(props: PropsType) {
                 usingImperialSystem={usingImperialSystem}
             />
             <SelectedWeatherInfo
-                weatherData={selectedWeatherData}
+                weatherData={currentData}
                 locationData={locationData}
                 usingImperialSystem={usingImperialSystem}
             />
@@ -39,11 +35,7 @@ export default function WeatherInfo(props: PropsType) {
                 weatherData={hourlyData}
                 timezone={_weatherDataContainer.timezone}
             />
-            <DailyForecast
-                onSelectWeekDay={onSelectWeekDay}
-                weatherData={dailyData}
-                selectedWeekDay={selectedWeekDay}
-            />
+            <DailyForecast weatherData={dailyData} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { LocationData } from "$types/common";
 
-export default function fetchLocationDataFromIP() {
+export function fetchLocationDataFromIP() {
     const key = __BIG_DATA_CLOUD_KEY__;
     const baseUrl = "https://api.bigdatacloud.net/data/ip-geolocation";
     const query = `?localityLanguage=en&key=${key}`;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextInputContainer from "$components/TextInputContainer";
 import Dropdown from "$components/Dropdown";
-import useAutocomplete from "$hooks/useAutocomplete";
+import { useAutocomplete } from "$hooks/useAutocomplete";
 import { clamp } from "$utils/common";
 import {
     Callback,

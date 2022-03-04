@@ -33,8 +33,8 @@ export default function Icon(props: IconPropsType) {
     }
 
     return (
-        <div className={className}>
+        <span className={className}>
             {ImportedIcon}
-        </div>
+        </span>
     );
 }

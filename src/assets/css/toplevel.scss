@@ -6,6 +6,7 @@ html, body {
 
     @media screen and (max-width: $main-width) {
         font-size: 40%;
+        -webkit-text-size-adjust: 100%;
     }
 }
 

@@ -1,12 +1,15 @@
 @import "./globals";
 
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
 html, body {
     height: 100%;
     font-size: 62.5%;
 
     @media screen and (max-width: $main-width) {
         font-size: 40%;
-        -webkit-text-size-adjust: 100%;
     }
 }
 
